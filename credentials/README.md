@@ -10,8 +10,8 @@
 1. Server URL or IP
 Server URL: ec2-3-132-216-71.us-east-2.compute.amazonaws.com
 Server IP: 3.132.216.71
-2. SSH username
-3. SSH password or key.
+2. SSH username: N/A
+3. SSH password or key: N/A
     <br> If a ssh key is used please upload the key to the credentials folder.
 4. Database URL or IP and port used.
     <br><strong> NOTE THIS DOES NOT MEAN YOUR DATABASE NEEDS A PUBLIC FACING PORT.</strong> But knowing the IP and port number will help with SSH tunneling into the database. The default port is more than sufficient for this class.
