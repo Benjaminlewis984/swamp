@@ -7,8 +7,7 @@ import Dang from './pages/Dang';
 import William from './pages/William';
 import Joe from './pages/Joe';
 import Kevin from './pages/Kevin';
-// import Ben from './pages/Ben';
-// etc..
+import Ben from './pages/Ben';
 
 const App = () => {
   return (
@@ -30,6 +29,9 @@ const App = () => {
           <div>
             <Link to="/Kevin">Kevin</Link>
           </div>
+          <div>
+            <Link to="/ben">Ben</Link>
+          </div>
         </div>
         <Switch>
           <Route exact path="/" component={Home} />
@@ -37,6 +39,7 @@ const App = () => {
           <Route exact path="/william" component={William} />
           <Route exact path="/Joe" component={Joe} />
           <Route exact path="/Kevin" component={Kevin} />
+          <Route exact path="/ben" component={Ben} />
         </Switch>
       </BrowserRouter>
     </div>
