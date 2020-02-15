@@ -1,6 +1,7 @@
 import React from 'react';
 import '../styles/Benjamin.css';
 import sf_logo from "../imgs/sf-logo.png";
+import BenImage from "../imgs/BenImage.jpg";
 
 const Ben = () => {
     return (
@@ -8,13 +9,15 @@ const Ben = () => {
         <div>
             <noscript>You need to enable JavaScript to run this app.</noscript>
             <p>
-                <img src={sf_logo} alt="sf-logo" class="sf-image"/>
+                <img src={sf_logo} alt="sf-logo" class="sf-image" />
             </p>
             <div class="glow">
                 <h1 id="aboutme" class="about-me-text">ABOUT ME</h1>
             </div>
             <p id='name' class="ben-text">Benjamin Lewis</p>
         </div>
+        <img class="profile" src={BenImage} />
+
         <div class="paragraph">
             <p>
                 Born in Lincoln, California I moved to Bay Area in order to persue a computer science degree at San Francisco State University

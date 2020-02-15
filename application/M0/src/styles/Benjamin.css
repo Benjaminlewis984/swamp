@@ -3,16 +3,10 @@
     padding:0px;
     -webkit-animation: glow 1s ease-in-out infinite alternate;
     -moz-animation: glow 1s ease-in-out infinite alternate;
+    animation: glow 1s ease-in-out infinite alternate;
+
 }
 
-@-webkit-keyframes glow {
-    from {
-        text-shadow: 0 0 10px #ffee00, 0 0 20px rgb(131, 36, 255), 0 0 30px #f5f826, 0 0 40px #f5f826, 0 0 50px #f5f826, 0 0 60px #f5f826, 0 0 70px #f5f826;
-    }
-    to {
-        text-shadow: 0 0 20px #ffee00, 0 0 30px #ffee00, 0 0 40px #ffee00, 0 0 50px #ffee00, 0 0 60px #ffee00, 0 0 70px #ffee00, 0 0 80px #ffee00;
-    }
-}
 
 .sf-image {
     width: 40px; 
@@ -31,6 +25,7 @@
     justify-content: center;
     text-align: center;
     top: 3px;
+    
 }
 
 .ben-text {
