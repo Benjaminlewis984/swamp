@@ -8,6 +8,7 @@ import William from './pages/William';
 import Joe from './pages/Joe';
 import Kevin from './pages/Kevin';
 import Ben from './pages/Ben';
+import Onu from './pages/Onu';
 
 const App = () => {
   return (
@@ -32,6 +33,9 @@ const App = () => {
           <div>
             <Link to="/ben">Ben</Link>
           </div>
+          <div>
+            <Link to="/onu">Onu</Link>
+          </div>
         </div>
         <Switch>
           <Route exact path="/" component={Home} />
@@ -40,6 +44,7 @@ const App = () => {
           <Route exact path="/Joe" component={Joe} />
           <Route exact path="/Kevin" component={Kevin} />
           <Route exact path="/ben" component={Ben} />
+          <Route exact path="/onu" component={Onu} />
         </Switch>
       </BrowserRouter>
     </div>
