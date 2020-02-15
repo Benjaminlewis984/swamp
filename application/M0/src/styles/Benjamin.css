@@ -25,7 +25,8 @@
     justify-content: center;
     text-align: center;
     top: 3px;
-    
+    text-shadow: 2px 2px 8px yellow;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 .ben-text {
@@ -34,6 +35,8 @@
     flex-direction: column;
     justify-content: center;
     text-align: center;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
 }
 
 .paragraph {
@@ -49,4 +52,6 @@
     flex-direction: column;
     justify-content: left;
     text-align: left;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
 }
