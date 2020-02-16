@@ -7,12 +7,13 @@
 
 # Below is a list of items required. Missing items will causes points to be deducted from multiple milestone submissions.
 
-1. Server URL or IP
-Server URL: ec2-3-132-216-71.us-east-2.compute.amazonaws.com
+1. Server URL or IP <br>
+Server URL: ec2-3-132-216-71.us-east-2.compute.amazonaws.com <br>
 Server IP: 3.132.216.71
 2. SSH username: teach
-3. SSH password or key: teach
-    3a. use the command `ssh -i teachkey teach@<ip_address>`
+3. SSH password or key: teach <br>
+    3a. Use the command `ssh -i credentials/teachkey teach@<ip_address>` . The path given assumes that you are in the home directory of the project folder. Adjust accordingly. <br>
+    3b. If there is a warning stating that the permissions are too open use the command `chmod 600 credentials/teachkey` . This is necessary if you are downloading the file for the first time.
     <br> If a ssh key is used please upload the key to the credentials folder.
 4. Database URL or IP and port used.
     <br><strong> NOTE THIS DOES NOT MEAN YOUR DATABASE NEEDS A PUBLIC FACING PORT.</strong> But knowing the IP and port number will help with SSH tunneling into the database. The default port is more than sufficient for this class.
