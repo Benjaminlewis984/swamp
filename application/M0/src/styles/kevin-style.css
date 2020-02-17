@@ -1,0 +1,24 @@
+.about {
+    letter-spacing: 20px;
+    font-size: 45px;
+    font-style: italic;
+    text-transform: uppercase;
+}
+/* For some reason, it was rotated counter-clockwise by 90 deg. */
+.list-1 {
+    list-style-position: inside;
+    text-align: left;
+    margin-left: 37%;
+}
+
+.list-1 li {
+    padding-bottom: 10px;
+}
+
+.spacing {
+    margin-top: 100px;
+}
+
+.header, .body {
+    font-family: Arial, Helvetica, sans-serif;
+}
