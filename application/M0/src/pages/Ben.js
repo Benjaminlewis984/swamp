@@ -22,7 +22,6 @@ const Ben = () => {
             </div>
             <p id='name' class="ben-text">Benjamin Lewis</p>
         
-        
         </div>
         <img class="profile" src={BenImage} />
 
