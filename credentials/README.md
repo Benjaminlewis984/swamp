@@ -22,10 +22,11 @@ Database Port: 3306
 5. Database username: teach
 6. Database password: teach
 7. Database name: Database
-  Instructions: 
-    Navigate to /csc648-fa20-team04/credentails/mysql_keys
-    Use the following command: mysql -uroot -p -h 35.247.83.230 --ssl-ca=server-ca.pem --ssl-cert=client-cert.pem --ssl-key=client-key.pem
-    When prompted, enter "teach" as the password
+  - Instructions: 
+    - Navigate to /csc648-fa20-team04/credentails/mysql_keys
+    - Use the following command: 
+        - mysql -uroot -p -h 35.247.83.230 --ssl-ca=server-ca.pem --ssl-cert=client-cert.pem --ssl-key=client-key.pem
+    - When prompted, enter "teach" as the password
 
 # Most important things to Remember
 ## These values need to kept update to date throughout the semester. <br>
