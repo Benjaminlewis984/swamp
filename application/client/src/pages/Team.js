@@ -1,13 +1,7 @@
 import React from 'react';
 import { Switch, Route, Link } from "react-router-dom";
 
-import ben from "../imgs/BenImage.jpg";
-import dang from "../imgs/dang.jpg";
-import will from "../imgs/william.jpg";
-import joe from "../imgs/Joe.jpg";
-import onu from "../imgs/Onu.jpeg";
-import kevin from "../imgs/kevin.jpg";
-
+// Import pages as components
 import Ben from './Ben';
 import Dang from './Dang';
 import William from './William';
@@ -15,6 +9,13 @@ import Joe from './Joe';
 import Onu from './Onu';
 import Kevin from './Kevin';
 
+// Import profile pictures
+import ben from "../imgs/BenImage.jpg";
+import dang from "../imgs/dang.jpg";
+import will from "../imgs/william.jpg";
+import joe from "../imgs/Joe.jpg";
+import onu from "../imgs/Onu.jpg";
+import kevin from "../imgs/kevin.jpg";
 
 const Team = () => {
   return (

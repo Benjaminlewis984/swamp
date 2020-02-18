@@ -16,12 +16,8 @@ const App = () => {
     <div className="App">
       <BrowserRouter>
         <div className="nav-bar">
-          <div>
             <Link to="/">Home</Link>
-          </div>
-          <div>
             <Link to="/about">About</Link>
-          </div>
         </div>
         <Switch>
           <Route exact path="/" component={Home} />

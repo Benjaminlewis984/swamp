@@ -1,5 +1,5 @@
 import React from 'react';
-import onu from "../imgs/Onu.jpeg";
+import onu from "../imgs/Onu.jpg";
 
 const Onu = () => {
     return (
