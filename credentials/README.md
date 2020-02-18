@@ -15,12 +15,17 @@ Server IP: 3.132.216.71
     3a. Use the command `ssh -i credentials/teachkey teach@<ip_address>` . The path given assumes that you are in the home directory of the project folder. Adjust accordingly. <br>
     3b. If there is a warning stating that the permissions are too open use the command `chmod 600 credentials/teachkey` . This is necessary if you are downloading the file for the first time.
     <br> If a ssh key is used please upload the key to the credentials folder.
+
 4. Database URL or IP and port used.
-    <br><strong> NOTE THIS DOES NOT MEAN YOUR DATABASE NEEDS A PUBLIC FACING PORT.</strong> But knowing the IP and port number will help with SSH tunneling into the database. The default port is more than sufficient for this class.
-5. Database username
-6. Database password
-7. Database name (basically the name that contains all your tables)
-8. Instructions on how to use the above information.
+Database IP: 35.247.83.230
+Database Port: 3306
+5. Database username: teach
+6. Database password: teach
+7. Database name: Database
+  Instructions: 
+    Navigate to /csc648-fa20-team04/credentails/mysql_keys
+    Use the following command: mysql -uroot -p -h 35.247.83.230 --ssl-ca=server-ca.pem --ssl-cert=client-cert.pem --ssl-key=client-key.pem
+    When prompted, enter "teach" as the password
 
 # Most important things to Remember
 ## These values need to kept update to date throughout the semester. <br>
