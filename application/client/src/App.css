@@ -30,11 +30,37 @@
 
 .nav-bar a{
   padding: 5px;
-  display: inline-block;
+  display: inline-flex;
 }
 
 .profile {
   border-radius: 50%;
-  width: 260px;
-  height: 260px;
+  width: 220px;
+  height: 220px;
+}
+
+.container {
+  align-content: center;
+  display: inline-block;
+}
+
+.team-box {
+ display: inline-flex;
+}
+
+h2 {
+  text-decoration: underline;
+}
+
+td {
+  padding: 20px;
+}
+
+.title {
+  font-style: italic;
+}
+
+.box-lim{
+  max-width:500px;
+  display: inline-block;
 }
