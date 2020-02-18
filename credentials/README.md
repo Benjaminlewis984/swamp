@@ -16,8 +16,8 @@ Server IP: 3.132.216.71
     3b. If there is a warning stating that the permissions are too open use the command `chmod 600 credentials/teachkey` . This is necessary if you are downloading the file for the first time.
     <br> If a ssh key is used please upload the key to the credentials folder.
 
-4. Database URL or IP and port used.
-Database IP: 35.247.83.230
+4. Database IP and port used. <br>
+Database IP: 35.247.83.230 <br>
 Database Port: 3306
 5. Database username: teach
 6. Database password: teach
