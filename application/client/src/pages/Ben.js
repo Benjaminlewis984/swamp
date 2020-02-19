@@ -8,7 +8,6 @@ const Ben = () => {
     return (
     <body bgcolor="white">
         <div>
-            <noscript>You need to enable JavaScript to run this app.</noscript>
             <div class="linkedIn" target="_blank">
                 <a href="https://www.linkedin.com/in/benjamin-lewis984/" target="_blank">
                 <img src={linkedIn} alt="LinkedIn_logo" width="35px" href="https://www.linkedin.com/in/benjamin-lewis984/"></img>
@@ -17,10 +16,7 @@ const Ben = () => {
             <p>
                 <img src={sf_logo} alt="sf-logo" class="sf-image" />
             </p>
-            <div class="glow">
-                <h1 id="aboutme" class="about-me-text">ABOUT ME</h1>
-            </div>
-            <p id='name' class="ben-text">Benjamin Lewis</p>
+            <p class="ben-text" >Benjamin Lewis</p>
         
         </div>
         <img class="profile" src={BenImage} />
