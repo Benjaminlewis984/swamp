@@ -19,9 +19,9 @@ Server IP: 3.132.216.71
 4. Database IP and port used. <br>
 Database IP: 35.247.83.230 <br>
 Database Port: 3306
-5. Database username: teach
+5. Database username: root
 6. Database password: teach
-7. Database name: Database
+7. Database name: test_database
   - Instructions (<strong>requires mysql-client</strong>): 
     - Navigate to /csc648-fa20-team04/credentails/mysql_keys
     - Use the following command: 
