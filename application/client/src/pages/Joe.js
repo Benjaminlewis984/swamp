@@ -13,7 +13,7 @@ const Joe = () => {
                 <p>I've been living in the U.S for 15 years (approximately)</p>
                 <p>I was pursueing Register Nurse degree but found out that it's not right
                     for me so I changed it to be computer science since it attracts me so much in
-                    tern of excitement and joys when I can create something.
+                    term of excitement and joys when I can create something.
                 </p>
                 <p> On top of it, if i can solve/fix something, it gives me happiness and joys to my life!!!</p>
                 <p>-Hobby-</p>
