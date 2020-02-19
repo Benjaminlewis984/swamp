@@ -43,12 +43,13 @@
     color: rgb(108, 0, 197); 
     opacity: .9;
     text-shadow: 1px 1px yellow;
+    line-height: normal;
     font-size:25px;
     padding-top: 10px;
-    margin-left: 50px;
-    padding-left: 50px;
-    margin-right: 50px;
-    padding-right: 50px;
+    margin-left: 200px;
+    padding-left: 200px;
+    margin-right: 200px;
+    padding-right: 200px;
     flex-direction: column;
     justify-content: left;
     text-align: left;
