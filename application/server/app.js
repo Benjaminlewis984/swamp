@@ -1,3 +1,13 @@
+var mysql = require('mysql')
+var connection = mysql.createConnection({
+	host: '35.247.83.230',
+	user: 'root',
+	password: 'teach',
+	database: 'test_database'
+})
+
+connection.connect();
+
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
