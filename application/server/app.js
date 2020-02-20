@@ -1,6 +1,6 @@
 var databaseManager = require('./database-manager.js');
 databaseManager.connect();
-databaseManager.setDatabase("test_database");
+databaseManager.setDatabase("swamp");
 databaseManager.queryDatabase("SHOW DATABASES;");
 
 var createError = require('http-errors');
