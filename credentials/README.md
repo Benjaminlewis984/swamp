@@ -21,7 +21,7 @@ Database IP: 35.247.83.230 <br>
 Database Port: 3306
 5. Database username: root
 6. Database password: teach
-7. Database name: test_database
+7. Database name: swamp
   - Instructions (<strong>requires mysql-client</strong>): 
     - Navigate to /csc648-fa20-team04/credentails/mysql_keys
     - Use the following command: 
