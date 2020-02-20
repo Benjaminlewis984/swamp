@@ -2,9 +2,6 @@ var databaseManager = require('./database/database-manager.js');
 databaseManager.connect();
 
 var userManager = require('./database/user-manager.js');
-userManager.getUser("WilliamLewwwA", (result) => {
-	console.log(result);
-});
 
 var createError = require('http-errors');
 var express = require('express');

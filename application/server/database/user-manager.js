@@ -5,6 +5,11 @@ exports.addUser = (username, password, email) => {
 	databaseManager.queryDatabase("INSERT INTO users(username, password, email) VALUES " + queryString, (result) => {});
 }
 
+exports.deleteUser = (username) => {
+	var queryString = "'" + username + "';";
+	databaseManager.queryDatabase("DELETE FROM users WHERE username = " + queryString, (result) => {});
+}
+
 exports.getUser = (username, action) => {
 	var queryString = "'" + username + "');";
 	databaseManager.queryDatabase("SELECT EXISTS(SELECT * FROM users WHERE username = " + queryString, (existsResult) => {
@@ -20,7 +25,8 @@ exports.getUser = (username, action) => {
 	});
 }
 
-exports.deleteUser = (username) => {
-	var queryString = "'" + username + "';";
-	databaseManager.queryDatabase("DELETE FROM users WHERE username = " + queryString, (result) => {});
+exports.updateUserPassword = (username, password) => {
+	var usernameQueryString = "'" + username + "';";
+	var passwordQueryString = "'" + password + "'";
+	databaseManager.queryDatabase("UPDATE users SET password = " + passwordQueryString + " WHERE username = " + usernameQueryString, (result) => {});
 }
