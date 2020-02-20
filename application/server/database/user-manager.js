@@ -14,6 +14,9 @@ exports.getUser = (username, action) => {
 				action(userResult);
 			});
 		}
+		else {
+			action(undefined);
+		}
 	});
 }
 
