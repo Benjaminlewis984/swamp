@@ -14,15 +14,24 @@ exports.connect = () => {
 	});
 }
 
-exports.manageDatabase = (database) => {
-	connection.changeUser({database: database}, (error) => {
-		if (error) throw error;
-	});
-}
-
 exports.end = () => {
 	connection.end((error) => {
 		if (error) throw error;
 		console.log("closed connection");
+	});
+}
+
+exports.setDatabase = (database) => {
+	connection.changeUser({database: database}, (error) => {
+		if (error) throw error;
+		console.log("set database to: " + database);
+	});
+}
+
+exports.queryDatabase = (query) => {
+	connection.query(query, (error, result) => {
+		if (error) throw error;
+		console.log("query results...");
+		console.log(result);
 	});
 }
