@@ -1,7 +1,5 @@
 var databaseManager = require('./database-manager.js');
-databaseManager.connect();
-databaseManager.setDatabase("swamp");
-databaseManager.queryDatabase("SHOW DATABASES;");
+var userManager = require('./user-manager.js');
 
 var createError = require('http-errors');
 var express = require('express');

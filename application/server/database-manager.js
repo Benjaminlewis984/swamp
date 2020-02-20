@@ -4,6 +4,7 @@ var connectionInformation = {
 	host: '35.247.83.230',
 	user: 'root',
 	password: 'teach',
+	database: 'swamp'
 };
 var connection = mysql.createConnection(connectionInformation);
 
@@ -18,13 +19,6 @@ exports.end = () => {
 	connection.end((error) => {
 		if (error) throw error;
 		console.log("closed connection");
-	});
-}
-
-exports.setDatabase = (database) => {
-	connection.changeUser({database: database}, (error) => {
-		if (error) throw error;
-		console.log("set database to: " + database);
 	});
 }
 
