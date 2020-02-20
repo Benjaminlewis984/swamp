@@ -9,7 +9,7 @@
 
 1. Server URL or IP <br>
 Server URL: ec2-3-132-216-71.us-east-2.compute.amazonaws.com <br>
-Server IP: 3.132.216.71
+Server IP: 3.19.215.120
 2. SSH username: teach
 3. SSH password or key: teach <br>
     3a. Use the command `ssh -i credentials/teachkey teach@<ip_address>` . The path given assumes that you are in the home directory of the project folder. Adjust accordingly. <br>
