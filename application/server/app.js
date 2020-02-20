@@ -1,5 +1,5 @@
-var database = require('./database.js');
-database.connect();
+var databaseManager = require('./database-manager.js');
+databaseManager.connect();
 
 var createError = require('http-errors');
 var express = require('express');
