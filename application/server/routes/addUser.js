@@ -8,7 +8,7 @@ router.get('/addUser/:username/:password/:email', function(req, res, next) {
   var password = req.params.password;
   var email = req.params.email;
   
-  if (username == username.replace(/[^a-z0-9]/gi,'') && email == email.replace(/[^a-z0-9@.]/gi,'')) {
+  if (username == username.replace(/[^A-Za-z0-9]/gi,'') && email == email.replace(/[^A-Za-z0-9]*@mail\.sfsu\.edu/gi,'')) {
       userManager.getUserFromUsername(username, (usernameResult) => {
       if (usernameResult == undefined) {
         userManager.getUserFromEmail(email, (emailResult) => {
