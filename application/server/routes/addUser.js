@@ -2,13 +2,12 @@ var userManager = require('../database/user-manager.js');
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/addUser/:username/:password/:email', function(req, res, next) {
-  var username = req.params.username;
-  var password = req.params.password;
-  var email = req.params.email;
-  
-  if (username == username.replace(/[^A-Za-z0-9]/gi,'') && email == email.replace(/[^A-Za-z0-9@.]/gi,'')) {
+router.post('/addUser', (req, res) => {
+  var username = req.query.username;
+  var password = req.query.password;
+  var email = req.query.email;
+
+  if (username == username.replace(/[^A-Za-z0-9]/gi,'')) {
     if(/[A-Za-z0-9]*@mail\.sfsu\.edu/gi.test(email)) {
       userManager.getUserFromUsername(username, (usernameResult) => {
         if (usernameResult == undefined) {
