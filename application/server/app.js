@@ -5,9 +5,11 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var passport = require('passport');
 
 var indexRouter = require('./routes/index');
 var addUserRouter = require('./routes/addUser');
+var verifyUserRouter = require('./routes/verifyUser');
 
 var app = express();
 
@@ -19,9 +21,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(passport.initialize());
 
 app.use(indexRouter);
 app.use(addUserRouter);
+app.use(verifyUserRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
