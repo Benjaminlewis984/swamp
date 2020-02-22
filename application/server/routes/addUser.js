@@ -14,24 +14,24 @@ router.post('/addUser', (req, res) => {
           userManager.getUserFromEmail(email, (emailResult) => {
             if (emailResult == undefined) {
               userManager.addUser(username, password, email);
-              res.send("Added user!");
+              res.send("Added user");
             }
             else {
-              res.send("Email already exists!");
+              res.send("Email already exists");
             }
           });
         }
         else {
-          res.send("Username already exists!");
+          res.send("Username already exists");
         }
       });
     }
     else {
-      res.send("Invalid Email");
+      res.send("Invalid email");
     }
   }
   else {
-    res.send("Invalid information!");
+    res.send("Invalid username");
   }
 });
 
