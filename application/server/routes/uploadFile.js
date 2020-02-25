@@ -7,7 +7,11 @@ router.get('/upload', (req, res, next) => {
 });
 
 router.post('/upload', (req, res) => {
-  console.log(req.files);
+  var file = req.files.file;
+
+  file.mv('./media/raw/' + file.name, (err) => {
+    res.send('File uploaded!');
+  });
 });
 
 module.exports = router;
