@@ -7,24 +7,25 @@ var fs = require('fs');
 
 var mediaDirectory = path.join(__dirname, '../media/raw');
 
-fs.readdir(mediaDirectory, (err, files) => {
-  console.log(files);
-});
-
 router.get('/upload', (req, res, next) => {
   res.render('upload', { title: 'Upload file' });
 });
 
 router.post('/upload', (req, res) => {
-  var file = req.files.file;
+  fs.readdir(mediaDirectory, (err, files) => {
+    var fileStringList = [];
+    for (let x = 0; x < files.length; x++) {
+      fileStringList.push(files[x].substr(0, files[x].indexOf('.')));
+    }
 
-  var date = new Date();
+    var file = req.files.file;
 
-  var dateString = date.toISOString();
-  dateString = dateString.substr(0, dateString.indexOf('T'));
+    var dateString = (new Date()).toISOString();
+    dateString = dateString.substr(0, dateString.indexOf('T'));
 
-  file.mv('./media/raw/' + file.name, (err) => {
-    res.send('File uploaded!');
+    file.mv('./media/raw/' + file.name, (err) => {
+      res.send('File uploaded!');
+    });
   });
 });
 
