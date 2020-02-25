@@ -1,0 +1,11 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    h1= title
+     form(method='POST' action='/upload' encType="multipart/form-data")
+          div.form-group
+            input.form-control(type='file', name='test_file')
+          button.btn.btn-primary(type='submit') Submit
