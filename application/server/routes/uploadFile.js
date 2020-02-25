@@ -19,11 +19,17 @@ router.post('/upload', (req, res) => {
     }
 
     var file = req.files.file;
+    var fileExtension = file.name.substr(file.name.indexOf('.'));
 
     var dateString = (new Date()).toISOString();
-    dateString = dateString.substr(0, dateString.indexOf('T'));
+    dateString = dateString.substr(0, dateString.indexOf('T')) + ":";
 
-    file.mv('./media/raw/' + file.name, (err) => {
+    var fileNumber = 0;
+    while (fileStringList.indexOf(dateString + fileNumber) != -1) {
+      fileNumber += 1;
+    }
+
+    file.mv('./media/raw/' + dateString + fileNumber + fileExtension, (err) => {
       res.send('File uploaded!');
     });
   });
