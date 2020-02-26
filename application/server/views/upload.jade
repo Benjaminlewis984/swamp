@@ -7,5 +7,15 @@ html
     h1= title
      form(method='POST' action='/upload' encType="multipart/form-data")
           div.form-group
+            label(for='name') File:
             input.form-control(type='file', name='file')
+          div.form-group
+            label(for='name') Preview:
+            input.form-control(type='file', name='preview')
+          div.form-group
+            input.form-control(type='text' placeholder='title' name='title')
+          div.form-group
+            input.form-control(type='text' placeholder='description' name='description')
+          div.form-group
+            input.form-control(type='text' placeholder='category' name='category')
           button.btn.btn-primary(type='submit') Submit

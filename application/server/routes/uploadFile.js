@@ -1,4 +1,4 @@
-var userManager = require('../database/user-manager.js');
+var mediaManager = require('../database/media-manager.js');
 var express = require('express');
 var router = express.Router();
 
@@ -12,24 +12,31 @@ router.get('/upload', (req, res, next) => {
 });
 
 router.post('/upload', (req, res) => {
+  let file = req.files.file;
+  let preview = req.files.preview;
+
+  let title = req.body.title;
+  let description = req.body.description;
+  let category = req.body.category;
+
   fs.readdir(mediaDirectory, (err, files) => {
-    var fileStringList = [];
+    let fileStringList = [];
     for (let x = 0; x < files.length; x++) {
       fileStringList.push(files[x].substr(0, files[x].indexOf('.')));
     }
 
-    var file = req.files.file;
-    var fileExtension = file.name.substr(file.name.indexOf('.'));
+    let fileExtension = file.name.substr(file.name.indexOf('.'));
 
-    var dateString = (new Date()).toISOString();
+    let dateString = (new Date()).toISOString();
     dateString = dateString.substr(0, dateString.indexOf('T')) + ":";
 
-    var fileNumber = 0;
+    let fileNumber = 0;
     while (fileStringList.indexOf(dateString + fileNumber) != -1) {
       fileNumber += 1;
     }
 
     file.mv('./media/raw/' + dateString + fileNumber + fileExtension, (err) => {
+      mediaManager.addMedia(title, description, category, "default/pdf.png", "raw/" + dateString + fileNumber + fileExtension);
       res.send('File uploaded!');
     });
   });

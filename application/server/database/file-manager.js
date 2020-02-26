@@ -1,1 +1,0 @@
-var databaseManager = require('./database-manager.js');
