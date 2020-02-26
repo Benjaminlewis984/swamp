@@ -1,11 +1,11 @@
-var userManager = require('../database/user-manager.js');
 var express = require('express');
 var router = express.Router();
 
-var LocalStrategy = require('passport-local').Strategy;
 var passport = require('passport');
+var pp_config = require('../modules/passport-config');
+pp_config(passport);
 
-router.get('/login', (req, res, next) => {
+router.get('/login', alreadyAuth, (req, res, next) => {
   res.render('login', { title: 'Sign in'});
 });
   
@@ -19,30 +19,16 @@ router.post('/login', passport.authenticate('local', {
   failureRedirect: '/error'
 }));
 
-/** 
- * First checks if username is in database.
- * Then matches the password from the form to the user's password.
+/**
+ * Checks if user is already authenticated.
+ * If so, redirect to homepage, otherwise next
  */
-var userAuthentication = (username, password, done) => {
-  userManager.getUserFromUsername(username, (usernameResult) => {
-    console.log(usernameResult);
-    if(usernameResult == undefined) {
-      return done(null, false, { message: "Incorrect username"});
-    }
-    if(usernameResult[0]['password'] == password) {
-      console.log('correct');
-      return done(null, usernameResult[0]);
-    } else {
-      return done(null, false, { message: "Incorrect password"});
-    }
-  });
-};
-
-passport.use(new LocalStrategy({ 
-  usernameField: 'username',
-  passwordField: 'password'
- }, userAuthentication));
-passport.serializeUser((user, done) => { done(null, user) });
-passport.deserializeUser((id, done) => { done(nul, id) });
+function alreadyAuth(req, res, next) {
+  if(req.isAuthenticated()) {
+    res.redirect('/');
+  } else {
+    return next();
+  }
+}
 
 module.exports = router;

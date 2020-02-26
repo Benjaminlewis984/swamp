@@ -2,7 +2,7 @@ var userManager = require('../database/user-manager.js');
 var express = require('express');
 var router = express.Router();
 
-router.get('/register', (req, res, next) => {
+router.get('/register', alreadyAuth, (req, res, next) => {
   res.render('register', { title: 'Sign up' });
 });
 
@@ -18,27 +18,39 @@ router.post('/register', (req, res, next) => {
           userManager.getUserFromEmail(email, (emailResult) => {
             if (emailResult == undefined) {
               userManager.addUser(username, password, email);
-              //res.send("Added user");
-              res.redirect('/login');
+              res.send("Added user");
+              //res.redirect('/login');
             }
             else {
-              //res.send("Email already exists");
+              res.send("Email already exists");
             }
           });
         }
         else {
-          //res.send("Username already exists");
+          res.send("Username already exists");
         }
       });
     }
     else {
-      //res.send("Invalid email");
+      res.send("Invalid email");
     }
   }
   else {
-    //res.send("Invalid username");
+    res.send("Invalid username");
   }
-  res.redirect('/error');
+  //res.redirect('/error');
 });
+
+/**
+ * Checks if user is already authenticated.
+ * If so, redirect to homepage, otherwise next
+ */
+function alreadyAuth(req, res, next) {
+  if(req.isAuthenticated()) {
+    res.redirect('/');
+  } else {
+    return next();
+  }
+}
 
 module.exports = router;

@@ -6,6 +6,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var passport = require('passport');
+var session = require('express-session');
 var fileUpload = require('express-fileupload');
 
 var indexRouter = require('./routes/index');
@@ -19,11 +20,18 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(session({
+  secret: 'very hyper super duper long random string',
+  resave: false,
+  saveUninitialized: false
+}));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
+app.use(passport.session());
 app.use(fileUpload());
 
 app.use(indexRouter);
