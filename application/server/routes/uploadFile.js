@@ -17,7 +17,6 @@ router.post('/upload', (req, res) => {
 
   let title = req.body.title;
   let description = req.body.description;
-  let category = req.body.category;
 
   fs.readdir(mediaDirectory, (err, files) => {
     let fileStringList = [];
@@ -36,7 +35,7 @@ router.post('/upload', (req, res) => {
     }
 
     file.mv('./media/raw/' + dateString + fileNumber + fileExtension, (err) => {
-      mediaManager.addMedia(title, description, category, "default/pdf.png", "raw/" + dateString + fileNumber + fileExtension);
+      mediaManager.addMedia(title, description, "default/pdf.png", "raw/" + dateString + fileNumber + fileExtension);
       res.send('File uploaded!');
     });
   });
