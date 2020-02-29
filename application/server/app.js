@@ -14,6 +14,7 @@ var addUserRouter = require('./routes/addUser');
 var verifyUserRouter = require('./routes/verifyUser');
 var uploadFileRouter = require('./routes/uploadFile');
 var signOutRouter = require('./routes/signOut');
+var banUserRouter = require('./routes/banUser');
 
 var app = express();
 
@@ -39,7 +40,8 @@ app.use(indexRouter);
 app.use(addUserRouter);
 app.use(verifyUserRouter);
 app.use(uploadFileRouter);
-app.use(signOutRouter)
+app.use(signOutRouter);
+app.use(banUserRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

@@ -10,6 +10,9 @@ function pp_config(passport) {
   var userAuthentication = (username, password, done) => {
     userManager.getUserFromUsername(username, (usernameResult) => {
       console.log(usernameResult);
+      if(usernameResult[0]['privilege'] == 'banned') {
+        return done(null, false, {message: "User is banned"});
+      }
       if(usernameResult == undefined) {
         return done(null, false, { message: "Incorrect username"});
       }

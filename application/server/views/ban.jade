@@ -1,0 +1,12 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    h1= title
+     form(method='POST' action='/ban')
+          div.form-group
+            label(for='name') Ban Username:
+            input#name.form-control(type='text', placeholder='first and last' name='username')
+          button.btn.btn-primary(type='submit') Ban
