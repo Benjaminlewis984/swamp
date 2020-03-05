@@ -17,6 +17,7 @@ router.post('/upload', (req, res) => {
 
   let title = req.body.title;
   let description = req.body.description;
+  let category = req.body.category;
 
   fs.readdir(mediaDirectory, (err, files) => {
     let fileStringList = [];
@@ -25,6 +26,7 @@ router.post('/upload', (req, res) => {
     }
 
     let fileExtension = file.name.substr(file.name.indexOf('.'));
+    let previewExtension = preview.name.substr(preview.name.indexOf('.'));
 
     let dateString = (new Date()).toISOString();
     dateString = dateString.substr(0, dateString.indexOf('T')) + ":";
@@ -34,9 +36,27 @@ router.post('/upload', (req, res) => {
       fileNumber += 1;
     }
 
-    file.mv('./media/raw/' + dateString + fileNumber + fileExtension, (err) => {
-      mediaManager.addMedia(title, description, "default/pdf.png", "raw/" + dateString + fileNumber + fileExtension);
-      res.send('File uploaded!');
+    let previewPath = "";
+    if (preview === undefined) {
+      previewPath = "default/" + category + ".png";
+    }
+    else {
+      previewPath = "preview/" + dateString + fileNumber + previewExtension;
+    }
+
+    let rawPath = "raw/" + dateString + fileNumber + fileExtension;
+
+    file.mv('./media/' + rawPath, (err) => {
+      if (previewPath.substr(0, 8) == "preview/") {
+        preview.mv('./media/' + previewPath, (err) => {
+          mediaManager.addMedia(title, description, previewPath, rawPath, category);
+          res.send('File uploaded!');
+        });
+      }
+      else {
+        mediaManager.addMedia(title, description, previewPath, rawPath, category);
+        res.send('File uploaded!');
+      }
     });
   });
 });
