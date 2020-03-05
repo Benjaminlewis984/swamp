@@ -1,0 +1,12 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/style.css')
+  body
+    h1= title
+    for results in result
+     tr.odd(role='row')
+       td #{results.id}
+       td #{results.description}
+       td #{results.status}

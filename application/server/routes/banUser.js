@@ -8,20 +8,15 @@ router.get('/ban', checkAuthAdmin, (req, res, next) => {
 
 router.post('/ban', (req, res, next) => {
   let username = req.body.username;
-  if(req.user.privilege == 'admin') {
-    userManager.getUserFromUsername(username, (usernameResult) => {
-      if(usernameResult != undefined && usernameResult[0]['privilege'] == 'user') {
-        userManager.updateUserPrivilege(username, "banned");
-        console.log('banned user');
-        res.redirect('/')
-      } else {
-        res.send("Failed to ban user");
-      }
-    })
-  } else {
-    console.log('failed');
-    res.redirect('/');
-  }
+  userManager.getUserFromUsername(username, (usernameResult) => {
+    if(usernameResult != undefined && usernameResult[0]['privilege'] == 'user') {
+      userManager.updateUserPrivilege(username, "banned");
+      console.log('banned user');
+      res.redirect('/')
+    } else {
+      res.send("Failed to ban user");
+    }
+  });
 });
 /**
  * Checks if user is already authenticated.

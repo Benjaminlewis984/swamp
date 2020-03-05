@@ -19,3 +19,16 @@ exports.rejectMedia = (title) => {
   var queryTitle = "'" + title + "';";
   databaseManager.queryDatabase("UPDATE media SET status = 'rejected' WHERE title = " + queryTitle, (result) => {});
 }
+
+exports.getMediaFromStatus = (status, action) => {
+  databaseManager.queryDatabase(`SELECT COUNT(*) FROM media WHERE status = '${status}';`, (count) => {
+    console.log(count);
+    if(count[0]['COUNT(*)'] > 0) {
+      databaseManager.queryDatabase(`SELECT * FROM media WHERE status = '${status}';`, (result) => {
+        action(result);
+      });
+    } else {
+      action(undefined);
+    }
+  });
+}
