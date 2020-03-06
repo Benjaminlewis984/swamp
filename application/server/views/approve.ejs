@@ -11,8 +11,8 @@
         <th>ID</th>
         <th>Title</th>
         <th>Description</th>
-        <th>Raw Path</th>
-        <th>Preview Path</th>
+        <th>Raw File</th>
+        <th>Preview File</th>
         <th>Status</th>
       </tr>
 <% result.forEach(function(obj){ %>
@@ -20,8 +20,16 @@
         <td><%=obj.id%></td>
         <td><%=obj.title%></td>
         <td><%=obj.description%></td>
-        <td><%=obj.raw_path%></td>
-        <td><%=obj.preview_path%></td>
+        <td>
+          <form action="/download" method="post" style="display: inline-block;">
+            <button type="submit" name="name" value="<%=obj.raw_path%>">Download Raw</button>
+          </form>
+        </td>
+        <td>
+          <form action="/download" method="post" style="display: inline-block;">
+            <button type="submit" name="name" value="<%=obj.preview_path%>">Download Preview</button>
+          </form>
+        </td>
         <td><%=obj.status%></td>
       </tr>
       <%})%>
