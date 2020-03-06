@@ -33,7 +33,7 @@ app.use(session({
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'media/preview')));
+app.use(express.static(path.join(__dirname, 'media')));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(fileUpload());
