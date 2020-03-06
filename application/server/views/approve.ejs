@@ -6,17 +6,25 @@
   </head>
   <body>
     <h1>Approve</h1>
-    <table id='table'>
-      <%=
-        for (let x = 0; x < result.length; x++) {
-          console.log(x);
-        }
-      %>
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Raw Path</th>
+        <th>Preview Path</th>
+        <th>Status</th>
+      </tr>
+<% result.forEach(function(obj){ %>
+      <tr>
+        <td><%=obj.id%></td>
+        <td><%=obj.title%></td>
+        <td><%=obj.description%></td>
+        <td><%=obj.raw_path%></td>
+        <td><%=obj.preview_path%></td>
+        <td><%=obj.status%></td>
+      </tr>
+      <%})%>
     </table>
-<!--     for results in result
-     tr.odd(role='row')
-       td #{results.id}
-       td #{results.description}
-       td #{results.status} -->
   </body>
 </html>
