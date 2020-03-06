@@ -22,12 +22,12 @@
         <td><%=obj.description%></td>
         <td>
           <form action="/download" method="post" style="display: inline-block;">
-            <button type="submit" name="name" value="<%=obj.raw_path%>">Download Raw</button>
+            <button type="submit" name="path" value="<%=obj.raw_path%>">Download Raw</button>
           </form>
         </td>
         <td>
           <form action="/download" method="post" style="display: inline-block;">
-            <button type="submit" name="name" value="<%=obj.preview_path%>">Download Preview</button>
+            <button type="submit" name="path" value="<%=obj.preview_path%>">Download Preview</button>
           </form>
         </td>
         <td><%=obj.status%></td>

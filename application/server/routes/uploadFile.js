@@ -5,7 +5,7 @@ var router = express.Router();
 var path = require('path');
 var fs = require('fs');
 
-var mediaDirectory = path.join(__dirname, '../media/raw');
+var mediaRawDirectory = path.join(__dirname, '../media/raw');
 
 router.get('/upload', (req, res, next) => {
   res.render('upload', { title: 'Upload file' });
@@ -19,7 +19,7 @@ router.post('/upload', (req, res) => {
   let description = req.body.description;
   let category = req.body.category;
 
-  fs.readdir(mediaDirectory, (err, files) => {
+  fs.readdir(mediaRawDirectory, (err, files) => {
     let fileStringList = [];
     for (let x = 0; x < files.length; x++) {
       fileStringList.push(files[x].substr(0, files[x].indexOf('.')));
