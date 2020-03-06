@@ -12,7 +12,7 @@
         <th>Title</th>
         <th>Description</th>
         <th>Raw File</th>
-        <th>Preview File</th>
+        <th>Preview Image</th>
         <th>Status</th>
       </tr>
 <% result.forEach(function(obj){ %>
@@ -26,9 +26,7 @@
           </form>
         </td>
         <td>
-          <form action="/download" method="post" style="display: inline-block;">
-            <button type="submit" name="path" value="<%=obj.preview_path%>">Download Preview</button>
-          </form>
+           <img src="<%=obj.preview_path%>" style="width: 100px; height: 100px;"> 
         </td>
         <td><%=obj.status%></td>
       </tr>
