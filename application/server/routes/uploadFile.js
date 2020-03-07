@@ -5,11 +5,20 @@ var router = express.Router();
 var path = require('path');
 var fs = require('fs');
 
-var mediaDirectory = path.join(__dirname, '../media/raw');
+var mediaRawDirectory = path.join(__dirname, '../media/raw');
 
-router.get('/upload', (req, res, next) => {
+router.get('/upload', checkAuthUser, (req, res, next) => {
   res.render('upload', { title: 'Upload file' });
 });
+
+function checkAuthUser(req, res, next) {
+  if(req.isAuthenticated()) {
+    if(req.user !== undefined) {
+      return next();
+    }
+  }
+  res.redirect('/login');
+}
 
 router.post('/upload', (req, res) => {
 
@@ -24,14 +33,13 @@ router.post('/upload', (req, res) => {
   let description = req.body.description;
   let category = req.body.category;
 
-  fs.readdir(mediaDirectory, (err, files) => {
+  fs.readdir(mediaRawDirectory, (err, files) => {
     let fileStringList = [];
     for (let x = 0; x < files.length; x++) {
       fileStringList.push(files[x].substr(0, files[x].indexOf('.')));
     }
 
     let fileExtension = file.name.substr(file.name.indexOf('.'));
-    let previewExtension = preview.name.substr(preview.name.indexOf('.'));
 
     let dateString = (new Date()).toISOString();
     dateString = dateString.substr(0, dateString.indexOf('T')) + ":";
@@ -46,6 +54,7 @@ router.post('/upload', (req, res) => {
       previewPath = "default/" + category + ".png";
     }
     else {
+      let previewExtension = preview.name.substr(preview.name.indexOf('.'));
       previewPath = "preview/" + dateString + fileNumber + previewExtension;
     }
 
@@ -54,12 +63,12 @@ router.post('/upload', (req, res) => {
     file.mv('./media/' + rawPath, (err) => {
       if (previewPath.substr(0, 8) == "preview/") {
         preview.mv('./media/' + previewPath, (err) => {
-          mediaManager.addMedia(title, description, previewPath, rawPath, category);
+          mediaManager.addMedia(req.user.id, title, description, previewPath, rawPath, category);
           res.send('File uploaded!');
         });
       }
       else {
-        mediaManager.addMedia(title, description, previewPath, rawPath, category);
+        mediaManager.addMedia(req.user.id, title, description, previewPath, rawPath, category);
         res.send('File uploaded!');
       }
     });

@@ -8,8 +8,7 @@
 # Below is a list of items required. Missing items will causes points to be deducted from multiple milestone submissions.
 
 1. Server URL or IP <br>
-Server URL: ec2-3-132-216-71.us-east-2.compute.amazonaws.com <br>
-Server IP: 3.132.216.71
+Server URL: http://18.223.182.101:3000/
 2. SSH username: teach
 3. SSH password or key: teach <br>
     3a. Use the command `ssh -i credentials/teachkey teach@<ip_address>` . The path given assumes that you are in the home directory of the project folder. Adjust accordingly. <br>
