@@ -12,6 +12,11 @@ router.get('/upload', (req, res, next) => {
 });
 
 router.post('/upload', (req, res) => {
+
+  if(!req.isAuthenticated()) {
+    res.redirect('/register')
+  }
+
   let file = req.files.file;
   let preview = req.files.preview;
 

@@ -32,3 +32,7 @@ exports.getMediaFromStatus = (status, action) => {
     }
   });
 }
+
+exports.deleteRejectedMedia = () => {
+  databaseManager.queryDatabase(`DELETE FROM media WHERE status = 'rejected'`);
+}
