@@ -25,7 +25,7 @@ router.post('/login', passport.authenticate('local', {
  */
 function alreadyAuth(req, res, next) {
   if(req.isAuthenticated()) {
-    console.log(req.user);
+    // console.log(req.user);
     res.redirect('/');
   } else {
     return next();

@@ -25,7 +25,7 @@ exports.end = () => {
 exports.queryDatabase = (query, action) => {
 	connection.query(query, (error, result) => {
 		if (error) throw error;
-		console.log("query: " + query);
+		// console.log("query: " + query);
 
 		action(result);
 	});

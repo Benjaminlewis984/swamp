@@ -48,6 +48,21 @@ exports.getUserFromEmail = (email, action) => {
   });
 }
 
+exports.getUserFromID = (id, action) => {
+  var queryString = "'" + id + "');";
+  databaseManager.queryDatabase("SELECT EXISTS(SELECT * FROM users WHERE id = " + queryString, (existsResult) => {
+    if (Object.values(existsResult[0])[0] == 1) {
+      queryString = "'" + id + "';";
+      databaseManager.queryDatabase("SELECT * FROM users WHERE id = " + queryString, (userResult) => {
+        action(userResult);
+      });
+    }
+    else {
+      action(undefined);
+    }
+  });
+}
+
 exports.updateUserPassword = (username, password) => {
 	var usernameQueryString = "'" + username + "';";
 	var passwordQueryString = "'" + password + "'";

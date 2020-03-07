@@ -1,13 +1,22 @@
 var mediaManager = require('../database/media-manager.js');
+var userManager = require('../database/user-manager.js');
 var express = require('express');
 var router = express.Router();
 
 router.get('/approve', checkAuthAdmin, (req, res, next) => {
-  mediaManager.getMediaFromStatus("pending", (result) => {
-    if(result == undefined) {
+  mediaManager.getMediaFromStatus("pending", (results) => {
+    if(results == undefined) {
       res.send("No media is pending for approval");
     } else {
-      res.render('approve', {result: result});
+      results.forEach((result, idx) => {
+        userManager.getUserFromID(result.author_id, (user) => {
+          result["author_username"] = user[0].username;
+
+          if (idx == results.length - 1) {
+            res.render('approve', {results: results});
+          }
+        });
+      });
     }
   });
 });

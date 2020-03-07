@@ -9,7 +9,7 @@ var LocalStrategy = require('passport-local').Strategy;
 function pp_config(passport) {
   var userAuthentication = (username, password, done) => {
     userManager.getUserFromUsername(username, (usernameResult) => {
-      console.log(usernameResult);
+      // console.log(usernameResult);
       if(usernameResult[0]['privilege'] == 'banned') {
         return done(null, false, {message: "User is banned"});
       }
