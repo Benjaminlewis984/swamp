@@ -1,8 +1,8 @@
 var databaseManager = require('./database-manager.js');
 
-exports.addMedia = (title, description, preview_path, raw_path, category) => {
-  var queryString = "('" + title + "', '" + description + "', '" + preview_path + "', '" + raw_path + "', '" + category + "');";
-  databaseManager.queryDatabase("INSERT INTO media(title, description, preview_path, raw_path, category) VALUES " + queryString, (result) => {});
+exports.addMedia = (author_id, title, description, preview_path, raw_path, category) => {
+  var queryString = "('" + author_id + "', '" + title + "', '" + description + "', '" + preview_path + "', '" + raw_path + "', '" + category + "');";
+  databaseManager.queryDatabase("INSERT INTO media(author_id, title, description, preview_path, raw_path, category) VALUES " + queryString, (result) => {});
 }
 
 exports.deleteMedia = (title) => {

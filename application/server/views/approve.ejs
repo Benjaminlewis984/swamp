@@ -9,6 +9,7 @@
     <table width="100%">
       <tr>
         <th>ID</th>
+        <th>Author</th>
         <th>Title</th>
         <th>Description</th>
         <th>Raw File</th>
@@ -19,6 +20,7 @@
 <% result.forEach(function(obj){ %>
       <tr>
         <td style="text-align:center"><%=obj.id%></td>
+        <td style="text-align:center"><%=obj.author_id%></td>
         <td style="text-align:center"><%=obj.title%></td>
         <td style="text-align:center"><%=obj.description%></td>
         <td style="text-align:center">
@@ -27,7 +29,7 @@
           </form>
         </td>
         <td style="text-align:center">
-           <img src="<%=obj.preview_path.substr(obj.preview_path.indexOf('/') + 1)%>" style="width: 100px; height: 100px;"> 
+           <img src="<%=obj.preview_path.substr((obj.preview_path.indexOf('/') + 1) * (obj.preview_path.indexOf('default/') != 0));%>" style="width: 100px; height: 100px;"> 
         </td>
         <td style="text-align:center"><%=obj.status%></td>
         <td style="text-align:center">
