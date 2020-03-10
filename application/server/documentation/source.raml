@@ -2,3 +2,63 @@
 ---
 title: Swamp Backend Documentation
 
+/register:
+  get:
+    description: Renders the register page
+  post:
+    description: Create a user on the database
+    queryParameters:
+      username:
+        displayName: Username
+        type: string
+        description:
+        required: true
+      email:
+        displayName: Email
+        type: string
+        description:
+        required: true
+      password:
+        displayName: Password
+        type: string
+        description:
+        required: true
+    responses:
+      200:
+        description: Sends a message on success
+      400:
+        description: Sends a message on fail
+
+/approve:
+  get:
+    description: Renders the approve page
+  post:
+    description: Approve media on the database
+    queryParameters:
+      id:
+        displayName: id
+        type: int
+        description: 
+        required: true
+
+/reject:
+  post:
+    description: Reject media on the database
+    queryParameters:
+      id:
+        displayName: id
+        type: int
+        description: 
+        required: true
+
+/ban:
+  get:
+    description: Renders the ban page
+  post:
+    description: Ban a user on the database
+    queryParameters:
+      username:
+        displayName: Username
+        type: string
+        description:
+        required: true
