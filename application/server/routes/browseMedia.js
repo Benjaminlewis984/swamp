@@ -25,7 +25,8 @@ router.post('/browse', (req, res, next) => {
           result["author_username"] = user[0].username;
 
           if (idx == results.length - 1) {
-            res.render('browse', {results: results});
+            res.status(200);
+            res.send({results: results, category: "all"});
           }
         });
       });
@@ -38,7 +39,8 @@ router.post('/browse', (req, res, next) => {
           result["author_username"] = user[0].username;
 
           if (idx == results.length - 1) {
-            res.render('browse', {results: results});
+            res.status(200);
+            res.send({results: results, category: req.body.category});
           }
         });
       });
