@@ -6,13 +6,16 @@
   </head>
   <body>
     <h1>Index</h1>
-    <a href="/login">login</a>
-    <br>
-    <a href="/register">register</a>
+    <% if (user !== undefined) { %>
+      <br>
+      <a href="/logout">logout</a>
+    <% } else { %>
+      <a href="/login">login</a>
+      <br>
+      <a href="/register">register</a>
+    <% } %>
     <br>
     <a href="/upload">upload</a>
-    <br>
-    <a href="/logout">logout</a>
     <br>
     <a href="/ban">ban</a>
     <br>
