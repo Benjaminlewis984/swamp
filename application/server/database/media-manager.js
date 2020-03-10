@@ -44,3 +44,11 @@ exports.getMediaApproved = (count, offset, action) => {
     action(result);
   });
 }
+
+exports.getMediaApprovedCategory = (count, offset, category, action) => {
+  var queryString = category + "\' " + "LIMIT " + count + " OFFSET " + offset + ";";
+
+  databaseManager.queryDatabase('SELECT * FROM media WHERE status = \'approved\' AND category = \'' + queryString, (result) => {
+    action(result);
+  });
+}
