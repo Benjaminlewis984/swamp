@@ -3,17 +3,14 @@ var userManager = require('../database/user-manager.js');
 var express = require('express');
 var router = express.Router();
 
-router.get('/browse', (req, res, next) => {
-  mediaManager.getMediaApproved(25, 0, (results) => {
-    results.forEach((result, idx) => {
-      userManager.getUserFromID(result.author_id, (user) => {
-        result["author_username"] = user[0].username;
+var request = require('request');
 
-        if (idx == results.length - 1) {
-          res.render('browse', {results: results});
-        }
-      });
-    });
+router.get('/browse', (req, res, next) => {
+  if (req.query.category === undefined) {
+    req.query.category = 'all';
+  }
+  request.post('http://0.0.0.0:3001/browse', {json: req.query}, (error, response, body) => {
+    res.render('browse', {results: body.results});
   });
 });
 
