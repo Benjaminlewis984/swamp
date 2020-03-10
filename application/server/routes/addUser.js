@@ -25,28 +25,28 @@ router.post('/register', async (req, res, next) => {
             if (emailResult == undefined) {
               userManager.addUser(username, hash_pass, email);
               res.status(200);
-              res.send("Added user");
+              res.send({success: 'true'});
             }
             else {
               res.status(400);
-              res.send("Email already exists");
+              res.send({success: 'false', reason: 'email already exists'});
             }
           });
         }
         else {
           res.status(400);
-          res.send("Username already exists");
+          res.send({success: 'false', reason: 'username already exists'});
         }
       });
     }
     else {
       res.status(400);
-      res.send("Invalid email");
+      res.send({success: 'false', reason: 'invalid email'});
     }
   }
   else {
     res.status(400);
-    res.send("Invalid username");
+    res.send({success: 'false', reason: 'invalid username'});
   }
 });
 

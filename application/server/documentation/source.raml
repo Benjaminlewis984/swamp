@@ -26,8 +26,21 @@ title: Swamp Backend Documentation
     responses:
       200:
         description: User successfully added to database
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
+              }
       400:
         description: Failed to add user to database
+        body:
+          application/json:
+            example: |
+              {
+                "success": false,
+                "reason": "email already exists"
+              }
 
 /approve:
   get:
