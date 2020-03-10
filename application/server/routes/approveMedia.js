@@ -23,12 +23,14 @@ router.get('/approve', checkAuthAdmin, (req, res, next) => {
 
 router.post('/approve', (req, res, next) => {
   mediaManager.approveMedia(req.body.id);
-  res.redirect('/approve')
+  res.status(200);
+  res.send('Approved media')
 });
 
 router.post('/reject', (req, res, next) => {
   mediaManager.rejectMedia(req.body.id);
-  res.redirect('/approve')
+  res.status(400);
+  res.send('Rejected media')
 });
 
 /**

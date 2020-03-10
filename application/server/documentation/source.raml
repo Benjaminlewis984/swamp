@@ -25,9 +25,9 @@ title: Swamp Backend Documentation
         required: true
     responses:
       200:
-        description: Sends a message on success
+        description: User successfully added to database
       400:
-        description: Sends a message on fail
+        description: Failed to add user to database
 
 /approve:
   get:
@@ -40,6 +40,9 @@ title: Swamp Backend Documentation
         type: int
         description: 
         required: true
+    responses:
+      200:
+        description: Media successfully approved
 
 /reject:
   post:
@@ -50,6 +53,9 @@ title: Swamp Backend Documentation
         type: int
         description: 
         required: true
+    responses:
+      200:
+        description: Media successfully rejected
 
 /ban:
   get:
@@ -62,3 +68,8 @@ title: Swamp Backend Documentation
         type: string
         description:
         required: true
+    responses:
+      200:
+        description: User successfully banned
+      400:
+        description: Failed to ban user
