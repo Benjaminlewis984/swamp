@@ -22,7 +22,6 @@ exports.rejectMedia = (id) => {
 
 exports.getMediaFromStatus = (status, action) => {
   databaseManager.queryDatabase(`SELECT COUNT(*) FROM media WHERE status = '${status}';`, (count) => {
-    // console.log(count);
     if(count[0]['COUNT(*)'] > 0) {
       databaseManager.queryDatabase(`SELECT * FROM media WHERE status = '${status}';`, (result) => {
         action(result);
