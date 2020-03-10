@@ -56,6 +56,12 @@ title: Swamp Backend Documentation
     responses:
       200:
         description: Media successfully approved
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
+              }
 
 /reject:
   post:
@@ -69,6 +75,12 @@ title: Swamp Backend Documentation
     responses:
       200:
         description: Media successfully rejected
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
+              }
 
 /ban:
   get:
@@ -84,5 +96,17 @@ title: Swamp Backend Documentation
     responses:
       200:
         description: User successfully banned
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
+              }
       400:
         description: Failed to ban user
+        body:
+          application/json:
+            example: |
+              {
+                "success": false,
+              }

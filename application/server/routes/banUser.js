@@ -12,10 +12,10 @@ router.post('/ban', (req, res, next) => {
     if(usernameResult != undefined && usernameResult[0]['privilege'] == 'user') {
       userManager.updateUserPrivilege(username, "banned");
       res.status(200);
-      res.send("Banned user");
+      res.send({success: "true"});
     } else {
       res.status(400);
-      res.send("Failed to ban user");
+      res.send({success: "false"});
     }
   });
 });
