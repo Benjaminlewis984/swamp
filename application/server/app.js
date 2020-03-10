@@ -18,6 +18,7 @@ var banUserRouter = require('./routes/banUser');
 var approveMediaRouter = require('./routes/approveMedia');
 var downloadMediaRouter = require('./routes/downloadMedia');
 var browseMediaRouter = require('./routes/browseMedia');
+var documentationRouter = require('./routes/documentation');
 
 var app = express();
 
@@ -48,6 +49,7 @@ app.use(banUserRouter);
 app.use(approveMediaRouter);
 app.use(downloadMediaRouter);
 app.use(browseMediaRouter);
+app.use(documentationRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
