@@ -17,6 +17,7 @@ var signOutRouter = require('./routes/signOut');
 var banUserRouter = require('./routes/banUser');
 var approveMediaRouter = require('./routes/approveMedia');
 var downloadMediaRouter = require('./routes/downloadMedia');
+var browseMediaRouter = require('./routes/browseMedia');
 
 var app = express();
 
@@ -46,6 +47,7 @@ app.use(signOutRouter);
 app.use(banUserRouter);
 app.use(approveMediaRouter);
 app.use(downloadMediaRouter);
+app.use(browseMediaRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
