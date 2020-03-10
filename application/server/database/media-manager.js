@@ -10,14 +10,14 @@ exports.deleteMedia = (title) => {
   databaseManager.queryDatabase("DELETE FROM media WHERE title = " + queryString, (result) => {});
 }
 
-exports.approveMedia = (title) => {
-  var queryTitle = "'" + title + "';";
-  databaseManager.queryDatabase("UPDATE media SET status = 'approved' WHERE title = " + queryTitle, (result) => {});
+exports.approveMedia = (id) => {
+  var queryTitle = "'" + id + "';";
+  databaseManager.queryDatabase("UPDATE media SET status = 'approved' WHERE id = " + queryTitle, (result) => {});
 }
 
-exports.rejectMedia = (title) => {
-  var queryTitle = "'" + title + "';";
-  databaseManager.queryDatabase("UPDATE media SET status = 'rejected' WHERE title = " + queryTitle, (result) => {});
+exports.rejectMedia = (id) => {
+  var queryTitle = "'" + id + "';";
+  databaseManager.queryDatabase("UPDATE media SET status = 'rejected' WHERE id = " + queryTitle, (result) => {});
 }
 
 exports.getMediaFromStatus = (status, action) => {
@@ -35,4 +35,12 @@ exports.getMediaFromStatus = (status, action) => {
 
 exports.deleteRejectedMedia = () => {
   databaseManager.queryDatabase(`DELETE FROM media WHERE status = 'rejected'`);
+}
+
+exports.getMediaApproved = (count, offset, action) => {
+  var queryString = "LIMIT " + count + " OFFSET " + offset + ";";
+
+  databaseManager.queryDatabase('SELECT * FROM media WHERE status = \'approved\' ' + queryString, (result) => {
+    action(result);
+  });
 }

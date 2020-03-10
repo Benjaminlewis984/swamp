@@ -3,7 +3,10 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/browse', (req, res, next) => {
-  res.render('browse');
+  mediaManager.getMediaApproved(25, 0, (results) => {
+    res.render('browse', {results: results});
+    console.log(results);
+  });
 });
 
 module.exports = router;

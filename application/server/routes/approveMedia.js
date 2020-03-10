@@ -22,8 +22,15 @@ router.get('/approve', checkAuthAdmin, (req, res, next) => {
 });
 
 router.post('/approve', (req, res, next) => {
-  
+  mediaManager.approveMedia(req.body.id);
+  res.redirect('/approve')
 });
+
+router.post('/reject', (req, res, next) => {
+  mediaManager.rejectMedia(req.body.id);
+  res.redirect('/approve')
+});
+
 /**
  * Checks if user is already authenticated.
  * If so, redirect to homepage, otherwise next
