@@ -1,6 +1,6 @@
-var userManager = require('../database/user-manager.js');
-var LocalStrategy = require('passport-local').Strategy;
-
+const userManager = require('../database/user-manager.js');
+const LocalStrategy = require('passport-local').Strategy;
+const bcrypt = require('bcrypt');
 
 /** 
  * First checks if username is in database.
@@ -8,7 +8,7 @@ var LocalStrategy = require('passport-local').Strategy;
  */
 function pp_config(passport) {
   var userAuthentication = (username, password, done) => {
-    userManager.getUserFromUsername(username, (usernameResult) => {
+    userManager.getUserFromUsername(username, async (usernameResult) => {
       // console.log(usernameResult);
       if(usernameResult[0]['privilege'] == 'banned') {
         return done(null, false, {message: "User is banned"});
@@ -16,7 +16,7 @@ function pp_config(passport) {
       if(usernameResult == undefined) {
         return done(null, false, { message: "Incorrect username"});
       }
-      if(usernameResult[0]['password'] == password) {
+      if(await bcrypt.compare(password, usernameResult[0]['password'])) {
         return done(null, usernameResult[0]);
       } else {
         return done(null, false, { message: "Incorrect password"});

@@ -1,15 +1,20 @@
 var userManager = require('../database/user-manager.js');
 var express = require('express');
 var router = express.Router();
+const bcrypt = require('bcrypt');
 
 router.get('/register', alreadyAuth, (req, res, next) => {
   res.render('register', { title: 'Sign up' });
 });
 
-router.post('/register', (req, res, next) => {
+router.post('/register', async (req, res, next) => {
   let username = req.body.username;
-  let password = req.body.password;
   let email = req.body.email;
+  try {
+    var hash_pass = await bcrypt.hash(req.body.password, 10);
+  } catch {
+    res.send("error");
+  }
 
   if (username == username.replace(/[^A-Za-z0-9]/gi,'')) {
     if(/[A-Za-z0-9]*@mail\.sfsu\.edu/gi.test(email)) {
@@ -17,7 +22,7 @@ router.post('/register', (req, res, next) => {
         if (usernameResult == undefined) {
           userManager.getUserFromEmail(email, (emailResult) => {
             if (emailResult == undefined) {
-              userManager.addUser(username, password, email);
+              userManager.addUser(username, hash_pass, email);
               res.send("Added user");
               //res.redirect('/login');
             }
