@@ -14,10 +14,10 @@ router.get('/login', alreadyAuth, (req, res, next) => {
  * If user is in database, redirects to home page.
  * Else, redirects to error page.
  */
-router.post('/login', passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/error'
-}));
+router.post('/login', passport.authenticate('local'), (req, res, next) => {
+  res.status(200);
+  res.send({success: "true"});
+});
 
 /**
  * Checks if user is already authenticated.
