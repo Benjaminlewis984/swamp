@@ -11,12 +11,12 @@ title: Swamp backend
       username:
         displayName: Username
         type: string
-        description:
+        description: Must be alpha-numeric
         required: true
       email:
         displayName: Email
         type: string
-        description:
+        description: must contain the postfix "@mail.sfsu.edu"
         required: true
       password:
         displayName: Password
@@ -51,7 +51,7 @@ title: Swamp backend
       id:
         displayName: id
         type: int
-        description: 
+        description: media primary key
         required: true
     responses:
       200:
@@ -70,7 +70,7 @@ title: Swamp backend
       id:
         displayName: id
         type: int
-        description: 
+        description: media primary key
         required: true
     responses:
       200:
@@ -120,7 +120,7 @@ title: Swamp backend
       category:
         displayName: Category
         type: string
-        description:
+        description: can be "all", "document", "image", "video", or "audio"
         required: true
     responses:
       200:
