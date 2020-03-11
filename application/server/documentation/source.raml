@@ -213,12 +213,12 @@ title: Swamp backend
         type: string
         description: can be "document", "image", "video", or "audio"
         required: true
-        responses:
-    200:
-      description: Successfully uploaded media
-      body:
-        application/json:
-          example: |
-            {
-              "success": true,
-            }
+    responses:
+      200:
+        description: Successfully uploaded media
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
+              }
