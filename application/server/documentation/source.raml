@@ -129,6 +129,8 @@ title: Swamp backend
           application/json:
             example: |
               {
+                "success": true,
+                "category":"audio",
                 "results": 
                 [
                   {
@@ -153,6 +155,31 @@ title: Swamp backend
                     "status":"approved",
                     "author_username":"kevin"
                   }
-                ],
-                "category":"audio"
+                ]
+              }
+
+/download:
+  post:
+    description: Download raw data file
+    queryParameters:
+      path:
+        displayName: Path
+        type: string
+        description: the relative path of the file from the media directory
+        required: true
+    responses:
+      200:
+        description: File be available for download on success
+
+/logout:
+  post:
+    description: Logout from the website
+    responses:
+      200:
+        description: User has successfully logged out
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
               }

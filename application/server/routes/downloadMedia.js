@@ -8,6 +8,7 @@ var mediaDirectory = path.join(__dirname, '../media/');
 
 router.post('/download', checkAuthAdmin, (req, res, next) => {
   const file = mediaDirectory + req.body.path;
+  res.status(200);
   res.download(file);
 });
 

@@ -8,7 +8,8 @@ pp_config(passport);
 router.get('/logout', checkAuth, (req, res, next) => {
   req.session.destroy((err) => {
     req.logout();
-    res.redirect('/');
+    req.status(200);
+    res.send({success: "true"});
   });
 });
 

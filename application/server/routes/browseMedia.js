@@ -23,7 +23,7 @@ router.post('/browse', (req, res, next) => {
 
           if (idx == results.length - 1) {
             res.status(200);
-            res.send({results: results, category: "all"});
+            res.send({success: true, category: "all", results: results});
           }
         });
       });
