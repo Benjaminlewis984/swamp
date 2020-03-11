@@ -183,3 +183,42 @@ title: Swamp backend
               {
                 "success": true,
               }
+
+/upload:
+  post:
+    description: Upload file to filesystem and create a logical definition on database
+    queryParameters:
+      file:
+        displayName: File
+        type: file
+        description: raw data to be uploaded to file system
+        required: true
+      preview:
+        displayName: Preview
+        type: file
+        description: image preview that will be shown on the store page
+        required: false
+      title:
+        displayName: Title
+        type: string
+        description:
+        required: true
+      description:
+        displayName: Description
+        type: string
+        description:
+        required: true
+      category:
+        displayName: Category
+        type: string
+        description: can be "document", "image", "video", or "audio"
+        required: true
+        responses:
+    200:
+      description: Successfully uploaded media
+      body:
+        application/json:
+          example: |
+            {
+              "success": true,
+            }

@@ -21,7 +21,6 @@ function checkAuthUser(req, res, next) {
 }
 
 router.post('/upload', (req, res) => {
-
   if(!req.isAuthenticated()) {
     res.redirect('/register')
   }
@@ -64,12 +63,14 @@ router.post('/upload', (req, res) => {
       if (previewPath.substr(0, 8) == "preview/") {
         preview.mv('./media/' + previewPath, (err) => {
           mediaManager.addMedia(req.user.id, title, description, previewPath, rawPath, category);
-          res.send('File uploaded!');
+          res.status(200);
+          res.send({success: "true"});
         });
       }
       else {
         mediaManager.addMedia(req.user.id, title, description, previewPath, rawPath, category);
-        res.send('File uploaded!');
+        res.status(200);
+        res.send({success: "true"});
       }
     });
   });
