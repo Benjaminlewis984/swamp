@@ -25,8 +25,7 @@ router.get('/login', alreadyAuth, (req, res, next) => {
  */
 router.post('/login', passport.authenticate('local'), (req, res, next) => {
   res.status(200);
-  res.redirect('/');
-  //res.send({success: "true", user: req.user});
+  res.send({success: "true", user: req.user});
 });
 
 /**
