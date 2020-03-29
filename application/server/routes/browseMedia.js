@@ -6,8 +6,9 @@ var router = express.Router();
 var request = require('request');
 
 router.get('/browse', (req, res, next) => {
-  if (req.query.category === undefined) {
-    req.query.category = 'all';
+  let category = req.body.category;
+  if (category === undefined) {
+    category = 'all';
   }
   request.post('http://0.0.0.0:3001/browse', {json: req.query}, (error, response, body) => {
     res.render('browse', {results: body.results});
@@ -15,7 +16,10 @@ router.get('/browse', (req, res, next) => {
 });
 
 router.post('/browse', (req, res, next) => {
-  if (req.body.category == 'all') {
+  let category = req.body.category;
+  let search = req.body.search;
+
+  if (category == 'all') {
     mediaManager.getMediaApproved(25, 0, (results) => {
       results.forEach((result, idx) => {
         userManager.getUserFromID(result.author_id, (user) => {
@@ -30,14 +34,14 @@ router.post('/browse', (req, res, next) => {
     });
   }
   else {
-    mediaManager.getMediaApprovedCategory(25, 0, req.body.category, (results) => {
+    mediaManager.getMediaApprovedCategory(25, 0, category, (results) => {
       results.forEach((result, idx) => {
         userManager.getUserFromID(result.author_id, (user) => {
           result["author_username"] = user[0].username;
 
           if (idx == results.length - 1) {
             res.status(200);
-            res.send({results: results, category: req.body.category});
+            res.send({results: results, category: category});
           }
         });
       });
