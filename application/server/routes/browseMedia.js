@@ -18,12 +18,12 @@ router.get('/browse', (req, res, next) => {
 router.post('/browse', (req, res, next) => {
   let category = req.body.category;
   let search = req.body.search;
-
+  
   if (category == 'all') { category = undefined; }
-  if (search.length == 0) { search = undefined; }
+  if (search == '') { search = undefined; }
 
   filter = { status: 'approved', category: category, title: search };
-
+  
   mediaManager.getMediaFilter(25, 0, filter, (results) => {
     results.forEach((result, idx) => {
       userManager.getUserFromID(result.author_id, (user) => {
