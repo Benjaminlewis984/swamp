@@ -19,34 +19,23 @@ router.post('/browse', (req, res, next) => {
   let category = req.body.category;
   let search = req.body.search;
 
-  if (category == 'all') {
-    mediaManager.getMediaApproved(25, 0, (results) => {
-      results.forEach((result, idx) => {
-        userManager.getUserFromID(result.author_id, (user) => {
-          result["author_username"] = user[0].username;
+  if (category == 'all') { category = undefined; }
+  if (search.length == 0) { search = undefined; }
 
-          if (idx == results.length - 1) {
-            res.status(200);
-            res.send({success: true, category: "all", results: results});
-          }
-        });
+  filter = { status: 'approved', category: category, title: search };
+
+  mediaManager.getMediaFilter(25, 0, filter, (results) => {
+    results.forEach((result, idx) => {
+      userManager.getUserFromID(result.author_id, (user) => {
+        result["author_username"] = user[0].username;
+
+        if (idx == results.length - 1) {
+          res.status(200);
+          res.send({success: true, filter: filter, results: results});
+        }
       });
     });
-  }
-  else {
-    mediaManager.getMediaApprovedCategory(25, 0, category, (results) => {
-      results.forEach((result, idx) => {
-        userManager.getUserFromID(result.author_id, (user) => {
-          result["author_username"] = user[0].username;
-
-          if (idx == results.length - 1) {
-            res.status(200);
-            res.send({results: results, category: category});
-          }
-        });
-      });
-    });
-  }
+  });
 });
 
 module.exports = router;

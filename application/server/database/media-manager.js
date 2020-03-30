@@ -36,18 +36,36 @@ exports.deleteRejectedMedia = () => {
   databaseManager.queryDatabase(`DELETE FROM media WHERE status = 'rejected'`);
 }
 
-exports.getMediaApproved = (count, offset, action) => {
-  var queryString = "LIMIT " + count + " OFFSET " + offset + ";";
+exports.getMediaFilter = (count, offset, filter, action) => {
+  var queryString = "SELECT * FROM media ";
 
-  databaseManager.queryDatabase('SELECT * FROM media WHERE status = \'approved\' ' + queryString, (result) => {
-    action(result);
-  });
-}
+  if (filter.status !== undefined || filter.category !== undefined || filter.title !== undefined) {
+    queryString += "WHERE ";
+  }
 
-exports.getMediaApprovedCategory = (count, offset, category, action) => {
-  var queryString = category + "\' " + "LIMIT " + count + " OFFSET " + offset + ";";
+  if (filter.status !== undefined) {
+    queryString += "status = \'" + filter.status + "\' ";
+  }
 
-  databaseManager.queryDatabase('SELECT * FROM media WHERE status = \'approved\' AND category = \'' + queryString, (result) => {
+  if (filter.category !== undefined) {
+    if (filter.status !== undefined) {
+      queryString += "AND ";
+    }
+
+    queryString += "category = \'" + filter.category + "\' ";
+  }
+
+  if (filter.title !== undefined) {
+    if (filter.status !== undefined || filter.category !== undefined) {
+      queryString += "AND ";
+    }
+
+    queryString += "title = \'" + filter.title + "\' ";
+  }
+
+  queryString += "LIMIT " + count + " OFFSET " + offset + ";";
+
+  databaseManager.queryDatabase(queryString, (result) => {
     action(result);
   });
 }
