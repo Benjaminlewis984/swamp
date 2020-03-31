@@ -122,6 +122,11 @@ title: Swamp backend
         type: string
         description: can be "all", "document", "image", "video", or "audio"
         required: true
+      search:
+        displayName: Search
+        type: string
+        description: used to find media with a specific title/description
+        required: true
     responses:
       200:
         description: Media successfully fetched
