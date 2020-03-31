@@ -227,3 +227,28 @@ title: Swamp backend
               {
                 "success": true,
               }
+
+/login:
+  get:
+    description: Renders the login page
+  post:
+    description: Login to the website
+    queryParameters:
+      username:
+        displayName: Username
+        type: string
+        required: true
+      password:
+        displayName: Password
+        type: string
+        required: true
+    responses:
+      200:
+        description: Successfully logged in
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
+                "user": USER_INFORMATION
+              }
