@@ -10,6 +10,7 @@ import Joe from './pages/Joe';
 import Kevin from './pages/Kevin';
 import Ben from './pages/Ben';
 import Onu from './pages/Onu';
+import Browse from './pages/Browse';
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
       <BrowserRouter>
         <div className="nav-bar">
             <Link to="/">Home</Link>
+            <Link to="/browse">Browse</Link>
             <Link to="/about">About</Link>
         </div>
         <Switch>
@@ -28,6 +30,7 @@ const App = () => {
           <Route exact path="/kevin" component={Kevin} />
           <Route exact path="/ben" component={Ben} />
           <Route exact path="/onu" component={Onu} />
+          <Route exact path="/browse" component={Browse} />
         </Switch>
       </BrowserRouter>
     </div>
