@@ -50,7 +50,7 @@ router.post('/upload', (req, res) => {
 
     let previewPath = "";
     if (preview === undefined) {
-      previewPath = "default/" + category + ".png";
+      previewPath = "preview/default/" + category + ".png";
     }
     else {
       let previewExtension = preview.name.substr(preview.name.indexOf('.'));
@@ -60,7 +60,7 @@ router.post('/upload', (req, res) => {
     let rawPath = "raw/" + dateString + fileNumber + fileExtension;
 
     file.mv('./media/' + rawPath, (err) => {
-      if (previewPath.substr(0, 8) == "preview/") {
+      if (previewPath.substr(0, 16) != "preview/default/") {
         preview.mv('./media/' + previewPath, (err) => {
           mediaManager.addMedia(req.user.id, title, description, previewPath, rawPath, category);
           res.status(200);
