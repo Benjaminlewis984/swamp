@@ -1,6 +1,7 @@
 var databaseManager = require('./database/database-manager.js');
 databaseManager.connect();
 
+var cors = require("cors");
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -32,6 +33,7 @@ app.use(session({
   saveUninitialized: false
 }));
 
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
