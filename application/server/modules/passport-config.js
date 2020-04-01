@@ -1,6 +1,6 @@
 const userManager = require('../database/user-manager.js');
 const LocalStrategy = require('passport-local').Strategy;
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 /** 
  * First checks if username is in database.

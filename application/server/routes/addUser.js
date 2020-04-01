@@ -1,7 +1,7 @@
 var userManager = require('../database/user-manager.js');
 var express = require('express');
 var router = express.Router();
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 router.get('/register', alreadyAuth, (req, res, next) => {
   res.render('register', { title: 'Sign up' });
