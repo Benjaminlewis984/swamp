@@ -10,7 +10,6 @@ import Joe from './pages/Joe';
 import Kevin from './pages/Kevin';
 import Ben from './pages/Ben';
 import Onu from './pages/Onu';
-import Browse from './pages/Browse';
 
 const App = () => {
   return (
