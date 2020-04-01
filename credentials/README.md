@@ -8,8 +8,7 @@
 # Below is a list of items required. Missing items will causes points to be deducted from multiple milestone submissions.
 
 1. Server URL or IP <br>
-Server URL: ec2-3-132-216-71.us-east-2.compute.amazonaws.com <br>
-Server IP: 3.132.216.71
+Server URL: http://18.223.182.101:3000/
 2. SSH username: teach
 3. SSH password or key: teach <br>
     3a. Use the command `ssh -i credentials/teachkey teach@<ip_address>` . The path given assumes that you are in the home directory of the project folder. Adjust accordingly. <br>
@@ -17,16 +16,15 @@ Server IP: 3.132.216.71
     <br> If a ssh key is used please upload the key to the credentials folder.
 
 4. Database IP and port used. <br>
-Database IP: 35.247.83.230 <br>
+Database Endpoint: swamp-database-instance.c7yirp5jbhfm.us-east-2.rds.amazonaws.com <br>
 Database Port: 3306
-5. Database username: root
-6. Database password: teach
+5. Database username: admin
+6. Database password: 1vFhxpUjr0vof3KErgPi
 7. Database name: swamp
   - Instructions (<strong>requires mysql-client</strong>): 
-    - Navigate to /csc648-fa20-team04/credentails/mysql_keys
     - Use the following command: 
-        - mysql -uroot -p -h 35.247.83.230 --ssl-ca=server-ca.pem --ssl-cert=client-cert.pem --ssl-key=client-key.pem
-    - When prompted, enter "teach" as the password
+        - mysql -h swamp-database-instance.c7yirp5jbhfm.us-east-2.rds.amazonaws.com -P 3306 -u admin -p
+    - When prompted, enter "1vFhxpUjr0vof3KErgPi" as the password
 
 # Most important things to Remember
 ## These values need to kept update to date throughout the semester. <br>
