@@ -18,7 +18,6 @@ const App = () => {
       <BrowserRouter>
         <div className="nav-bar">
             <Link to="/">Home</Link>
-            <Link to="/browse">Browse</Link>
             <Link to="/about">About</Link>
         </div>
         <Switch>
@@ -30,7 +29,6 @@ const App = () => {
           <Route exact path="/kevin" component={Kevin} />
           <Route exact path="/ben" component={Ben} />
           <Route exact path="/onu" component={Onu} />
-          <Route exact path="/browse" component={Browse} />
         </Switch>
       </BrowserRouter>
     </div>
