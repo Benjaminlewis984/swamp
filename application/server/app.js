@@ -10,6 +10,7 @@ var passport = require('passport');
 var session = require('express-session');
 var fileUpload = require('express-fileupload');
 
+app.use(cors());
 var indexRouter = require('./routes/index');
 var addUserRouter = require('./routes/addUser');
 var verifyUserRouter = require('./routes/verifyUser');
@@ -33,7 +34,6 @@ app.use(session({
   saveUninitialized: false
 }));
 
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
