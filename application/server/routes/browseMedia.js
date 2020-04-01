@@ -25,16 +25,22 @@ router.post('/browse', (req, res, next) => {
   filter = { status: 'approved', category: category, title: search };
   
   mediaManager.getMediaFilter(25, 0, filter, (results) => {
-    results.forEach((result, idx) => {
-      userManager.getUserFromID(result.author_id, (user) => {
-        result["author_username"] = user[0].username;
+    if (results.length == 0) {
+      res.status(400);
+      res.send({success: true, filter: filter, results: results});
+    }
+    else {
+      results.forEach((result, idx) => {
+        userManager.getUserFromID(result.author_id, (user) => {
+          result["author_username"] = user[0].username;
 
-        if (idx == results.length - 1) {
-          res.status(200);
-          res.send({success: true, filter: filter, results: results});
-        }
+          if (idx == results.length - 1) {
+            res.status(200);
+            res.send({success: true, filter: filter, results: results});
+          }
+        });
       });
-    });
+    }
   });
 });
 
