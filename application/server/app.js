@@ -10,7 +10,9 @@ var passport = require('passport');
 var session = require('express-session');
 var fileUpload = require('express-fileupload');
 
+var app = express();
 app.use(cors());
+
 var indexRouter = require('./routes/index');
 var addUserRouter = require('./routes/addUser');
 var verifyUserRouter = require('./routes/verifyUser');
@@ -21,8 +23,6 @@ var approveMediaRouter = require('./routes/approveMedia');
 var downloadMediaRouter = require('./routes/downloadMedia');
 var browseMediaRouter = require('./routes/browseMedia');
 var documentationRouter = require('./routes/documentation');
-
-var app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
