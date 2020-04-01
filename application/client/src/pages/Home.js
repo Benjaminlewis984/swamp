@@ -29,13 +29,13 @@ const Home = () => {
       <h1>swamp.</h1>
       <Input type='text' value={query} onChange={e => setQuery(e.target.value)} placeholder='Search by title..' />
       <button onClick={searchByTitle}>Search</button>
-      <Table id='results' display='none'>
-        <tr class='results th'>
+      <Table id='results' display="none">
+        <th class='results th'>
           <td>Title</td>
           <td>Description</td>
           <td>Category</td>
           <td>Preview</td>
-        </tr>
+        </th>
             {result.map(items =>
               <tr>
                 <td>{items.title}</td>
