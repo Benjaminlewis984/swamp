@@ -11,7 +11,7 @@ const Home = () => {
   const searchByTitle = () => {
     console.log('Button click')
 
-    axios.post('http://localhost:3001/browse', {
+    axios.post('http://18.191.184.143:3001/browse', {
       category: 'all',
       search: query,
     }).then((res) => {
