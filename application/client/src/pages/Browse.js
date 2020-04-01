@@ -24,7 +24,15 @@ const Browse = () => {
       <h1>Browse</h1>
       <Input type='text' value={query} onChange={e=>setQuery(e.target.value)} placeholder='Search by title..' />
       <button onClick={searchByTitle}>Search</button>
-      <h2>{result[0]}</h2>
+      <h2>
+        {result.map(items =>
+          <tr>
+            <td>{items.title}</td>
+            <td>{items.description}</td>
+            <td>{items.category}</td>
+            <td> <img src={`http://localhost:3001/${items.preview_path}`}></img></td> 
+          </tr>)}
+      </h2>
     </div>
   );
 };
