@@ -9,6 +9,7 @@
   border-collapse: collapse;
   border: 3px solid #ddd;
   width: 100%;
+  display: none
 }
 
 #results td, #results th {
