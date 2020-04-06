@@ -41,7 +41,7 @@ const Home = () => {
                 <td>{items.title}</td>
                 <td>{items.description}</td>
                 <td>{items.category}</td>
-                <td> <img src={`http://localhost:3001/${items.preview_path}`}></img></td>
+                <td> <img src={`http://18.191.184.143:3001/${items.preview_path}`}></img></td>
               </tr>)}
       </Table>
     </div>
