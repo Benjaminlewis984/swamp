@@ -1,5 +1,5 @@
-var mediaManager = require('../database/media-manager.js');
-var userManager = require('../database/user-manager.js');
+var mediaManager = require('../../database/media-manager.js');
+var userManager = require('../../database/user-manager.js');
 var express = require('express');
 var router = express.Router();
 

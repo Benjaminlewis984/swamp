@@ -14,14 +14,14 @@ var app = express();
 app.use(cors());
 
 var indexRouter = require('./routes/index');
-var addUserRouter = require('./routes/addUser');
-var verifyUserRouter = require('./routes/verifyUser');
-var uploadFileRouter = require('./routes/uploadFile');
-var signOutRouter = require('./routes/signOut');
-var banUserRouter = require('./routes/banUser');
-var approveMediaRouter = require('./routes/approveMedia');
-var downloadMediaRouter = require('./routes/downloadMedia');
-var browseMediaRouter = require('./routes/browseMedia');
+var addUserRouter = require('./routes/Users/addUser');
+var verifyUserRouter = require('./routes/Users/verifyUser');
+var uploadFileRouter = require('./routes/Media/uploadFile');
+var signOutRouter = require('./routes/Users/signOut');
+var banUserRouter = require('./routes/Users/banUser');
+var approveMediaRouter = require('./routes/Media/approveMedia');
+var downloadMediaRouter = require('./routes/Media/downloadMedia');
+var browseMediaRouter = require('./routes/Media/browseMedia');
 var documentationRouter = require('./routes/documentation');
 
 // view engine setup

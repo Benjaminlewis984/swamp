@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var passport = require('passport');
-var pp_config = require('../modules/passport-config');
+var pp_config = require('../../modules/passport-config');
 pp_config(passport);
 
 var request = require('request');

@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var passport = require('passport');
-var pp_config = require('../modules/passport-config');
+var pp_config = require('../../modules/passport-config');
 pp_config(passport);
 
 router.get('/logout', checkAuth, (req, res, next) => {
