@@ -1,9 +1,10 @@
-var mediaManager = require('../../database/media-manager.js');
-var userManager = require('../../database/user-manager.js');
-var express = require('express');
-var router = express.Router();
+const mediaManager = require('../../database/media-manager.js');
+const userManager = require('../../database/user-manager.js');
+const express = require('express');
+const router = express.Router();
+const passport_config = require('../../modules/passport-config.js')
 
-router.get('/approve', checkAuthAdmin, (req, res, next) => {
+router.get('/approve', passport_config.checkAuthAdmin, (req, res, next) => {
   mediaManager.getMediaFromStatus("pending", (results) => {
     if(results == undefined) {
       res.send("No media is pending for approval");
@@ -32,18 +33,5 @@ router.post('/reject', (req, res, next) => {
   res.status(400);
   res.send({success: "true"});
 });
-
-/**
- * Checks if user is already authenticated.
- * If so, redirect to homepage, otherwise next
- */
-function checkAuthAdmin(req, res, next) {
-  if(req.isAuthenticated()) {
-    if(req.user.privilege == 'admin') {
-      return next();
-    }
-  }
-  res.redirect('/login');
-}
 
 module.exports = router;

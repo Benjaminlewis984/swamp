@@ -1,11 +1,11 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-var passport = require('passport');
-var passport_config = require('../../modules/passport-config');
+const passport = require('passport');
+const passport_config = require('../../modules/passport-config');
 passport_config.pp_config(passport);
 
-var request = require('request');
+const request = require('request');
 
 router.get('/login', passport_config.alreadyAuth, (req, res, next) => {
   if (req.query.username != undefined) {

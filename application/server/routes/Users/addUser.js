@@ -1,9 +1,10 @@
-var userManager = require('../../database/user-manager.js');
-var express = require('express');
-var router = express.Router();
+const userManager = require('../../database/user-manager.js');
+const express = require('express');
+const router = express.Router();
 const bcrypt = require('bcryptjs');
+const passport_config = require('../../modules/passport-config.js');
 
-router.get('/register', alreadyAuth, (req, res, next) => {
+router.get('/register', passport_config.alreadyAuth, (req, res, next) => {
   res.render('register', { title: 'Sign up' });
 });
 
@@ -49,17 +50,5 @@ router.post('/register', async (req, res, next) => {
     res.send({success: 'false', reason: 'invalid username'});
   }
 });
-
-/**
- * Checks if user is already authenticated.
- * If so, redirect to homepage, otherwise next
- */
-function alreadyAuth(req, res, next) {
-  if(req.isAuthenticated()) {
-    res.redirect('/');
-  } else {
-    return next();
-  }
-}
 
 module.exports = router;

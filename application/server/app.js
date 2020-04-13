@@ -1,28 +1,28 @@
-var databaseManager = require('./database/database-manager.js');
+const databaseManager = require('./database/database-manager.js');
 databaseManager.connect();
 
-var cors = require("cors");
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var passport = require('passport');
-var session = require('express-session');
-var fileUpload = require('express-fileupload');
+const cors = require("cors");
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const passport = require('passport');
+const session = require('express-session');
+const fileUpload = require('express-fileupload');
 
-var app = express();
+const app = express();
 app.use(cors());
 
-var indexRouter = require('./routes/index');
-var addUserRouter = require('./routes/Users/addUser');
-var verifyUserRouter = require('./routes/Users/verifyUser');
-var uploadFileRouter = require('./routes/Media/uploadFile');
-var signOutRouter = require('./routes/Users/signOut');
-var banUserRouter = require('./routes/Users/banUser');
-var approveMediaRouter = require('./routes/Media/approveMedia');
-var downloadMediaRouter = require('./routes/Media/downloadMedia');
-var browseMediaRouter = require('./routes/Media/browseMedia');
-var documentationRouter = require('./routes/documentation');
+const indexRouter = require('./routes/index');
+const addUserRouter = require('./routes/Users/addUser');
+const verifyUserRouter = require('./routes/Users/verifyUser');
+const uploadFileRouter = require('./routes/Media/uploadFile');
+const signOutRouter = require('./routes/Users/signOut');
+const banUserRouter = require('./routes/Users/banUser');
+const approveMediaRouter = require('./routes/Media/approveMedia');
+const downloadMediaRouter = require('./routes/Media/downloadMedia');
+const browseMediaRouter = require('./routes/Media/browseMedia');
+const documentationRouter = require('./routes/documentation');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -1,9 +1,8 @@
-var mediaManager = require('../../database/media-manager.js');
-var userManager = require('../../database/user-manager.js');
-var express = require('express');
-var router = express.Router();
-
-var request = require('request');
+const mediaManager = require('../../database/media-manager.js');
+const userManager = require('../../database/user-manager.js');
+const express = require('express');
+const router = express.Router();
+const request = require('request');
 
 router.get('/browse', (req, res, next) => {
   let category = req.body.category;

@@ -1,8 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
-var passport = require('passport');
-var passport_config = require('../../modules/passport-config');
+const passport = require('passport');
+const passport_config = require('../../modules/passport-config');
 passport_config.pp_config(passport);
 
 router.get('/logout', passport_config.checkAuth, (req, res, next) => {

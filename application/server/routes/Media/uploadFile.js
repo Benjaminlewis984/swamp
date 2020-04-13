@@ -1,24 +1,16 @@
-var mediaManager = require('../../database/media-manager.js');
-var express = require('express');
-var router = express.Router();
+const mediaManager = require('../../database/media-manager.js');
+const express = require('express');
+const router = express.Router();
+const passport_config = require('../../modules/passport-config.js');
 
-var path = require('path');
-var fs = require('fs');
+const path = require('path');
+const fs = require('fs');
 
-var mediaRawDirectory = path.join(__dirname, '../media/raw');
+const mediaRawDirectory = path.join(__dirname, '../media/raw');
 
-router.get('/upload', checkAuthUser, (req, res, next) => {
+router.get('/upload', passport_config.checkAuthAdmin, (req, res, next) => {
   res.render('upload', { title: 'Upload file' });
 });
-
-function checkAuthUser(req, res, next) {
-  if(req.isAuthenticated()) {
-    if(req.user !== undefined) {
-      return next();
-    }
-  }
-  res.redirect('/login');
-}
 
 router.post('/upload', (req, res) => {
   if(!req.isAuthenticated()) {
