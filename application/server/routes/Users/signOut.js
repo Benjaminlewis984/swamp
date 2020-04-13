@@ -2,10 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 var passport = require('passport');
-var pp_config = require('../../modules/passport-config');
-pp_config(passport);
+var passport_config = require('../../modules/passport-config');
+passport_config.pp_config(passport);
 
-router.get('/logout', checkAuth, (req, res, next) => {
+router.get('/logout', passport_config.checkAuth, (req, res, next) => {
   req.session.destroy((err) => {
     req.logout();
     res.status(200);
@@ -17,13 +17,5 @@ router.get('/logout', checkAuth, (req, res, next) => {
  * Checks if user is already authenticated.
  * If so, redirect to homepage, otherwise next
  */
-
-function checkAuth(req, res, next) {
-  if(req.isAuthenticated()) {
-    return next();
-  } else {
-    res.redirect('/');
-  }
-}
 
 module.exports = router;

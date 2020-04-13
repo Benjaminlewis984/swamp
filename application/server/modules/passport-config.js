@@ -32,4 +32,33 @@ function pp_config(passport) {
   passport.deserializeUser((id, done) => { done(null, id); });
 }
 
-module.exports = pp_config;
+function checkAuthAdmin(req, res, next) {
+  if(req.isAuthenticated()) {
+    if(req.user.privilege == 'admin') {
+      return next();
+    }
+  }
+  res.redirect('/login');
+}
+
+function checkAuth(req, res, next) {
+  if(req.isAuthenticated()) {
+    return next();
+  } else {
+    res.redirect('/');
+  }
+}
+
+function alreadyAuth(req, res, next) {
+  if(req.isAuthenticated()) {
+    // console.log(req.user);
+    res.redirect('/');
+  } else {
+    return next();
+  }
+}
+
+module.exports.pp_config = pp_config;
+module.exports.checkAuthAdmin = checkAuthAdmin;
+module.exports.checkAuth = checkAuth;
+module.exports.alreadyAuth = alreadyAuth;

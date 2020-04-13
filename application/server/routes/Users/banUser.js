@@ -1,8 +1,9 @@
 var userManager = require('../../database/user-manager.js');
 var express = require('express');
 var router = express.Router();
+const pp_config = require('../../modules/passport-config.js');
 
-router.get('/ban', checkAuthAdmin, (req, res, next) => {
+router.get('/ban', pp_config.checkAuthAdmin, (req, res, next) => {
   res.render('ban');
 });
 
@@ -23,13 +24,5 @@ router.post('/ban', (req, res, next) => {
  * Checks if user is already authenticated.
  * If so, redirect to homepage, otherwise next
  */
-function checkAuthAdmin(req, res, next) {
-  if(req.isAuthenticated()) {
-    if(req.user.privilege == 'admin') {
-      return next();
-    }
-  }
-  res.redirect('/login');
-}
 
 module.exports = router;
