@@ -1,0 +1,254 @@
+#%RAML 1.0
+---
+title: Swamp backend
+
+/register:
+  get:
+    description: Renders the register page
+  post:
+    description: Create a user on the database
+    queryParameters:
+      username:
+        displayName: Username
+        type: string
+        description: Must be alpha-numeric
+        required: true
+      email:
+        displayName: Email
+        type: string
+        description: must contain the postfix "@mail.sfsu.edu"
+        required: true
+      password:
+        displayName: Password
+        type: string
+        description:
+        required: true
+    responses:
+      200:
+        description: User successfully added to database
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
+              }
+      400:
+        description: Failed to add user to database
+        body:
+          application/json:
+            example: |
+              {
+                "success": false,
+                "reason": "email already exists"
+              }
+
+/approve:
+  get:
+    description: Renders the approve page
+  post:
+    description: Approve media on the database
+    queryParameters:
+      id:
+        displayName: id
+        type: int
+        description: media primary key
+        required: true
+    responses:
+      200:
+        description: Media successfully approved
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
+              }
+
+/reject:
+  post:
+    description: Reject media on the database
+    queryParameters:
+      id:
+        displayName: id
+        type: int
+        description: media primary key
+        required: true
+    responses:
+      200:
+        description: Media successfully rejected
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
+              }
+
+/ban:
+  get:
+    description: Renders the ban page
+  post:
+    description: Ban a user on the database
+    queryParameters:
+      username:
+        displayName: Username
+        type: string
+        description:
+        required: true
+    responses:
+      200:
+        description: User successfully banned
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
+              }
+      400:
+        description: Failed to ban user
+        body:
+          application/json:
+            example: |
+              {
+                "success": false,
+              }
+
+/browse:
+  get:
+    description: Renders the browse page
+  post:
+    description: Get the first 25 accepted media from the given category
+    queryParameters:
+      category:
+        displayName: Category
+        type: string
+        description: can be "all", "document", "image", "video", or "audio"
+        required: true
+      search:
+        displayName: Search
+        type: string
+        description: used to find media with a specific title/description
+        required: true
+    responses:
+      200:
+        description: Media successfully fetched
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
+                "category":"audio",
+                "results": 
+                [
+                  {
+                    "id":31,
+                    "author_id":25,
+                    "title":"My Music File",
+                    "description":"This is an audio file from my class",
+                    "preview_path":"default/audio.png",
+                    "raw_path":"raw/2020-03-07:3.cu",
+                    "category":"audio",
+                    "status":"approved",
+                    "author_username":"william"
+                  },
+                  {
+                    "id":33,
+                    "author_id":25,
+                    "title":"Test File",
+                    "description":"Test Description",
+                    "preview_path":"preview/2020-03-10:1.jpg",
+                    "raw_path":"raw/2020-03-10:1.jpg",
+                    "category":"audio",
+                    "status":"approved",
+                    "author_username":"kevin"
+                  }
+                ]
+              }
+
+/download:
+  post:
+    description: Download raw data file
+    queryParameters:
+      path:
+        displayName: Path
+        type: string
+        description: the relative path of the file from the media directory
+        required: true
+    responses:
+      200:
+        description: File be available for download on success
+
+/logout:
+  post:
+    description: Logout from the website
+    responses:
+      200:
+        description: User has successfully logged out
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
+              }
+
+/upload:
+  post:
+    description: Upload file to filesystem and create a logical definition on database
+    queryParameters:
+      file:
+        displayName: File
+        type: file
+        description: raw data to be uploaded to file system
+        required: true
+      preview:
+        displayName: Preview
+        type: file
+        description: image preview that will be shown on the store page
+        required: false
+      title:
+        displayName: Title
+        type: string
+        description:
+        required: true
+      description:
+        displayName: Description
+        type: string
+        description:
+        required: true
+      category:
+        displayName: Category
+        type: string
+        description: can be "document", "image", "video", or "audio"
+        required: true
+    responses:
+      200:
+        description: Successfully uploaded media
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
+              }
+
+/login:
+  get:
+    description: Renders the login page
+  post:
+    description: Login to the website
+    queryParameters:
+      username:
+        displayName: Username
+        type: string
+        required: true
+      password:
+        displayName: Password
+        type: string
+        required: true
+    responses:
+      200:
+        description: Successfully logged in
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
+                "user": USER_INFORMATION
+              }

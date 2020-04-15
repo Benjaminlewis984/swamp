@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Index</title>
+    <link rel='stylesheet', href='/stylesheets/style.css'>
+  </head>
+  <body>
+    <h1>Index</h1>
+    <% if (user !== undefined) { %>
+      <br>
+      <a href="/logout">logout</a>
+      <br>
+      <a href="/upload">upload</a>
+    <% } else { %>
+      <a href="/login">login</a>
+      <br>
+      <a href="/register">register</a>
+    <% } %>
+    <% if (user !== undefined && user.privilege == 'admin') { %>
+      <br>
+      <a href="/ban">ban</a>
+      <br>
+      <a href="/approve">approve</a>
+    <% } %>
+    <br>
+    <a href="/browse">browse</a>
+    <br>
+    <a href="/documentation">documentation</a>
+  </body>
+</html>
