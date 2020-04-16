@@ -6,6 +6,9 @@ import * as serviceWorker from './serviceWorker';
 import { createStore } from 'redux';
 import allReducers from './reducers';
 import { Provider } from 'react-redux';
+import "./styles.css";
+
+import ValidatedLoginForm from "./ValidatedLoginForm";
 
 // Putting all reducers into the store a.k.a the root reducer
 // Also creates a new dev tool for redux as a tab from inspecting webpage
@@ -16,6 +19,7 @@ const store = createStore(allReducers,
 ReactDOM.render(
 <Provider store={store}>
 <App />
+{/* <ValidatedLoginForm /> */}
 </Provider>, 
 document.getElementById('root'));
 

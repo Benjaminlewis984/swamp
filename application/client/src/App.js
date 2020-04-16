@@ -13,6 +13,7 @@ import Onu from './pages/Onu';
 import {useSelector, useDispatch} from 'react-redux';
 import counterReducer from './reducers/counter';
 import {increment, decrement} from './actions';
+import Login from './Login';
 
 const App = () => {
   const reduxCounter = useSelector(state => state.counter);
@@ -25,6 +26,7 @@ const App = () => {
         <div className="nav-bar">
             <Link to="/">Home</Link>
             <Link to="/about">About</Link>
+            <Link to="/Login">Login</Link>
         </div>
         <Switch>
           <Route exact path="/" component={Home} />
@@ -35,14 +37,15 @@ const App = () => {
           <Route exact path="/kevin" component={Kevin} />
           <Route exact path="/ben" component={Ben} />
           <Route exact path="/onu" component={Onu} />
+          <Route exact path="/login" component={Login}/>
         </Switch>
 
-        <div className="counter">
+        {/* <div className="counter">
         <h1>Redux Counter : {reduxCounter}</h1>
         <button onClick={() => dispatch(increment())}>Increment</button>
         <button onClick={() => dispatch(decrement())}>Decrement</button>
         {isLogged ? <h2>This is something only logged in people can see</h2> : ''}
-        </div>
+        </div> */}
 
       </BrowserRouter>
     </div>
