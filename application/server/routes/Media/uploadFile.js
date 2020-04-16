@@ -6,7 +6,7 @@ const passport_config = require('../../modules/passport-config.js');
 const path = require('path');
 const fs = require('fs');
 
-const mediaRawDirectory = path.join(__dirname, '../media/raw');
+const mediaRawDirectory = path.join(__dirname, '../../media/raw');
 
 router.get('/upload', passport_config.checkAuth, (req, res, next) => {
   res.render('upload', { title: 'Upload file' });
@@ -16,13 +16,15 @@ router.post('/upload', (req, res) => {
   if(!req.isAuthenticated()) {
     res.redirect('/register')
   }
+  
   let file = req.files.file;
   let preview = req.files.preview;
+  let price = 0;
+  let academic = 0;
 
   let title = req.body.title;
   let description = req.body.description;
   let category = req.body.category;
-
   fs.readdir(mediaRawDirectory, (err, files) => {
     let fileStringList = [];
     for (let x = 0; x < files.length; x++) {
@@ -53,13 +55,13 @@ router.post('/upload', (req, res) => {
     file.mv('./media/' + rawPath, (err) => {
       if (previewPath.substr(0, 16) != "preview/default/") {
         preview.mv('./media/' + previewPath, (err) => {
-          mediaManager.addMedia(req.user.id, title, description, previewPath, rawPath, category);
+          mediaManager.addMedia(title, description, previewPath, rawPath, category, price, req.user.acc_id, academic);
           res.status(200);
           res.send({success: "true"});
         });
       }
       else {
-        mediaManager.addMedia(req.user.id, title, description, previewPath, rawPath, category);
+        mediaManager.addMedia(title, description, previewPath, rawPath, category, price, req.user.acc_id, academic);
         res.status(200);
         res.send({success: "true"});
       }

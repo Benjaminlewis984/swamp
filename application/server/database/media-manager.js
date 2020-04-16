@@ -1,8 +1,14 @@
 var databaseManager = require('./database-manager.js');
 
-exports.addMedia = (author_id, title, description, preview_path, raw_path, category) => {
+/*exports.addMedia = (author_id, title, description, preview_path, raw_path, category) => {
   var queryString = "('" + author_id + "', '" + title + "', '" + description + "', '" + preview_path + "', '" + raw_path + "', '" + category + "');";
   databaseManager.queryDatabase("INSERT INTO media(author_id, title, description, preview_path, raw_path, category) VALUES " + queryString, (result) => {});
+}*/
+
+exports.addMedia = (title, description, preview_path, raw_path, category, price = 0, acc_id, academic = 0) => {
+  let date = new Date().toJSON().slice(0,10);
+  let time = new Date().toJSON().slice(11,19);
+  databaseManager.queryDatabase(`INSERT INTO \`media content\`(title, \`description\`, preview_path, raw_path, category, price, acc_id, academic, \`date\`, \`time\`) VALUES ('${title}', '${description}', '${preview_path}', '${raw_path}', '${category}', ${price}, ${acc_id}, ${academic}, '${date}', '${time}');`, (result) => {});
 }
 
 exports.deleteMedia = (title) => {
