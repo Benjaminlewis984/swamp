@@ -1,4 +1,5 @@
 const userManager = require('../database/user-manager.js');
+const databaseManager = require('../database/database-manager.js');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 
@@ -34,11 +35,31 @@ function pp_config(passport) {
 
 function checkAuthAdmin(req, res, next) {
   if(req.isAuthenticated()) {
-    if(req.user.privilege == 'admin') {
-      return next();
-    }
+    databaseManager.queryDatabase(`SELECT EXISTS(SELECT username FROM accounts INNER JOIN admins ON accounts.acc_id = admins.acc_id WHERE accounts.username = '${req.user.username}');`, (result) => {
+      if(Object.values(result[0])[0] == 1) {
+        return next();
+      } else {
+        res.redirect('/index');
+      }
+    })
+  } else {
+    res.redirect('/login');
   }
-  res.redirect('/login');
+}
+
+function checkAdmin(req, res, next) {
+  if(req.isAuthenticated()) {
+    databaseManager.queryDatabase(`SELECT EXISTS(SELECT username FROM accounts INNER JOIN admins ON accounts.acc_id = admins.acc_id WHERE accounts.username = '${req.user.username}');`, (result) => {
+      if(Object.values(result[0])[0] == 1) {
+        req.user.privilege = 'admin';
+        return next();
+      } else {
+        return next();
+      }
+    })
+  } else {
+    return next();
+  }
 }
 
 function checkAuth(req, res, next) {
@@ -61,4 +82,5 @@ function alreadyAuth(req, res, next) {
 module.exports.pp_config = pp_config;
 module.exports.checkAuthAdmin = checkAuthAdmin;
 module.exports.checkAuth = checkAuth;
+module.exports.checkAdmin = checkAdmin;
 module.exports.alreadyAuth = alreadyAuth;

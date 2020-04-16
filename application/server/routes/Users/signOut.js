@@ -13,9 +13,4 @@ router.get('/logout', passport_config.checkAuth, (req, res, next) => {
   });
 });
 
-/**
- * Checks if user is already authenticated.
- * If so, redirect to homepage, otherwise next
- */
-
 module.exports = router;

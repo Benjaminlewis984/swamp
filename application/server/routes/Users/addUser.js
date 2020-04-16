@@ -11,6 +11,9 @@ router.get('/register', passport_config.alreadyAuth, (req, res, next) => {
 router.post('/register', async (req, res, next) => {
   let username = req.body.username;
   let email = req.body.email;
+  let first_name = req.body.firstname;
+  let last_name = req.body.lastname;
+
   try {
     var hash_pass = await bcrypt.hash(req.body.password, 10);
   } catch {
@@ -24,7 +27,7 @@ router.post('/register', async (req, res, next) => {
         if (usernameResult == undefined) {
           userManager.getUserFromEmail(email, (emailResult) => {
             if (emailResult == undefined) {
-              userManager.addUser(username, hash_pass, email);
+              userManager.addUser(username, hash_pass, email, first_name, last_name);
               res.status(200);
               res.send({success: 'true'});
             }

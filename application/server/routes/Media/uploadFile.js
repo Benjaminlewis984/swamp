@@ -8,7 +8,7 @@ const fs = require('fs');
 
 const mediaRawDirectory = path.join(__dirname, '../media/raw');
 
-router.get('/upload', passport_config.checkAuthAdmin, (req, res, next) => {
+router.get('/upload', passport_config.checkAuth, (req, res, next) => {
   res.render('upload', { title: 'Upload file' });
 });
 
@@ -16,7 +16,6 @@ router.post('/upload', (req, res) => {
   if(!req.isAuthenticated()) {
     res.redirect('/register')
   }
-
   let file = req.files.file;
   let preview = req.files.preview;
 

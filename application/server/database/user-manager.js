@@ -1,29 +1,14 @@
-var databaseManager = require('./database-manager.js');
+const databaseManager = require('./database-manager.js');
 
-exports.addUser = (username, password, email) => {
-	var queryString = "('" + username + "', '" + password + "', '" + email + "');";
-	databaseManager.queryDatabase("INSERT INTO users(username, password, email) VALUES " + queryString, (result) => {});
-}
-/*
-Instead of deleting by usernames, we should just modify privilege to 'banned'
-
-exports.deleteUser = (username) => {
-	var queryString = "'" + username + "';";
-	databaseManager.queryDatabase("DELETE FROM users WHERE username = " + queryString, (result) => {});
-}*/
-
-exports.updateUserPrivilege = (username, privilege) => {
-	var usernameQueryString = "'" + username + "';";
-	var privilegeQueryString = "'" + privilege + "'";
-	databaseManager.queryDatabase("UPDATE users SET privilege = " + privilegeQueryString + " WHERE username = " + usernameQueryString, (result) => {});
+exports.addUser = (username, password, email, first_name, last_name) => {
+  databaseManager.queryDatabase(`INSERT INTO accounts(username, password, email, first_name, last_name) VALUES ('${username}', '${password}', '${email}', '${first_name}', '${last_name}');`, (result) => {});
+  databaseManager.queryDatabase(`INSERT INTO \`registered users\`(acc_id) VALUES ((SELECT acc_id FROM accounts WHERE username = '${username}'));`, (result) => {});
 }
 
 exports.getUserFromUsername = (username, action) => {
-	var queryString = "'" + username + "');";
-	databaseManager.queryDatabase("SELECT EXISTS(SELECT * FROM users WHERE username = " + queryString, (existsResult) => {
+	databaseManager.queryDatabase(`SELECT EXISTS(SELECT * FROM accounts WHERE username = '${username}');`, (existsResult) => {
 		if (Object.values(existsResult[0])[0] == 1) {
-			queryString = "'" + username + "';";
-			databaseManager.queryDatabase("SELECT * FROM users WHERE username = " + queryString, (userResult) => {
+			databaseManager.queryDatabase(`SELECT * FROM accounts WHERE username = '${username}'`, (userResult) => {
 				action(userResult);
 			});
 		}
@@ -34,11 +19,9 @@ exports.getUserFromUsername = (username, action) => {
 }
 
 exports.getUserFromEmail = (email, action) => {
-  var queryString = "'" + email + "');";
-  databaseManager.queryDatabase("SELECT EXISTS(SELECT * FROM users WHERE email = " + queryString, (existsResult) => {
+  databaseManager.queryDatabase(`SELECT EXISTS(SELECT * FROM accounts WHERE email = '${email}');`, (existsResult) => {
     if (Object.values(existsResult[0])[0] == 1) {
-      queryString = "'" + email + "';";
-      databaseManager.queryDatabase("SELECT * FROM users WHERE email = " + queryString, (userResult) => {
+      databaseManager.queryDatabase(`SELECT * FROM accounts WHERE email = '${email}';`, (userResult) => {
         action(userResult);
       });
     }
@@ -49,11 +32,9 @@ exports.getUserFromEmail = (email, action) => {
 }
 
 exports.getUserFromID = (id, action) => {
-  var queryString = "'" + id + "');";
-  databaseManager.queryDatabase("SELECT EXISTS(SELECT * FROM users WHERE id = " + queryString, (existsResult) => {
+  databaseManager.queryDatabase(`SELECT EXISTS(SELECT * FROM accounts WHERE acc_id = ${id});`, (existsResult) => {
     if (Object.values(existsResult[0])[0] == 1) {
-      queryString = "'" + id + "';";
-      databaseManager.queryDatabase("SELECT * FROM users WHERE id = " + queryString, (userResult) => {
+      databaseManager.queryDatabase(`SELECT * FROM accounts WHERE acc_id = ${id};`, (userResult) => {
         action(userResult);
       });
     }
@@ -64,7 +45,5 @@ exports.getUserFromID = (id, action) => {
 }
 
 exports.updateUserPassword = (username, password) => {
-	var usernameQueryString = "'" + username + "';";
-	var passwordQueryString = "'" + password + "'";
-	databaseManager.queryDatabase("UPDATE users SET password = " + passwordQueryString + " WHERE username = " + usernameQueryString, (result) => {});
+	databaseManager.queryDatabase(`UPDATE accounts SET password = '${password}' WHERE username = '${username}'`, (result) => {});
 }
