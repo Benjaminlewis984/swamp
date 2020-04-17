@@ -10,7 +10,7 @@ router.get('/approve', passport_config.checkAuthAdmin, (req, res, next) => {
       res.send("No media is pending for approval");
     } else {
       results.forEach((result, idx) => {
-        userManager.getUserFromID(result.author_id, (user) => {
+        userManager.getUserFromID(result.acc_id, (user) => {
           result["author_username"] = user[0].username;
 
           if (idx == results.length - 1) {
@@ -23,13 +23,13 @@ router.get('/approve', passport_config.checkAuthAdmin, (req, res, next) => {
 });
 
 router.post('/approve', (req, res, next) => {
-  mediaManager.approveMedia(req.body.id);
+  mediaManager.approveMedia(req.body.id, req.user.admin_id);
   res.status(200);
   res.send({success: "true"});
 });
 
 router.post('/reject', (req, res, next) => {
-  mediaManager.rejectMedia(req.body.id);
+  mediaManager.rejectMedia(req.body.id, req.user.admin_id);
   res.status(400);
   res.send({success: "true"});
 });

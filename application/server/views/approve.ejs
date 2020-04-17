@@ -34,10 +34,10 @@
         <td style="text-align:center"><%=obj.status%></td>
         <td style="text-align:center">
           <form action="/approve" method="post" style="display: inline-block;">
-            <button type="submit" name="id" value="<%=obj.id%>" style="background-color: #4CAF50;">Accept</button>
+            <button type="submit" name="id" value="<%=obj.m_id%>" style="background-color: #4CAF50;">Accept</button>
           </form>
           <form action="/reject" method="post" style="display: inline-block;">
-            <button type="submit" name="id" value="<%=obj.id%>" style="background-color: #f44336;">Reject</button>
+            <button type="submit" name="id" value="<%=obj.m_id%>" style="background-color: #f44336;">Reject</button>
           </form>
         </td>
       </tr>

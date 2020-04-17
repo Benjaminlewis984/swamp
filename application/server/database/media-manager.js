@@ -16,20 +16,34 @@ exports.deleteMedia = (title) => {
   databaseManager.queryDatabase("DELETE FROM media WHERE title = " + queryString, (result) => {});
 }
 
+/*
 exports.approveMedia = (id) => {
   var queryTitle = "'" + id + "';";
   databaseManager.queryDatabase("UPDATE media SET status = 'approved' WHERE id = " + queryTitle, (result) => {});
 }
+*/
 
+exports.approveMedia = (m_id, admin_id) => {
+  databaseManager.queryDatabase(`UPDATE \`media content\` SET status = 'approved' WHERE m_id = ${m_id};`, (result) => {});
+  databaseManager.queryDatabase(`INSERT INTO \`approved media\`(m_id, status, status_by) VALUES (${m_id}, 'approved', ${admin_id})`, (result) => {})
+}
+
+/*
 exports.rejectMedia = (id) => {
   var queryTitle = "'" + id + "';";
   databaseManager.queryDatabase("UPDATE media SET status = 'rejected' WHERE id = " + queryTitle, (result) => {});
 }
+*/
+
+exports.rejectMedia = (m_id, admin_id) => {
+  databaseManager.queryDatabase(`UPDATE \`media content\` SET status = 'rejected' WHERE m_id = ${m_id};`, (result) => {});
+  databaseManager.queryDatabase(`INSERT INTO \`rejected media\`(m_id, status, status_by) VALUES (${m_id}, 'rejected', ${admin_id});`, (result) => {});
+}
 
 exports.getMediaFromStatus = (status, action) => {
-  databaseManager.queryDatabase(`SELECT COUNT(*) FROM media WHERE status = '${status}';`, (count) => {
+  databaseManager.queryDatabase(`SELECT COUNT(*) FROM \`media content\` WHERE status = '${status}';`, (count) => {
     if(count[0]['COUNT(*)'] > 0) {
-      databaseManager.queryDatabase(`SELECT * FROM media WHERE status = '${status}';`, (result) => {
+      databaseManager.queryDatabase(`SELECT * FROM \`media content\` WHERE status = '${status}';`, (result) => {
         action(result);
       });
     } else {
@@ -38,12 +52,18 @@ exports.getMediaFromStatus = (status, action) => {
   });
 }
 
+/*
 exports.deleteRejectedMedia = () => {
   databaseManager.queryDatabase(`DELETE FROM media WHERE status = 'rejected'`);
 }
+*/
+
+exports.deleteRejectedMedia = () => {
+  databaseManager.queryDatabase(`DELETE FROM \`media content\` media INNER JOIN \`rejected media\` rejected ON media.m_id = rejected.m_id`)
+}
 
 exports.getMediaFilter = (count, offset, filter, action) => {
-  var queryString = "SELECT * FROM media ";
+  var queryString = "SELECT * FROM 'media content' ";
 
   if (filter.status !== undefined || filter.category !== undefined || filter.title !== undefined) {
     queryString += "WHERE ";
