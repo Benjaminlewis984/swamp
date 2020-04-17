@@ -63,14 +63,14 @@ exports.deleteRejectedMedia = () => {
 }
 
 exports.getMediaFilter = (count, offset, filter, action) => {
-  var queryString = "SELECT * FROM 'media content' ";
+  var queryString = "SELECT * FROM `media content` ";
 
   if (filter.status !== undefined || filter.category !== undefined || filter.title !== undefined) {
     queryString += "WHERE ";
   }
 
   if (filter.status !== undefined) {
-    queryString += "status = \'" + filter.status + "\' ";
+    queryString += "`status` = \'" + filter.status + "\' ";
   }
 
   if (filter.category !== undefined) {

@@ -30,7 +30,7 @@ router.post('/browse', (req, res, next) => {
     }
     else {
       results.forEach((result, idx) => {
-        userManager.getUserFromID(result.author_id, (user) => {
+        userManager.getUserFromID(result.acc_id, (user) => {
           result["author_username"] = user[0].username;
 
           if (idx == results.length - 1) {
