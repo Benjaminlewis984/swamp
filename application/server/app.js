@@ -23,6 +23,7 @@ const approveMediaRouter = require('./routes/Media/approveMedia');
 const downloadMediaRouter = require('./routes/Media/downloadMedia');
 const browseMediaRouter = require('./routes/Media/browseMedia');
 const documentationRouter = require('./routes/documentation');
+const cartRouter = require('./routes/ShoppingCart/addToCart');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -52,6 +53,7 @@ app.use(approveMediaRouter);
 app.use(downloadMediaRouter);
 app.use(browseMediaRouter);
 app.use(documentationRouter);
+app.use(cartRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

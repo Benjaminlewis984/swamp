@@ -1,4 +1,4 @@
-var databaseManager = require('./database-manager.js');
+const databaseManager = require('./database-manager.js');
 
 /*exports.addMedia = (author_id, title, description, preview_path, raw_path, category) => {
   var queryString = "('" + author_id + "', '" + title + "', '" + description + "', '" + preview_path + "', '" + raw_path + "', '" + category + "');";
