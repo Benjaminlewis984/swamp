@@ -1,6 +1,6 @@
 import React from 'react';
-import profile_picture from "../imgs/william.jpg";
-import flopts_picture from "../imgs/flopts.png";
+import profile_picture from "../../imgs/william.jpg";
+import flopts_picture from "../../imgs/flopts.png";
 
 const William = () => {
     return (

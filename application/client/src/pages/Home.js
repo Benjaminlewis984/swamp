@@ -29,21 +29,21 @@ const Home = () => {
       <h1>swamp.</h1>
       <Input type='text' value={query} onChange={e => setQuery(e.target.value)} placeholder='Search by title..' />
       <button onClick={searchByTitle}>Search</button>
-      <Table id='results' display="none">
-        <th class='results th'>
+      <table id='results' display="none">
+        <tr className='table-head'>
           <td>Title</td>
           <td>Description</td>
           <td>Category</td>
           <td>Preview</td>
-        </th>
-            {result.map(items =>
-              <tr>
-                <td>{items.title}</td>
-                <td>{items.description}</td>
-                <td>{items.category}</td>
-                <td> <img src={`http://localhost:3001/${items.preview_path}`}></img></td>
-              </tr>)}
-      </Table>
+        </tr>
+        {result.map(items =>
+          <tr>
+            <td>{items.title}</td>
+            <td>{items.description}</td>
+            <td>{items.category}</td>
+            <td> <img src={`http://localhost:3001/${items.preview_path}`}></img></td>
+          </tr>)}
+      </table>
     </div>
   );
 };

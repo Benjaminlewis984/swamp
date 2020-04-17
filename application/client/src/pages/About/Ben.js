@@ -1,8 +1,8 @@
 import React from 'react';
-import '../styles/Benjamin.css';
-import sf_logo from "../imgs/sf-logo.png";
-import BenImage from "../imgs/BenImage.jpg";
-import linkedIn from "../imgs/LinkedIn_logo.png";
+import '../../styles/Benjamin.css';
+import sf_logo from "../../imgs/sf-logo.png";
+import BenImage from "../../imgs/BenImage.jpg";
+import linkedIn from "../../imgs/LinkedIn_logo.png";
 
 const Ben = () => {
     return (

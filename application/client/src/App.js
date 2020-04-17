@@ -4,12 +4,12 @@ import { Switch, Route, Link, BrowserRouter } from "react-router-dom";
 
 import Home from './pages/Home';
 import Team from './pages/Team';
-import Dang from './pages/Dang';
-import William from './pages/William';
-import Joe from './pages/Joe';
-import Kevin from './pages/Kevin';
-import Ben from './pages/Ben';
-import Onu from './pages/Onu';
+import Dang from './pages/About/Dang';
+import William from './pages/About/William';
+import Joe from './pages/About/Joe';
+import Kevin from './pages/About/Kevin';
+import Ben from './pages/About/Ben';
+import Onu from './pages/About/Onu';
 
 const App = () => {
   return (

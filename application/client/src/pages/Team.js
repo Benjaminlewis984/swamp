@@ -2,12 +2,12 @@ import React from 'react';
 import { Switch, Route, Link } from "react-router-dom";
 
 // Import pages as components
-import Ben from './Ben';
-import Dang from './Dang';
-import William from './William';
-import Joe from './Joe';
-import Onu from './Onu';
-import Kevin from './Kevin';
+import Ben from './About/Ben';
+import Dang from './About/Dang';
+import William from './About/William';
+import Joe from './About/Joe';
+import Onu from './About/Onu';
+import Kevin from './About/Kevin';
 
 // Import profile pictures
 import ben from "../imgs/BenImage.jpg";
