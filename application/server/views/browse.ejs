@@ -24,6 +24,7 @@
         <th>Description</th>
         <th>Category</th>
         <th>Preview Image</th>
+        <th>Price</th>
         <th>Controls</th>
       </tr>
 <% results.forEach(function(obj){ %>
@@ -35,6 +36,7 @@
         <td style="text-align:center">
            <img src="./<%=obj.preview_path.substr(obj.preview_path.indexOf('preview/') + 8);%>" style="width: 100px; height: 100px;"> 
         </td>
+        <td style="text-align:center">$<%=obj.price%></td>
         <td style="text-align:center">
           <form action="/cart" method="post" style="display: inline-block;">
             <button type="submit" name="m_id" value="<%=obj.m_id%>" style="background-color: #4CAF50;">Add to Cart</button>

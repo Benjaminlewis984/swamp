@@ -19,9 +19,9 @@ router.post('/upload', (req, res) => {
   
   let file = req.files.file;
   let preview = req.files.preview;
-  let price = 0;
-  let academic = 0;
 
+  let price = req.body.price;
+  let academic = 0;
   let title = req.body.title;
   let description = req.body.description;
   let category = req.body.category;

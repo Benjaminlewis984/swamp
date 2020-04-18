@@ -22,7 +22,6 @@ router.get('/cart', (req, res, next) => {
 })
 
 router.post('/cart', (req, res, next) => {
-  console.log(req.body)
   cartManager.addToCart(req.body.m_id, req.user.acc_id);
   res.status(200);
   res.send({success: "true"});
