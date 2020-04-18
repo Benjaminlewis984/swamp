@@ -48,10 +48,15 @@ title: Swamp backend
   post:
     description: Approve media on the database
     queryParameters:
-      id:
-        displayName: id
+      m_id:
+        displayName: m_id
         type: int
         description: media primary key
+        required: true
+      admin_id:
+        displayName: admin_id
+        type: int
+        description: id of the admin who approved the listing
         required: true
     responses:
       200:
@@ -67,10 +72,15 @@ title: Swamp backend
   post:
     description: Reject media on the database
     queryParameters:
-      id:
-        displayName: id
+      m_id:
+        displayName: m_id
         type: int
         description: media primary key
+        required: true
+      admin_id:
+        displayName: admin_id
+        type: int
+        desciption: id of the admin who rejected the listing
         required: true
     responses:
       200:
@@ -251,4 +261,30 @@ title: Swamp backend
               {
                 "success": true,
                 "user": USER_INFORMATION
+              }
+
+/cart:
+  get:
+    description: Renders media items in your shopping cart
+  post:
+    description: Adds item to your shopping cart
+    queryParameters:
+      m_id:
+        displayName: m_id
+        type: int
+        description: media primary key
+        required: true
+      acc_id:
+        displayName: acc_id
+        type: int
+        description: id of the logged in user
+        required: true
+    responses:
+      200:
+        description: Media successfully added to cart
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
               }
