@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const passport_config = require('../../modules/passport-config.js')
 
-router.get('/approve', passport_config.checkAuthAdmin, (req, res, next) => {
+router.get('/approve', passport_config.checkAuth, passport_config.checkAdmin, (req, res, next) => {
   mediaManager.getMediaFromStatus("pending", (results) => {
     if(results == undefined) {
       res.send("No media is pending for approval");

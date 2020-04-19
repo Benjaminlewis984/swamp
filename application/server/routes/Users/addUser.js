@@ -4,6 +4,7 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const passport_config = require('../../modules/passport-config.js');
 
+// If you're already a user, you can't register again
 router.get('/register', passport_config.alreadyAuth, (req, res, next) => {
   res.render('register', { title: 'Sign up' });
 });

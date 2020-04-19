@@ -33,46 +33,49 @@ function pp_config(passport) {
   passport.deserializeUser((id, done) => { done(null, id); });
 }
 
-function checkAuthAdmin(req, res, next) {
-  if(req.isAuthenticated()) {
-    databaseManager.queryDatabase(`SELECT EXISTS(SELECT username FROM accounts INNER JOIN admins ON accounts.acc_id = admins.acc_id WHERE accounts.username = '${req.user.username}');`, (result) => {
-      if(Object.values(result[0])[0] == 1) {
-        return next();
-      } else {
-        res.redirect('/index');
-      }
-    })
-  } else {
-    res.redirect('/login');
-  }
-}
-
-function checkAdmin(req, res, next) {
-  if(req.isAuthenticated()) {
-    databaseManager.queryDatabase(`SELECT EXISTS(SELECT username FROM accounts INNER JOIN admins ON accounts.acc_id = admins.acc_id WHERE accounts.username = '${req.user.username}');`, (result) => {
-      if(Object.values(result[0])[0] == 1) {
-        req.user.privilege = 'admin';
-        databaseManager.queryDatabase(`SELECT admins.admin_id FROM admins INNER JOIN accounts ON admins.acc_id = accounts.acc_id WHERE admins.acc_id = (SELECT accounts.acc_id FROM accounts INNER JOIN admins ON accounts.acc_id = admins.acc_id WHERE accounts.username = '${req.user.username}');`, (result) => {
-          req.user.admin_id = result[0]['admin_id'];
-          return next();
-        })
-      } else {
-        return next();
-      }
-    })
-  } else {
+// Checks if the account privilege
+// To be used in conjuction with checkAuth
+// If admin, move on to the next middleware
+// Else, queries database to determine is account is an admin
+// If so, move on to the next middleware
+// Else, redirects to homepage
+function checkForAdminStatus(req, res, next) {
+  databaseManager.queryDatabase(`SELECT EXISTS(SELECT username FROM accounts INNER JOIN admins ON accounts.acc_id = admins.acc_id WHERE accounts.username = '${req.user.username}');`, (result) => {
+    if(Object.values(result[0])[0] == 1) {
+      req.user.privilege = 'admin';
+      databaseManager.queryDatabase(`SELECT admins.admin_id FROM admins INNER JOIN accounts ON admins.acc_id = accounts.acc_id WHERE admins.acc_id = (SELECT accounts.acc_id FROM accounts INNER JOIN admins ON accounts.acc_id = admins.acc_id WHERE accounts.username = '${req.user.username}');`, (result) => {
+        req.user.admin_id = result[0]['admin_id'];
+      })
+    }
     return next();
+  });
+}
+
+// Checks if account is admin
+// If so, move on to the next middleware
+// Else, redirect to homepage
+function checkAdmin(req, res, next) {
+  if(req.user.privilege == 'admin') {
+    return next();
+  } else {
+    res.redirect('/')
   }
 }
 
+// Checks if the client has not logged in
+// If so, move on to the next middleware
+// Else, redirects to register
 function checkAuth(req, res, next) {
   if(req.isAuthenticated()) {
     return next();
   } else {
-    res.redirect('/');
+    res.redirect('/register');
   }
 }
 
+// Checks if client has already logged in
+// If so, redirects to homepage
+// Else, moves on to the next middleware
 function alreadyAuth(req, res, next) {
   if(req.isAuthenticated()) {
     // console.log(req.user);
@@ -82,8 +85,21 @@ function alreadyAuth(req, res, next) {
   }
 }
 
+// Checks if the account is not an admin.
+// To be used in conjuction with checkAuth
+// If the account is not an admin, move on to the next middleware
+// Else, redirects to homepage.
+function checkUser(req, res, next) {
+  if(req.user.privilege == 'admin') {
+    res.redirect('/');
+  } else {
+    return next();
+  }
+}
+
 module.exports.pp_config = pp_config;
-module.exports.checkAuthAdmin = checkAuthAdmin;
 module.exports.checkAuth = checkAuth;
+module.exports.checkForAdminStatus = checkForAdminStatus;
 module.exports.checkAdmin = checkAdmin;
 module.exports.alreadyAuth = alreadyAuth;
+module.exports.checkUser = checkUser;

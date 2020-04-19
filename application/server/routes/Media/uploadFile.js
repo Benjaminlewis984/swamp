@@ -8,7 +8,8 @@ const fs = require('fs');
 
 const mediaRawDirectory = path.join(__dirname, '../../media/raw');
 
-router.get('/upload', passport_config.checkAuth, (req, res, next) => {
+// Only users, not admins, can upload
+router.get('/upload', passport_config.checkAuth, passport_config.checkUser, (req, res, next) => {
   res.render('upload', { title: 'Upload file' });
 });
 

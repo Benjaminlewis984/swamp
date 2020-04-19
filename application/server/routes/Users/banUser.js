@@ -3,7 +3,8 @@ const express = require('express');
 const router = express.Router();
 const passport_config = require('../../modules/passport-config.js');
 
-router.get('/ban', passport_config.checkAuthAdmin, (req, res, next) => {
+// Only admins can ban
+router.get('/ban', passport_config.checkAuth, passport_config.checkAdmin, (req, res, next) => {
   res.render('ban');
 });
 

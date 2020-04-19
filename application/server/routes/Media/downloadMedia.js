@@ -6,7 +6,8 @@ const path = require('path');
 
 const mediaDirectory = path.join(__dirname, '../media/');
 
-router.post('/download', passport_config.checkAuthAdmin, (req, res, next) => {
+// Both users and admins can download
+router.post('/download', passport_config.checkAuth, (req, res, next) => {
   const file = mediaDirectory + req.body.path;
   res.status(200);
   res.download(file);
