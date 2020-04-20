@@ -17,11 +17,17 @@ router.get('/browse', (req, res, next) => {
 router.post('/browse', (req, res, next) => {
   let category = req.body.category;
   let search = req.body.search;
-  
-  if (category == 'all') { category = undefined; }
-  if (search == '') { search = undefined; }
+  let search_params = req.body.search;
+  let search_array
 
-  filter = { status: 'approved', category: category, title: search };
+  if(search_params != undefined) {
+    search_array = search_params.replace(/[^A-Za-z0-9]/g, ' ').split(' ').filter( e => e.trim().length > 1 )
+  }
+
+  if (category == 'all') { category = undefined; }
+  if (search_array.length < 1) { search = undefined; } else { search = search_array; }
+
+  filter = { status: 'approved', category: category, search: search };
   
   mediaManager.getMediaFilter(25, 0, filter, (results) => {
     if (results.length == 0) {

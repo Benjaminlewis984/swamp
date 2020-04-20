@@ -63,9 +63,9 @@ exports.deleteRejectedMedia = () => {
 }
 
 exports.getMediaFilter = (count, offset, filter, action) => {
-  var queryString = "SELECT * FROM `media content` ";
+  var queryString = "SELECT DISTINCT * FROM `media content` ";
 
-  if (filter.status !== undefined || filter.category !== undefined || filter.title !== undefined) {
+  if (filter.status !== undefined || filter.category !== undefined || filter.search !== undefined) {
     queryString += "WHERE ";
   }
 
@@ -81,12 +81,16 @@ exports.getMediaFilter = (count, offset, filter, action) => {
     queryString += "category = \'" + filter.category + "\' ";
   }
 
-  if (filter.title !== undefined) {
+  if (filter.search !== undefined) {
     if (filter.status !== undefined || filter.category !== undefined) {
       queryString += "AND ";
     }
 
-    queryString += "title = \'" + filter.title + "\' ";
+    queryString += "title LIKE \'%" + filter.search[0] + "%\' OR `description` LIKE \'%" + filter.search[0] + "%\' ";
+
+    for(let i = 1; i < filter.search.length; ++i) {
+      queryString += " OR title LIKE \'%" + filter.search[i] + "%\' OR `description` LIKE \'%" + filter.search[i] + "%\' ";
+    }
   }
 
   queryString += "LIMIT " + count + " OFFSET " + offset + ";";
