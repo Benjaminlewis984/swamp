@@ -7,3 +7,7 @@ You are free to organize the contents of the folder as you see fit. But remember
 
 ## Please use the rest of the README.md to store important information for your team's application.
 
+## npm install yup - Yup is a JavaScript schema builder for value parsing and validation. Define a schema, transform a value to match, validate the shape of an existing value, or both.
+
+## npm install formik - Formik is a small library that helps you with the 3 most annoying parts: Getting values in and out of form state. Validation and error messages. Handling form submission.
+
