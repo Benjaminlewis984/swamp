@@ -13,6 +13,9 @@ export class LoginForm extends React.Component {
     const { email, password } = this.state;
     return (
       <form onSubmit={this.handleSubmit}>
+        <Field name="email" validate={validateEmail} />
+          {errors.email && touched.email && <div>{errors.email}</div>}
+
         <label htmlFor="email">Email</label>
         <input
           name="email"
@@ -36,12 +39,33 @@ export class LoginForm extends React.Component {
 
   handleChange = event => {
     this.setState({
-      [event.target.name]: event.target.value
+      [event.target.name]: event.target.value,
+      
     });
+    let error;
+      if (!value) {
+        error = 'Required';
+      } else if (!/[A-Za-z0-9]*@mail\.sfsu\.edu/i.test(value))
+      {
+        error = 'Invalid email address';
+      }
+      return error;
   };
+
 
   handleSubmit = event => {
     console.log("Submitting");
     console.log(this.state);
   };
+}
+
+function validateEmail(value) {
+  let error;
+  if (!value) {
+    error = 'Required';
+  } else if (!/[A-Za-z0-9]*@mail\.sfsu\.edu/i.test(value))
+   {
+    error = 'Invalid email address';
+  }
+  return error;
 }

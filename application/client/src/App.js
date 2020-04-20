@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { Switch, Route, Link, BrowserRouter } from "react-router-dom";
 
+
 import Home from './pages/Home';
 import Team from './pages/Team';
 import Dang from './pages/Dang';
@@ -38,7 +39,7 @@ const App = () => {
           <Route exact path="/ben" component={Ben} />
           <Route exact path="/onu" component={Onu} />
           <Route exact path="/login" component={Login}/>
-        </Switch>
+=        </Switch>
 
         {/* <div className="counter">
         <h1>Redux Counter : {reduxCounter}</h1>

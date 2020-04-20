@@ -4,7 +4,6 @@ import ValidatedLoginForm from './ValidatedLoginForm';
 const Login = () => {
     return (
         <ValidatedLoginForm />
-
     );
 };
 

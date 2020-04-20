@@ -36,7 +36,8 @@ const ValidatedLoginForm = () => (
     validationSchema={Yup.object().shape({
       email: Yup.string()
         .email()
-        .required("Required"),
+        .required("Required")
+        .matches(/[A-Za-z0-9]*@mail\.sfsu\.edu/, "Invalid email address"),
       password: Yup.string()
         .required("No password provided.")
         .min(8, "Password is too short - should be 8 chars minimum.")
@@ -89,5 +90,16 @@ const ValidatedLoginForm = () => (
     }}
   </Formik>
 );
+
+function validateEmail(value) {
+  let error;
+  if (!value) {
+    error = 'Required';
+  } else if (!/[A-Za-z0-9]*@mail\.sfsu\.edu/i.test(value))
+   {
+    error = 'Invalid email address';
+  }
+  return error;
+}
 
 export default ValidatedLoginForm;
