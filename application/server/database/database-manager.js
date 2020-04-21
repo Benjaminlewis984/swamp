@@ -31,8 +31,8 @@ exports.end = () => {
 	});
 }
 
-exports.queryDatabase = (query, action) => {
-	connection.query(query, (error, result) => {
+exports.queryDatabase = (query, param, action) => {
+	connection.query(query, param, (error, result) => {
 		if (error) throw error;
 		action(result);
 	});

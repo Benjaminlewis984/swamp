@@ -43,10 +43,10 @@ function pp_config(passport) {
 // If so, move on to the next middleware
 // Else, redirects to homepage
 function checkForAdminStatus(req, res, next) {
-  databaseManager.queryDatabase(`SELECT EXISTS(SELECT username FROM accounts INNER JOIN admins ON accounts.acc_id = admins.acc_id WHERE accounts.username = '${req.user.username}');`, (result) => {
+  databaseManager.queryDatabase(`SELECT EXISTS(SELECT username FROM accounts INNER JOIN admins ON accounts.acc_id = admins.acc_id WHERE accounts.username = ?);`, [req.user.username], (result) => {
     if(Object.values(result[0])[0] == 1) {
       req.user.privilege = 'admin';
-      databaseManager.queryDatabase(`SELECT admins.admin_id FROM admins INNER JOIN accounts ON admins.acc_id = accounts.acc_id WHERE admins.acc_id = (SELECT accounts.acc_id FROM accounts INNER JOIN admins ON accounts.acc_id = admins.acc_id WHERE accounts.username = '${req.user.username}');`, (result) => {
+      databaseManager.queryDatabase(`SELECT admins.admin_id FROM admins INNER JOIN accounts ON admins.acc_id = accounts.acc_id WHERE admins.acc_id = (SELECT accounts.acc_id FROM accounts INNER JOIN admins ON accounts.acc_id = admins.acc_id WHERE accounts.username = ?);`, [req.user.username], (result) => {
         req.user.admin_id = result[0]['admin_id'];
       })
     }
