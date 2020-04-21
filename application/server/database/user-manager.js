@@ -47,3 +47,17 @@ exports.getUserFromID = (id, action) => {
 exports.updateUserPassword = (username, password) => {
 	databaseManager.queryDatabase(`UPDATE accounts SET password = '${password}' WHERE username = '${username}'`, (result) => {});
 }
+
+exports.checkUserBanned = (user, action) => {
+  user_acc_id = user[0]['acc_id'];
+  databaseManager.queryDatabase(`SELECT reg_id FROM \`registered users\` WHERE acc_id = ${user_acc_id};`, (result) => {
+    let reg_id = result[0]['reg_id'];
+    databaseManager.queryDatabase(`SELECT COUNT(*) FROM \`banned users\` WHERE reg_id = ${reg_id} AND ban_active = 1`, (count) => {
+      if(count[0]['COUNT(*)'] == 0) {
+        action(result);
+      } else {
+        action(undefined);
+      }
+    })
+  })
+}

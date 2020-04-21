@@ -20,7 +20,6 @@ router.get('/login', passport_config.alreadyAuth, (req, res, next) => {
   }
 });
 
-//
 router.post('/login', passport.authenticate('local'), passport_config.checkForAdminStatus, (req, res, next) => {
   res.status(200);
   res.send({success: "true", user: req.user});

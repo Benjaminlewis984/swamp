@@ -10,18 +10,21 @@ const bcrypt = require('bcryptjs');
 function pp_config(passport) {
   var userAuthentication = (username, password, done) => {
     userManager.getUserFromUsername(username, async (usernameResult) => {
-      // console.log(usernameResult);
-      if(usernameResult[0]['privilege'] == 'banned') {
-        return done(null, false, {message: "User is banned"});
-      }
       if(usernameResult == undefined) {
         return done(null, false, { message: "Incorrect username"});
       }
       if(await bcrypt.compare(password, usernameResult[0]['password'])) {
-        return done(null, usernameResult[0]);
+        userManager.checkUserBanned(usernameResult, (result) => {
+          if(result == undefined) {
+            return done(null, false, { message: "User is banned"});
+          } else {
+            return done(null, usernameResult[0]);
+          }
+        });
       } else {
         return done(null, false, { message: "Incorrect password"});
       }
+
     });
   };
   
