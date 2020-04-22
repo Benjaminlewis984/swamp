@@ -10,14 +10,14 @@ router.get('/ban', passport_config.checkAuth, passport_config.checkAdmin, (req, 
 
 router.post('/ban', (req, res, next) => {
   let username = req.body.username;
-  userManager.getUserFromUsername(username, (usernameResult) => {
-    if(usernameResult != undefined && usernameResult[0]['privilege'] == 'user') {
-      userManager.updateUserPrivilege(username, "banned");
-      res.status(200);
-      res.send({success: "true"});
-    } else {
+  userManager.getUserFromUsername(username, (user) => {
+    if(user == undefined) {
       res.status(400);
       res.send({success: "false"});
+    } else {
+      userManager.banUser(user, req.user.admin_id, req.body.reason, parseInt(req.body.ban_length));
+      res.status(200);
+      res.send({success: "true"});
     }
   });
 });

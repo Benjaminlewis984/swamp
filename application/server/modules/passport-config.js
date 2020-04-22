@@ -48,9 +48,11 @@ function checkForAdminStatus(req, res, next) {
       req.user.privilege = 'admin';
       databaseManager.queryDatabase(`SELECT admins.admin_id FROM admins INNER JOIN accounts ON admins.acc_id = accounts.acc_id WHERE admins.acc_id = (SELECT accounts.acc_id FROM accounts INNER JOIN admins ON accounts.acc_id = admins.acc_id WHERE accounts.username = ?);`, [req.user.username], (result) => {
         req.user.admin_id = result[0]['admin_id'];
+        return next();
       })
+    } else {
+      return next();
     }
-    return next();
   });
 }
 
