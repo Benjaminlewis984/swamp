@@ -63,7 +63,7 @@ function checkAdmin(req, res, next) {
   if(req.user.privilege == 'admin') {
     return next();
   } else {
-    res.redirect('/')
+    return res.status(401).send({success: "false"});
   }
 }
 
@@ -74,7 +74,7 @@ function checkAuth(req, res, next) {
   if(req.isAuthenticated()) {
     return next();
   } else {
-    res.redirect('/register');
+    return res.status(401).send({success: "false"})
   }
 }
 
@@ -84,7 +84,7 @@ function checkAuth(req, res, next) {
 function alreadyAuth(req, res, next) {
   if(req.isAuthenticated()) {
     // console.log(req.user);
-    res.redirect('/');
+    return res.status(401).send({success: "false"});
   } else {
     return next();
   }
@@ -96,7 +96,7 @@ function alreadyAuth(req, res, next) {
 // Else, redirects to homepage.
 function checkUser(req, res, next) {
   if(req.user.privilege == 'admin') {
-    res.redirect('/');
+    return res.status(401).send({success: "false"});
   } else {
     return next();
   }
