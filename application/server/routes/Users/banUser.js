@@ -12,12 +12,16 @@ router.post('/ban', (req, res, next) => {
   let username = req.body.username;
   userManager.getUserFromUsername(username, (user) => {
     if(user == undefined) {
-      res.status(400);
-      res.send({success: "false"});
+      res.status(400).send({success: "false"});
     } else {
-      userManager.banUser(user, req.user.admin_id, req.body.reason, parseInt(req.body.ban_length));
-      res.status(200);
-      res.send({success: "true"});
+      userManager.checkUserBanned(user, (result) => {
+        if(result != undefined) {
+          userManager.banUser(user, req.user.admin_id, req.body.reason, parseInt(req.body.ban_length));
+          res.status(200).send({success: "true"});
+        } else {
+          res.status(400).send({success: "false"});
+        }
+      });
     }
   });
 });
