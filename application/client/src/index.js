@@ -6,10 +6,11 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { ProductProvider } from './context';
 import { Provider } from 'react-redux';
 import * as serviceWorker from './serviceWorker';
+import rootReducer from './redux/reducers/rootReducer';
 import { createStore } from 'redux';
 import searchReducer, {searchResults} from './redux/reducers/searchReducers';
 
-const store = createStore(searchReducer);
+const store = createStore(rootReducer);
 
 ReactDOM.render(
     <ProductProvider>
