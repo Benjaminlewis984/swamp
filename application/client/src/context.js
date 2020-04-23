@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {storeProducts, detailProduct} from './data';
+import Home from './components/Home';
 
 const ProductContext = React.createContext();
 
