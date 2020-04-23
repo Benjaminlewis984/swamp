@@ -1,5 +1,5 @@
 import React from 'react';
-import dang from "../imgs/dang.jpg";
+import dang from "../../imgs/dang.jpg";
 
 const Dang = () => {
     return (

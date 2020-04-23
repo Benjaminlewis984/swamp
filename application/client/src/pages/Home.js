@@ -3,30 +3,32 @@ import { Container, Row, Col, Label, Form, FormGroup, Input, Alert, Table } from
 import axios from 'axios';
 import '../styles/Browse.css';
 
+const [result, setResult] = useState([]);
+const [query, setQuery] = useState('');
+
+const searchByTitle = () => {
+  console.log('Button click')
+  
+  axios.post('http://18.191.184.143:3001/browse', {
+    // axios.get(`http://18.191.184.143:3001/browse?titleSearch=${query}`, {
+    category: 'all',
+    search: query,
+  }).then((res) => {
+    console.log('TEST');
+    setResult(res.data.results);
+    console.log(result);
+    setQuery('');
+    
+    let element = document.getElementById('results');
+    element.style.display = "block";
+  }).catch(err => console.log(err));
+}
+
 const Home = () => {
-  const [query, setQuery] = useState('');
-  const [result, setResult] = useState([]);
-  const [showTable, setShowTable] = useState(false)
-
-  const searchByTitle = () => {
-    console.log('Button click')
-
-    axios.post('http://18.191.184.143:3001/browse', {
-      category: 'all',
-      search: query,
-    }).then((res) => {
-      console.log('TEST');
-      setResult(res.data.results);
-      setQuery('');
-      
-      let element = document.getElementById('results');
-      element.style.display = "block";
-    }).catch(err => console.log(err));
-  }
-
   return (
     <div>
       <h1>swamp.</h1>
+      {result}
       <Input type='text' value={query} onChange={e => setQuery(e.target.value)} placeholder='Search by title..' />
       <button onClick={searchByTitle}>Search</button>
       <Table id='results' display="none">
