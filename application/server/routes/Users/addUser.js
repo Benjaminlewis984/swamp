@@ -18,8 +18,7 @@ router.post('/register', async (req, res, next) => {
   try {
     var hash_pass = await bcrypt.hash(req.body.password, 10);
   } catch {
-    res.status(400);
-    res.send("error");
+    return res.status(400).send("error");
   }
 
   if (username == username.replace(/[^A-Za-z0-9]/gi,'')) {
@@ -29,29 +28,15 @@ router.post('/register', async (req, res, next) => {
           userManager.getUserFromEmail(email, (emailResult) => {
             if (emailResult == undefined) {
               userManager.addUser(username, hash_pass, email, first_name, last_name);
-              res.status(200);
-              res.send({success: 'true'});
-            }
-            else {
-              res.status(400);
-              res.send({success: 'false', reason: 'email already exists'});
+              return res.status(200).send({success: 'true'});
             }
           });
         }
-        else {
-          res.status(400);
-          res.send({success: 'false', reason: 'username already exists'});
-        }
       });
-    }
-    else {
-      res.status(400);
-      res.send({success: 'false', reason: 'invalid email'});
     }
   }
   else {
-    res.status(400);
-    res.send({success: 'false', reason: 'invalid username'});
+    return res.status(400).send({success: 'false', reason: 'invalid username'});
   }
 });
 

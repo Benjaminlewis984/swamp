@@ -35,13 +35,14 @@ function pp_config(passport) {
   passport.serializeUser((user, done) => { done(null, user); });
   passport.deserializeUser((id, done) => { done(null, id); });
 }
-
-// Checks if the account privilege
-// To be used in conjuction with checkAuth
-// If admin, move on to the next middleware
-// Else, queries database to determine is account is an admin
-// If so, move on to the next middleware
-// Else, redirects to homepage
+/**
+ * Checks if the account privilege
+ * To be used in conjuction with checkAuth
+ * If admin, move on to the next middleware
+ * Else, queries database to determine is account is an admin
+ * If so, move on to the next middleware
+ * Else, redirects to homepage
+ */
 function checkForAdminStatus(req, res, next) {
   databaseManager.queryDatabase(`SELECT EXISTS(SELECT username FROM accounts INNER JOIN admins ON accounts.acc_id = admins.acc_id WHERE accounts.username = ?);`, [req.user.username], (result) => {
     if(Object.values(result[0])[0] == 1) {
@@ -55,10 +56,11 @@ function checkForAdminStatus(req, res, next) {
     }
   });
 }
-
-// Checks if account is admin
-// If so, move on to the next middleware
-// Else, redirect to homepage
+/**
+ *  Checks if account is admin
+ *  If so, move on to the next middleware
+ *  Else, redirect to homepage
+*/
 function checkAdmin(req, res, next) {
   if(req.user.privilege == 'admin') {
     return next();
@@ -67,9 +69,11 @@ function checkAdmin(req, res, next) {
   }
 }
 
-// Checks if the client has not logged in
-// If so, move on to the next middleware
-// Else, redirects to register
+/**
+ * Checks if the client has not logged in
+ * If so, move on to the next middleware
+ * Else, redirects to register
+ */
 function checkAuth(req, res, next) {
   if(req.isAuthenticated()) {
     return next();
@@ -77,10 +81,11 @@ function checkAuth(req, res, next) {
     return res.status(401).send({success: "false"})
   }
 }
-
-// Checks if client has already logged in
-// If so, redirects to homepage
-// Else, moves on to the next middleware
+/**
+ * Checks if client has already logged in
+ * If so, redirects to homepage
+ * Else, moves on to the next middleware 
+ */
 function alreadyAuth(req, res, next) {
   if(req.isAuthenticated()) {
     // console.log(req.user);
@@ -90,10 +95,14 @@ function alreadyAuth(req, res, next) {
   }
 }
 
-// Checks if the account is not an admin.
-// To be used in conjuction with checkAuth
-// If the account is not an admin, move on to the next middleware
-// Else, redirects to homepage.
+
+/**
+ * Checks if the account is not an admin.
+ * To be used in conjuction with checkAuth
+ * If the account is not an admin, move on to the next middleware
+ * Else, redirects to homepage. 
+ */
+
 function checkUser(req, res, next) {
   if(req.user.privilege == 'admin') {
     return res.status(401).send({success: "false"});

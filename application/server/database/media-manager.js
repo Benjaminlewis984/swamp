@@ -80,3 +80,7 @@ exports.getMediaFilter = (count, offset, filter, action) => {
     action(result);
   });
 }
+
+// exports.checkMediaBought = (acc_id, ) => {
+
+// }
