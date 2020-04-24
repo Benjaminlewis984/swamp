@@ -12,11 +12,10 @@ exports.banUser = (user, admin_id, reason, ban_length) => {
   const unban_date = current_date.toJSON().slice(0,10);
 
   user_acc_id = user[0]['acc_id'];
-
-  databaseManager.queryDatabase(`SELECT reg_id FROM \`registered users\` WHERE acc_id = ?;`, [user_acc_id], (result) => {
+  this.getRegIDFromUser(user_acc_id, (result) => {
     const reg_id = result[0]['reg_id'];
     databaseManager.queryDatabase(`INSERT INTO \`banned users\`(reg_id, banned_by, reason, ban_date, unban_date, ban_active) VALUES (?, ?, ?, ?, ?, ?);`, [reg_id, admin_id, reason, date, unban_date, 1], () => {})
-  })
+  });
 }
 
 exports.getUserFromUsername = (username, action) => {
@@ -63,15 +62,29 @@ exports.updateUserPassword = (username, password) => {
 }
 
 exports.checkUserBanned = (user, action) => {
-  user_acc_id = user[0]['acc_id'];
-  databaseManager.queryDatabase(`SELECT reg_id FROM \`registered users\` WHERE acc_id = ?;`, [user_acc_id], (result) => {
-    const reg_id = result[0]['reg_id'];
-    databaseManager.queryDatabase(`SELECT COUNT(*) FROM \`banned users\` WHERE reg_id = ? AND ban_active = ?`, [reg_id, 1], (count) => {
-      if(count[0]['COUNT(*)'] == 0) {
+  const user_acc_id = user[0]['acc_id'];
+  this.getRegIDFromUser(user_acc_id, (result) => {
+    if(result != undefined) {
+      const reg_id = result[0]['reg_id'];
+      databaseManager.queryDatabase(`SELECT COUNT(*) FROM \`banned users\` WHERE reg_id = ? AND ban_active = ?`, [reg_id, 1], (count) => {
+        if(count[0]['COUNT(*)'] == 0) {
+          action(result);
+        } else {
+          action(undefined);
+        }
+      });
+    }
+  });
+}
+
+exports.getRegIDFromUser = (acc_id, action) => {
+  databaseManager.queryDatabase(`SELECT COUNT(*) FROM \`registered users\` WHERE acc_id = ?;`, [acc_id], (count) => {
+    if(count[0]['COUNT(*)'] != 0) {
+      databaseManager.queryDatabase(`SELECT reg_id FROM \`registered users\` WHERE acc_id = ?;`, [acc_id], (result) => {
         action(result);
-      } else {
-        action(undefined);
-      }
-    });
+      });
+    } else {
+      action(undefined);
+    }
   });
 }

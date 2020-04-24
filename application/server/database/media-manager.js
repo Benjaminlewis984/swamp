@@ -76,7 +76,6 @@ exports.getMediaFilter = (count, offset, filter, action) => {
   queryString += "LIMIT " + count + " OFFSET " + offset + ";";
   
   databaseManager.queryDatabase(queryString, params, (result) => {
-    
     action(result);
   });
 }
