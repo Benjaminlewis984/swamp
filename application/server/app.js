@@ -3,6 +3,7 @@ databaseManager.connect();
 
 const cors = require("cors");
 const createError = require('http-errors');
+const methodOverride = require('method-override');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -13,6 +14,7 @@ const fileUpload = require('express-fileupload');
 
 const app = express();
 app.use(cors());
+app.use(methodOverride('_method'));
 
 const indexRouter = require('./routes/index');
 const addUserRouter = require('./routes/Users/addUser');

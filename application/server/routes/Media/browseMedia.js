@@ -34,8 +34,7 @@ router.post('/browse', (req, res, next) => {
   
   mediaManager.getMediaFilter(25, 0, filter, (results) => {
     if (results.length == 0) {
-      res.status(400);
-      res.send({success: true, filter: filter, results: results});
+      return res.status(400).send({success: true, filter: filter, results: results});
     }
     else {
       results.forEach((result, idx) => {

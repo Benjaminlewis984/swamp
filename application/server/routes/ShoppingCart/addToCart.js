@@ -4,7 +4,7 @@ const cartManager = require('../../database/cart-manager.js');
 const userManager = require('../../database/user-manager.js');
 const passport_config = require('../../modules/passport-config.js');
 
-router.get('/cart', passport_config.checkUser, (req, res, next) => {
+router.get('/cart', passport_config.checkUser, (req, res) => {
   cartManager.getFromCartByID(req.user.acc_id, (results) => {
     if(results == undefined) {
       res.send('There are no listings in your shopping cart at this time.');
@@ -22,10 +22,14 @@ router.get('/cart', passport_config.checkUser, (req, res, next) => {
   });
 })
 
-router.post('/cart', passport_config.checkAuth, passport_config.checkUser, (req, res, next) => {
+router.post('/cart', passport_config.checkAuth, passport_config.checkUser, (req, res) => {
   cartManager.addToCart(req.body.m_id, req.user.acc_id);
-  res.status(200);
-  res.send({success: "true"});
-})
+  return res.status(200).send({success: "true"});
+});
+
+router.delete('/cart', (req, res) => {
+  cartManager.deleteFromCart(req.body.m_id, req.user.acc_id);
+  return res.status(200).send({sucess: "true"});
+});
 
 module.exports = router;
