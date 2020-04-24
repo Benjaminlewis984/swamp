@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../logo.svg';
 import styled from 'styled-components';
-import { ButtonContainer } from "./Button"
+import { ButtonContainer } from "./Button";
+import Login from './Login';
 
 export default class Navbar extends Component {
     render() {
@@ -30,7 +31,8 @@ export default class Navbar extends Component {
                         cart
                     </ButtonContainer>
                 </Link>
-                <Link to="/">
+                
+                <Link to="/login">
                 <ButtonContainer>
                         <span className="mr-2">
                             <i className="fas fa-sign-in-alt"></i>
@@ -49,6 +51,7 @@ export default class Navbar extends Component {
             </NavWrapper>
         )
     }
+}
 const NavWrapper = styled.nav`
     background: var(--mainBlue);
     .nav-link {

@@ -39,6 +39,7 @@ import Details from './components/Details';
 import Cart from './components/Cart';
 import Default from './components/Default';
 import Model from './components/Model';
+import Login from './components/Login';
 
 import Team from './components/Team';
 import Dang from './components/About/Dang';
@@ -58,7 +59,8 @@ class App extends Component {
             <Route path="/result" component={ProductList} />
             <Route path="/details" component={Details} />
             <Route path="/cart" component={Cart} />
-            
+            <Route path="/login" component={Login} />
+
             <Route path="/about" component={Team} />
             <Route path="/dang" component={Dang} />
             <Route path="/will" component={William} />
