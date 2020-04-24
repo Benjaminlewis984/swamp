@@ -7,31 +7,33 @@ import Search from "./Search";
 import { setSearchResults } from '../redux/actions/searchActions';
 import {connect } from 'react-redux';
 
-
-
-const Home = ({dispatch, searchResults}) => {
+const Home = ({
+  // dispatch, 
+  // searchResults
+}) => {
   const [query, setQuery] = useState('');
   const [result, setResult] = useState([]);
-  const [showTable, setShowTable] = useState(false);
+  //const [showTable, setShowTable] = useState(false);
 
   const searchByTitle = () => {
     console.log('Button click')
 
     axios.post('http://18.191.184.143:3001/browse',  {
+      // axios.get(`http://18.191.184.143:3001/browse?title=${query}`,  {
       category: 'all',
       search: query,
       searchResults: result, 
     }).then((res) => {
       console.log('TEST');
       console.log(res.data.results);
-      dispatch(setSearchResults(res.data.results));
+      setResult(res.data.results);
+      // dispatch(setSearchResults(res.data.results));
       setQuery('');
 
       let element = document.getElementById('results');
       element.style.display = "block";
     }).catch(err => console.log(err));
   }
-
 
   return (
     <div className="container">
@@ -82,4 +84,3 @@ const mapStateToProps = (state) => {
 
 
 export default connect(mapStateToProps)(Home);
-
