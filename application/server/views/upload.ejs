@@ -8,11 +8,13 @@
     <h1>Upload</h1>
     <form method='POST' action='/upload' encType="multipart/form-data">
       <label for='name'> File: </label><br>
-      <input type='file' name='file'><br>
+      <input type='file' name='file' required><br>
       <label for='name'> Preview: </label><br>
       <input type='file' name='preview'><br>
       <input type='text' placeholder='title' name='title'><br>
       <input type='text' placeholder='description' name='description'><br>
+      <label for='price'> Enter Amount: </label><br>
+      <input type='number' name='price' placeholder='0.00' required><br>
       <select name="category">
         <option value="document">Document</option>
         <option value="image">Image</option>

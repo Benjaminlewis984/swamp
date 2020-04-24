@@ -19,7 +19,6 @@
     "express-flash": "0.0.2",
     "express-session": "^1.17.0",
     "http-errors": "~1.6.3",
-    "jade": "~1.11.0",
     "morgan": "~1.9.1",
     "mysql": "^2.18.1",
     "passport": "^0.4.1",

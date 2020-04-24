@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import {storeProducts, detailProduct} from './data';
 import Home from './components/Home';
 
@@ -19,14 +20,19 @@ class ProductProvider extends Component {
     }
 
     setProducts = () => {
-        let tempProducts = [];
-        storeProducts.forEach(item => {
-            const singleItem = {...item};
-            tempProducts = [...tempProducts, singleItem];
+        let tempProducts;
+
+        axios.post('http://18.191.184.143:3001/browse', {
+            category: 'all',
+            search: '',
+        }).then((res) => {
+            tempProducts = res.data.results;
+
+            this.setState(() => { return {products: tempProducts} })
+            console.log(tempProducts[0].preview_path);
+            console.log(res.data.results);
         })
-        this.setState(() => {
-            return {products: tempProducts}
-        })
+
     }
 
     getItem = (id) => {
