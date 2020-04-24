@@ -12,7 +12,8 @@ router.get('/login', passport_config.alreadyAuth, (req, res, next) => {
   
   if (req.query.username != undefined) {
     request.post('http://0.0.0.0:3001/login', {json: req.query}, (error, response, body) => {
-      res.render('index', { title: 'Database Dashboard', user: body.user });
+      res.send({success: "true", user: body.user})
+      // res.render('index', { title: 'Database Dashboard', user: body.user });
     });
   }
   else {

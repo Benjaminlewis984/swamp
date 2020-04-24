@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
     username: '',
     password: '',
+    email: '',
     isSignedUp: false,
     loadingState: 'init',
 };
@@ -16,6 +17,11 @@ const signupReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 password: action.password,
+            };
+        case 'USER_SET_EMAIL':
+            return {
+                ...state,
+                email: action.email,
             };
         case 'USER_SET_IS_SIGNED_UP':
             return {

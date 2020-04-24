@@ -20,17 +20,14 @@ export const login = () => (dispatchEvent, getState) => {
     console.log('Log In Function !!!');
     const username = getState().loginReducer.userName;
     const password = getState().loginReducer.password;
-    
-    if(username.length > 0 && password.length > 0){
-        // endpoint on backend http://18.191.184.143:3001
+
     const url =(`http://18.191.184.143:3001/login?username=${username}&password=${password}`)
     fetch(url)
-    .then(data => {
-    // console.log(data);
-        if(data){
+    .then((res) => {
+        if(res.data){
             dispatchEvent(setIsLoggedIn('init'));
         }else{
             dispatchEvent(setLoadingState('error'));
         }
 })};
-}
+//}
