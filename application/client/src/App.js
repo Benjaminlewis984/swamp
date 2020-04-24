@@ -40,6 +40,7 @@ import Cart from './components/Cart';
 import Default from './components/Default';
 import Model from './components/Model';
 import Login from './components/Login';
+import Signup from './components/Signup';
 
 import Team from './components/Team';
 import Dang from './components/About/Dang';
@@ -60,6 +61,7 @@ class App extends Component {
             <Route path="/details" component={Details} />
             <Route path="/cart" component={Cart} />
             <Route path="/login" component={Login} />
+            <Route path="/signup" component={Signup} />
 
             <Route path="/about" component={Team} />
             <Route path="/dang" component={Dang} />

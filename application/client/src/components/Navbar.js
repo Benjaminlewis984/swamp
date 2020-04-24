@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import logo from '../logo.svg';
 import styled from 'styled-components';
 import { ButtonContainer } from "./Button";
-import Login from './Login';
 
 export default class Navbar extends Component {
     render() {
@@ -40,7 +39,7 @@ export default class Navbar extends Component {
                         login
                     </ButtonContainer>
                 </Link>
-                <Link to="/">
+                <Link to="/signup">
                 <ButtonContainer>
                         <span className="mr-2">
                             <i className="fas fa-user-plus"></i>
