@@ -30,17 +30,17 @@ exports.deleteFromCart = (m_id, acc_id) => {
 }
 
 exports.getFromCartByID = (acc_id, action) => {
-  let reg_id;
-  databaseManager.queryDatabase(`SELECT registered.reg_id FROM \`registered users\` registered INNER JOIN accounts ON registered.acc_id = accounts.acc_id WHERE accounts.acc_id = ?;`, [acc_id], (result) => {
-    reg_id = result[0]['reg_id'];
-    databaseManager.queryDatabase(`SELECT COUNT(*) FROM \`shopping cart\` WHERE reg_id = ?;`, [reg_id], (count) => {
-      if(count[0]['COUNT(*)'] > 0) {
-        databaseManager.queryDatabase(`SELECT * FROM \`media content\` media, \`shopping cart\` cart, \`approved media\` approved WHERE cart.approved_id = approved.approved_id AND approved.m_id = media.m_id AND cart.reg_id = ?;`, [reg_id], (result) => {
-          action(result);
-        });
-      } else {
-          action(undefined);
-      }
-    })
+  userManager.getRegIDFromUser(acc_id, (reg) => {
+    if(reg == undefined) { action(undefined) }
+    else {
+      const reg_id = reg[0]['reg_id'];
+      databaseManager.queryDatabase(`SELECT COUNT(*) FROM \`shopping cart\` WHERE reg_id = ?;`, [reg_id], (count) => {
+        if(count[0]['COUNT(*)'] > 0) {
+          databaseManager.queryDatabase(`SELECT * FROM \`media content\` media INNER JOIN \`shopping cart\` cart INNER JOIN \`approved media\` approved ON cart.approved_id = approved.approved_id AND approved.m_id = media.m_id WHERE cart.reg_id = ?;`, [reg_id], (result) => {
+            action(result);
+          });
+        } else { action(undefined); }
+      });
+    }
   })
 }
