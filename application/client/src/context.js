@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {storeProducts, detailProduct} from './data';
 import Home from './components/Home';
+import axios from 'axios';
 
 const ProductContext = React.createContext();
 
@@ -19,23 +20,15 @@ class ProductProvider extends Component {
     }
 
     setProducts = () => {
-        let store = [];
-        let tempProducts = [];
+        let tempProducts;
 
         axios.post('http://18.191.184.143:3001/browse', {
             category: 'all',
             search: '',
         }).then((res) => {
-            store = res.data.results;
+            tempProducts = res.data.results;
 
-            store.forEach(item => {
-                const singleItem = {...item};
-                tempProducts = [...tempProducts, singleItem];
-            })
-
-            this.setState(() => {
-                return {products: tempProducts}
-            })
+            this.setState(() => { return {products: tempProducts} })
         })
     }
 
