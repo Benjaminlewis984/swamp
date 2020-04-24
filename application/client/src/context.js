@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 import {storeProducts, detailProduct} from './data';
 import Home from './components/Home';
-import axios from 'axios';
 
 const ProductContext = React.createContext();
 
@@ -29,8 +29,10 @@ class ProductProvider extends Component {
             tempProducts = res.data.results;
 
             this.setState(() => { return {products: tempProducts} })
-            console.log(tempProducts);
+            console.log(tempProducts[0].preview_path);
+            console.log(res.data.results);
         })
+
     }
 
     getItem = (id) => {
