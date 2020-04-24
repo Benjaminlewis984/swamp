@@ -29,6 +29,7 @@ class ProductProvider extends Component {
             tempProducts = res.data.results;
 
             this.setState(() => { return {products: tempProducts} })
+            console.log(tempProducts);
         })
     }
 

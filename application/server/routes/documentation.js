@@ -1,8 +1,7 @@
-var raml2html = require('raml2html');
-var configWithDefaultTheme = raml2html.getConfigForTheme();
-
-var express = require('express');
-var router = express.Router();
+const raml2html = require('raml2html');
+const configWithDefaultTheme = raml2html.getConfigForTheme();
+const express = require('express');
+const router = express.Router();
 
 router.get('/documentation', (req, res, next) => {
   raml2html.render('./documentation/source.raml', configWithDefaultTheme).then((result) => {

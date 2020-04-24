@@ -1,37 +1,31 @@
-var mediaManager = require('../database/media-manager.js');
-var express = require('express');
-var router = express.Router();
+const mediaManager = require('../../database/media-manager.js');
+const express = require('express');
+const router = express.Router();
+const passport_config = require('../../modules/passport-config.js');
 
-var path = require('path');
-var fs = require('fs');
+const path = require('path');
+const fs = require('fs');
 
-var mediaRawDirectory = path.join(__dirname, '../media/raw');
+const mediaRawDirectory = path.join(__dirname, '../../media/raw');
 
-router.get('/upload', checkAuthUser, (req, res, next) => {
+// Only users, not admins, can upload
+router.get('/upload', passport_config.checkAuth, passport_config.checkUser, (req, res, next) => {
   res.render('upload', { title: 'Upload file' });
 });
-
-function checkAuthUser(req, res, next) {
-  if(req.isAuthenticated()) {
-    if(req.user !== undefined) {
-      return next();
-    }
-  }
-  res.redirect('/login');
-}
 
 router.post('/upload', (req, res) => {
   if(!req.isAuthenticated()) {
     res.redirect('/register')
   }
-
+  
   let file = req.files.file;
   let preview = req.files.preview;
 
+  let price = req.body.price;
+  let academic = 0;
   let title = req.body.title;
   let description = req.body.description;
   let category = req.body.category;
-
   fs.readdir(mediaRawDirectory, (err, files) => {
     let fileStringList = [];
     for (let x = 0; x < files.length; x++) {
@@ -50,7 +44,7 @@ router.post('/upload', (req, res) => {
 
     let previewPath = "";
     if (preview === undefined) {
-      previewPath = "default/" + category + ".png";
+      previewPath = "preview/default/" + category + ".png";
     }
     else {
       let previewExtension = preview.name.substr(preview.name.indexOf('.'));
@@ -60,15 +54,15 @@ router.post('/upload', (req, res) => {
     let rawPath = "raw/" + dateString + fileNumber + fileExtension;
 
     file.mv('./media/' + rawPath, (err) => {
-      if (previewPath.substr(0, 8) == "preview/") {
+      if (previewPath.substr(0, 16) != "preview/default/") {
         preview.mv('./media/' + previewPath, (err) => {
-          mediaManager.addMedia(req.user.id, title, description, previewPath, rawPath, category);
+          mediaManager.addMedia(title, description, previewPath, rawPath, category, price, req.user.acc_id, academic);
           res.status(200);
           res.send({success: "true"});
         });
       }
       else {
-        mediaManager.addMedia(req.user.id, title, description, previewPath, rawPath, category);
+        mediaManager.addMedia(title, description, previewPath, rawPath, category, price, req.user.acc_id, academic);
         res.status(200);
         res.send({success: "true"});
       }

@@ -1,28 +1,29 @@
-var databaseManager = require('./database/database-manager.js');
+const databaseManager = require('./database/database-manager.js');
 databaseManager.connect();
 
-var cors = require("cors");
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var passport = require('passport');
-var session = require('express-session');
-var fileUpload = require('express-fileupload');
+const cors = require("cors");
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const passport = require('passport');
+const session = require('express-session');
+const fileUpload = require('express-fileupload');
 
-var app = express();
+const app = express();
 app.use(cors());
 
-var indexRouter = require('./routes/index');
-var addUserRouter = require('./routes/addUser');
-var verifyUserRouter = require('./routes/verifyUser');
-var uploadFileRouter = require('./routes/uploadFile');
-var signOutRouter = require('./routes/signOut');
-var banUserRouter = require('./routes/banUser');
-var approveMediaRouter = require('./routes/approveMedia');
-var downloadMediaRouter = require('./routes/downloadMedia');
-var browseMediaRouter = require('./routes/browseMedia');
-var documentationRouter = require('./routes/documentation');
+const indexRouter = require('./routes/index');
+const addUserRouter = require('./routes/Users/addUser');
+const verifyUserRouter = require('./routes/Users/verifyUser');
+const uploadFileRouter = require('./routes/Media/uploadFile');
+const signOutRouter = require('./routes/Users/signOut');
+const banUserRouter = require('./routes/Users/banUser');
+const approveMediaRouter = require('./routes/Media/approveMedia');
+const downloadMediaRouter = require('./routes/Media/downloadMedia');
+const browseMediaRouter = require('./routes/Media/browseMedia');
+const documentationRouter = require('./routes/documentation');
+const cartRouter = require('./routes/ShoppingCart/addToCart');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -52,6 +53,7 @@ app.use(approveMediaRouter);
 app.use(downloadMediaRouter);
 app.use(browseMediaRouter);
 app.use(documentationRouter);
+app.use(cartRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

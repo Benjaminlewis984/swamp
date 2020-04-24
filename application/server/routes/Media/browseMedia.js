@@ -1,9 +1,8 @@
-var mediaManager = require('../database/media-manager.js');
-var userManager = require('../database/user-manager.js');
-var express = require('express');
-var router = express.Router();
-
-var request = require('request');
+const mediaManager = require('../../database/media-manager.js');
+const userManager = require('../../database/user-manager.js');
+const express = require('express');
+const router = express.Router();
+const request = require('request');
 
 router.get('/browse', (req, res, next) => {
   let category = req.body.category;
@@ -16,13 +15,23 @@ router.get('/browse', (req, res, next) => {
 });
 
 router.post('/browse', (req, res, next) => {
-  let category = req.body.category;
+  let category = req.body.category;  
   let search = req.body.search;
-  
-  if (category == 'all') { category = undefined; }
-  if (search == '') { search = undefined; }
+  let search_array
 
-  filter = { status: 'approved', category: category, title: search };
+  if(search == '') {
+    search = undefined;
+  }
+  if(search != undefined) {
+    search_array = search.replace(/[^A-Za-z0-9]/g, ' ').split(' ').filter( e => e.trim().length > 1 );
+    search_array = [...new Set(search_array)];
+    if (search_array.length < 1 || search == undefined) { search = search_array; }
+  }
+
+
+  if (category == 'all') { category = undefined; }
+
+  filter = { status: 'approved', category: category, search: search };
   
   mediaManager.getMediaFilter(25, 0, filter, (results) => {
     if (results.length == 0) {
@@ -31,7 +40,7 @@ router.post('/browse', (req, res, next) => {
     }
     else {
       results.forEach((result, idx) => {
-        userManager.getUserFromID(result.author_id, (user) => {
+        userManager.getUserFromID(result.acc_id, (user) => {
           result["author_username"] = user[0].username;
 
           if (idx == results.length - 1) {

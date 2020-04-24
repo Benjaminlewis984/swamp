@@ -1,22 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Browse</title>
+    <title>Shopping Cart</title>
     <link rel='stylesheet', href='/stylesheets/style.css'>
   </head>
   <body>
-    <h1>Browse</h1>
-    <form method='GET' action='/browse'>
-        <input type='text' placeholder='Search' name='search'><br>
-        <select name="category">
-          <option value="all">All</option>
-          <option value="document">Document</option>
-          <option value="image">Image</option>
-          <option value="video">Video</option>
-          <option value="audio">Audio</option>
-        </select>
-        <input type='submit' value='Submit'><br>
-    </form>
+    <h1>Shopping Cart</h1>
     <table width="100%">
       <tr>
         <th>Author</th>
@@ -25,7 +14,6 @@
         <th>Category</th>
         <th>Preview Image</th>
         <th>Price</th>
-        <th>Controls</th>
       </tr>
 <% results.forEach(function(obj){ %>
       <tr>
@@ -37,11 +25,6 @@
            <img src="./<%=obj.preview_path.substr(obj.preview_path.indexOf('preview/') + 8);%>" style="width: 100px; height: 100px;"> 
         </td>
         <td style="text-align:center">$<%=obj.price%></td>
-        <td style="text-align:center">
-          <form action="/cart" method="post" style="display: inline-block;">
-            <button type="submit" name="m_id" value="<%=obj.m_id%>" style="background-color: #4CAF50;">Add to Cart</button>
-          </form>
-        </td>
       </tr>
       <%})%>
     </table>
