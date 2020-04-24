@@ -33,8 +33,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { Switch, Route } from "react-router-dom";
 
 import Navbar from './components/Navbar';
-// import Home from './components/Home';
-// import Home from ''
+import Home from './components/Home';
 import ProductList from './components/ProductList';
 import Details from './components/Details';
 import Cart from './components/Cart';
