@@ -36,38 +36,22 @@ router.post('/browse', async (req, res, next) => {
   
   const results = await mediaManager.getMediaFilter(25, 0, filter);
   if(results.length == 0) { return res.status(200).send({success: true, filter: filter, results: results}); }
-  
-  results.forEach(async (result, idx) => {
-    const user = await userManager.getUserFromID(result.acc_id);
-    result["author_username"] = user[0].username;
-    if(idx == results.length - 1) {
-      return res.status(200).send({success: true, filter: filter, results: results});
-    }
-  });
-    // if (results.length == 0) {
-    //   return res.status(400).send({success: true, filter: filter, results: results});
-    // }
-    // else {
-    //   results.forEach((result, idx) => {
-    //     userManager.getUserFromID(result.acc_id, (user) => {
-    //       result["author_username"] = user[0].username;
-    //       result.bought = 'false';
-    //       result.cart = 'false';
-    //       if(req.user != undefined) {
-    //         checkoutManager.checkMediaInCheckout(req.user.acc_id, result['m_id'], (bought) => {
-    //           if(bought != undefined) { result.bought = 'true'; }
 
-    //           cartManager.checkMediaInCart(req.user.acc_id, result['m_id'], (inCart) => {
-    //             if(cart != undefined) { result.cart = 'true'; }
-    //           });
-    //         });
-    //       }
-    //       if (idx == results.length - 1) {
-    //         return res.status(200).send({success: true, filter: filter, results: results});
-    //       }
-    //     });
-    //   });
-    // }
+  if (results.length == 0) {
+    return res.status(400).send({success: true, filter: filter, results: results});
+  } else {
+    results.forEach(async (result, idx) => {
+      const userResult = await userManager.getUserFromID(result.acc_id);
+      result['author_username'] = userResult[0].username;
+      result.bought = 'false';
+      
+      if(req.body.user != undefined) {
+        const bought = await checkoutManager.checkMediaInCheckout(req.body.user.acc_id, result['m_id']);
+        if(bought != undefined) { result.bought = 'true'; }
+        if(idx == results.length - 1) { return res.status(200).send({success: true, filter: filter, results: results}); }
+      }
+    });
+  }
 });
 
 module.exports = router;

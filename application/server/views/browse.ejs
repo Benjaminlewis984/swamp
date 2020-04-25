@@ -37,11 +37,19 @@
            <img src="./<%=obj.preview_path.substr(obj.preview_path.indexOf('preview/') + 8);%>" style="width: 100px; height: 100px;"> 
         </td>
         <td style="text-align:center">$<%=obj.price%></td>
+        <% if(obj.bought == 'false') { %>
         <td style="text-align:center">
           <form action="/cart" method="post" style="display: inline-block;">
             <button type="submit" name="m_id" value="<%=obj.m_id%>" style="background-color: #4CAF50;">Add to Cart</button>
           </form>
         </td>
+        <% } else { %>
+        <td style="text-align:center">
+          <form action="/download" method="post" style="display: inline-block;">
+            <button type="submit" name="path" value="<%=obj.raw_path%>">Download</button>
+          </form>
+        </td>
+        <% } %>
       </tr>
       <%})%>
     </table>
