@@ -26,7 +26,7 @@ const approveMediaRouter = require('./routes/Media/approveMedia');
 const downloadMediaRouter = require('./routes/Media/downloadMedia');
 const browseMediaRouter = require('./routes/Media/browseMedia');
 const documentationRouter = require('./routes/documentation');
-const cartRouter = require('./routes/ShoppingCart/addToCart');
+const cartRouter = require('./routes/ShoppingCart/cart');
 const checkoutRouter = require('./routes/ShoppingCart/checkout');
 
 // view engine setup

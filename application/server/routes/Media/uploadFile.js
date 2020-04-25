@@ -63,8 +63,7 @@ router.post('/upload', (req, res) => {
       }
       else {
         mediaManager.addMedia(title, description, previewPath, rawPath, category, price, req.user.acc_id, academic);
-        res.status(200);
-        res.send({success: "true"});
+        return res.status(200).send({success: "true"});
       }
     });
   });

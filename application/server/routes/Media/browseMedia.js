@@ -1,3 +1,5 @@
+const cartManager = require('../../database/cart-manager.js');
+const checkoutManager = require('../../database/checkout-manager.js');
 const mediaManager = require('../../database/media-manager.js');
 const userManager = require('../../database/user-manager.js');
 const express = require('express');
@@ -15,11 +17,11 @@ router.get('/browse', (req, res, next) => {
   });
 });
 
-router.post('/browse', (req, res, next) => {
+router.post('/browse', async (req, res, next) => {
   let category = req.body.query.category;  
   let search = req.body.query.search;
   let search_array
-  
+
   if(search == '') {
     search = undefined;
   }
@@ -32,36 +34,40 @@ router.post('/browse', (req, res, next) => {
   if (category == 'all') { category = undefined; }
   filter = { status: 'approved', category: category, search: search };
   
-  mediaManager.getMediaFilter(25, 0, filter, (results) => {
-    if (results.length == 0) {
-      return res.status(400).send({success: true, filter: filter, results: results});
-    }
-    else {
-      results.forEach((result, idx) => {
-        userManager.getUserFromID(result.acc_id, (user) => {
-          result["author_username"] = user[0].username;
-          if(req.body.user == undefined) {
-            if (idx == results.length - 1) {
-              return res.status(200).send({success: true, filter: filter, results: results});
-            }
-          } else {
-            // mediaManager.checkMediaBought(req.body.user['acc_id'], result['m_id'], (results) => {
-            //   if(results != undefined) {
-            //     results['bought'] == true;
-            //   }
+  const results = await mediaManager.getMediaFilter(25, 0, filter);
+  if(results.length == 0) { return res.status(200).send({success: true, filter: filter, results: results}); }
   
-            //   if (idx == results.length - 1) {
-            //     return res.status(200).send({success: true, filter: filter, results: results});
-            //   }
-            // });
-            if (idx == results.length - 1) {
-              return res.status(200).send({success: true, filter: filter, results: results});
-            }
-          }
-        });
-      });
+  results.forEach(async (result, idx) => {
+    const user = await userManager.getUserFromID(result.acc_id);
+    result["author_username"] = user[0].username;
+    if(idx == results.length - 1) {
+      return res.status(200).send({success: true, filter: filter, results: results});
     }
   });
+    // if (results.length == 0) {
+    //   return res.status(400).send({success: true, filter: filter, results: results});
+    // }
+    // else {
+    //   results.forEach((result, idx) => {
+    //     userManager.getUserFromID(result.acc_id, (user) => {
+    //       result["author_username"] = user[0].username;
+    //       result.bought = 'false';
+    //       result.cart = 'false';
+    //       if(req.user != undefined) {
+    //         checkoutManager.checkMediaInCheckout(req.user.acc_id, result['m_id'], (bought) => {
+    //           if(bought != undefined) { result.bought = 'true'; }
+
+    //           cartManager.checkMediaInCart(req.user.acc_id, result['m_id'], (inCart) => {
+    //             if(cart != undefined) { result.cart = 'true'; }
+    //           });
+    //         });
+    //       }
+    //       if (idx == results.length - 1) {
+    //         return res.status(200).send({success: true, filter: filter, results: results});
+    //       }
+    //     });
+    //   });
+    // }
 });
 
 module.exports = router;

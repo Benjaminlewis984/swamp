@@ -31,9 +31,12 @@ exports.end = () => {
 	});
 }
 
-exports.queryDatabase = (query, param, action) => {
-	connection.query(query, param, (error, result) => {
-		if (error) throw error;
-		action(result);
+exports.queryDatabase = (query, param) => {
+	return new Promise((resolve, reject) => {
+		query = query.replace(/[\n]/gm, ' ');
+		connection.query(query, param, (err, result) => {
+			if(err) { reject(err); }
+			else { resolve(result); }
+		});
 	});
 }
