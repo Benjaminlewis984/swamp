@@ -1,12 +1,17 @@
 const databaseManager = require('./database-manager.js');
 
-exports.addMedia = async (title, description, preview_path, raw_path, category, price = 0, acc_id, academic = 0) => {
+exports.addMedia = async (title, description, preview_path, raw_path, category, price = 0, acc_id, academic = 0, type) => {
   const date = new Date().toJSON().slice(0,10);
   const time = new Date().toJSON().slice(11,19);
   await databaseManager.queryDatabase(`INSERT INTO \`media content\`
-                                (title, \`description\`, preview_path, raw_path, category, price, acc_id, academic, \`date\`, \`time\`)
-                                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`, 
-                                [title, description, preview_path, raw_path, category, price, acc_id, academic, date, time]);
+    (title, \`description\`, preview_path, raw_path, category, price, acc_id, academic, \`date\`, \`time\`)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`, 
+    [title, description, preview_path, raw_path, category, price, acc_id, academic, date, time]);
+  const last_id = await databaseManager.queryDatabase(`SELECT MAX(m_id) FROM \`media content\`;`);
+  const m_id = last_id[0]['MAX(m_id)'];
+
+  if(type == 'digital') { await databaseManager.queryDatabase(`INSERT INTO \`digital media\`(m_id) VALUES (?)`, [m_id]); }
+  else { await databaseManager.queryDatabase(`INSERT INTO \`physical media\`(m_id) VALUES (?)`, [m_id]);}
 }
 
 exports.deleteMedia = async (title) => {
