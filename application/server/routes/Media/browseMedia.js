@@ -35,10 +35,9 @@ router.post('/browse', async (req, res, next) => {
   filter = { status: 'approved', category: category, search: search };
   
   const results = await mediaManager.getMediaFilter(25, 0, filter);
-  if(results.length == 0) { return res.status(200).send({success: true, filter: filter, results: results}); }
 
   if (results.length == 0) {
-    return res.status(400).send({success: true, filter: filter, results: results});
+    return res.status(200).send({success: true, filter: filter, results: results});
   } else {
     results.forEach(async (result, idx) => {
       const userResult = await userManager.getUserFromID(result.acc_id);
@@ -50,6 +49,8 @@ router.post('/browse', async (req, res, next) => {
         if(bought != undefined) { result.bought = 'true'; }
         if(idx == results.length - 1) { return res.status(200).send({success: true, filter: filter, results: results}); }
       }
+
+      if(idx == results.length - 1) { return res.status(200).send({success: true, filter: filter, results: results}); }
     });
   }
 });
