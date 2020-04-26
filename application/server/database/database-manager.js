@@ -4,7 +4,7 @@ const connectionInformation = {
 	host: 'swamp-database-instance.c7yirp5jbhfm.us-east-2.rds.amazonaws.com',
 	user: 'admin',
 	password: '1vFhxpUjr0vof3KErgPi',
-	database: 'swamp'
+	database: 'mydb'
 };
 
 // Local DB for testing
