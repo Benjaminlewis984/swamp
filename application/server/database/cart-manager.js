@@ -11,11 +11,11 @@ exports.addToCart = async (m_id, acc_id) => {
   const reg = await userManager.getRegIDFromUser(acc_id);
   if(reg != undefined) {
     const reg_id = reg[0]['reg_id'];
-    const already_inside = await self.checkMediaInCart(acc_id, m_id);
+    const already_inside = await this.checkMediaInCart(acc_id, m_id);
     if(already_inside == undefined) {
       await databaseManager.queryDatabase(`INSERT INTO \`shopping cart\`(approved_id, price, reg_id) VALUES (?, ?, ?)`, [approved_id, price, reg_id]);
+      return '';
     }
-    return '';
   }
   return undefined;
 }

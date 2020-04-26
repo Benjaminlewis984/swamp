@@ -10,17 +10,17 @@ exports.addMedia = async (title, description, preview_path, raw_path, category, 
   const last_id = await databaseManager.queryDatabase(`SELECT MAX(m_id) FROM \`media content\`;`);
   const m_id = last_id[0]['MAX(m_id)'];
 
-  if(type == 'digital') { await databaseManager.queryDatabase(`INSERT INTO \`digital media\`(m_id) VALUES (?)`, [m_id]); }
-  else { await databaseManager.queryDatabase(`INSERT INTO \`physical media\`(m_id) VALUES (?)`, [m_id]);}
+  if(type == 'digital') { await databaseManager.queryDatabase(`INSERT INTO \`digital media\`(m_id, sold) VALUES (?, 0);`, [m_id]); }
+  else { await databaseManager.queryDatabase(`INSERT INTO \`physical media\`(m_id) VALUES (?);`, [m_id]);}
 }
 
 exports.deleteMedia = async (title) => {
-  await databaseManager.queryDatabase(`DELETE FROM media WHERE title = ?`, [title]);
+  await databaseManager.queryDatabase(`DELETE FROM media WHERE title = ?;`, [title]);
 }
 
 exports.approveMedia = async (m_id, admin_id) => {
   await databaseManager.queryDatabase(`UPDATE \`media content\` SET status = 'approved' WHERE m_id = ?;`, [m_id]);
-  await databaseManager.queryDatabase(`INSERT INTO \`approved media\`(m_id, status, status_by) VALUES (?, ?, ?)`, [m_id, 'approved', admin_id])
+  await databaseManager.queryDatabase(`INSERT INTO \`approved media\`(m_id, status, status_by) VALUES (?, ?, ?);`, [m_id, 'approved', admin_id])
 }
 
 exports.rejectMedia = async (m_id, admin_id) => {
@@ -38,7 +38,7 @@ exports.getMediaFromStatus = async (status) => {
 }
 
 exports.deleteRejectedMedia = () => {
-  databaseManager.queryDatabase(`DELETE FROM \`media content\` media INNER JOIN \`rejected media\` rejected ON media.m_id = rejected.m_id`, []);
+  databaseManager.queryDatabase(`DELETE FROM \`media content\` media INNER JOIN \`rejected media\` rejected ON media.m_id = rejected.m_id;`, []);
 }
 
 exports.getMediaFilter = async (count, offset, filter) => {

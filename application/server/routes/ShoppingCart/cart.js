@@ -5,22 +5,25 @@ const userManager = require('../../database/user-manager.js');
 const passport_config = require('../../modules/passport-config.js');
 
 router.get('/cart', passport_config.checkUser, async (req, res) => {
-  const cart = await cartManager.getFromCartByID(req.user.acc_id);
-  if(cart != undefined) {
-    cart.forEach(async (result, idx) => {
-      const user = await userManager.getUserFromID(result.acc_id);
-      result['author_username'] = user[0].username;
+  if(req.user) {
+    const cart = await cartManager.getFromCartByID(req.user.acc_id);
+    if(cart != undefined) {
+      cart.forEach(async (result, idx) => {
+        const user = await userManager.getUserFromID(result.acc_id);
+        result['author_username'] = user[0].username;
 
-      if(idx == cart.length - 1) {
-        res.render('cart', {results: cart});
-      }
-   });
-  } else { res.send('There are no listings in your shopping cart at this time.');}
+        if(idx == cart.length - 1) {
+          return res.render('cart', {results: cart});
+        }
+    });
+    } else { return res.status(200).send('There are no listings in your shopping cart at this time.'); }
+  } else { return res.status(403).send({success: "false"}); }
 });
 
 router.post('/cart', passport_config.checkAuth, passport_config.checkUser, async (req, res) => {
-  await cartManager.addToCart(req.body.m_id, req.user.acc_id);
-  return res.status(200).send({success: "true"});
+  const add = await cartManager.addToCart(req.body.m_id, req.user.acc_id);
+  if(add != undefined) { return res.status(200).send({success: "true"}); }
+  else { return res.status(403).send({success: "false"}); }
 });
 
 router.delete('/cart', async (req, res) => {
