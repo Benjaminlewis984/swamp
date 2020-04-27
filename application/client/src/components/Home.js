@@ -7,28 +7,28 @@ import Search from "./Search";
 import { setSearchResults } from '../redux/actions/searchActions';
 import {connect } from 'react-redux';
 
-const Home = ({
-  // dispatch, 
-  // searchResults
-}) => {
+const Home = () => {
   const [query, setQuery] = useState('');
   const [result, setResult] = useState([]);
-  //const [showTable, setShowTable] = useState(false);
 
   const searchByTitle = () => {
     console.log('Button click')
 
-    axios.post('http://18.191.184.143:3001/browse',  {
-      // axios.get(`http://18.191.184.143:3001/browse?title=${query}`,  {
-      category: 'all',
-      search: query,
-      searchResults: result, 
-    }).then((res) => {
+    axios.post(`http://18.191.184.143:3001/browse`,  {
+        "query": {
+          "category": "all",
+          "search": ""
+        }    
+    // axios.get(`http://18.191.184.143:3001/browse?title=${query}`,  {
+      //category: 'all',
+      // search: query,
+      // searchResults: result, 
+    })
+    .then((res) => {
       console.log('TEST');
       console.log(res.data.results);
       setResult(res.data.results);
-      // dispatch(setSearchResults(res.data.results));
-      setQuery('');
+      // setQuery('');
 
       let element = document.getElementById('results');
       element.style.display = "block";
@@ -53,7 +53,11 @@ const Home = ({
             <li><a href="#Music">Music</a></li>
             <li><a href="#Video">Video</a></li>
           </ul>
-          <Input type='text' value={query} onChange={e => setQuery(e.target.value)} placeholder='Search by title..' />
+
+          <Input type='text' value={query} 
+          onChange={e => setQuery(e.target.value)} 
+          placeholder='Search by title..' />
+
           <button onClick={searchByTitle}>Search</button>
           <table id='results' display="none">
             <tr className='table-head'>
@@ -67,7 +71,10 @@ const Home = ({
                 <td>{items.title}</td>
                 <td>{items.description}</td>
                 <td>{items.category}</td>
-                <td> <img src={`http://localhost:3001/${items.preview_path}`}></img></td>
+                <td> 
+                  <img src={`http://18.191.184.143:3001/${items.preview_path}`}>
+                </img>
+                </td>
               </tr>)}
           </table>
         </div>

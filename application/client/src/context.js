@@ -23,8 +23,12 @@ class ProductProvider extends Component {
         let tempProducts;
 
         axios.post('http://18.191.184.143:3001/browse', {
-            category: 'all',
-            search: '',
+            "query": {
+                "category": "all",
+                "search": ""
+              }  
+            // category: 'all',
+            // search: '',
         }).then((res) => {
             tempProducts = res.data.results;
 
