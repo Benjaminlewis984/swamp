@@ -10,7 +10,11 @@ import {connect } from 'react-redux';
 const Home = () => {
   const [query, setQuery] = useState('');
   const [result, setResult] = useState([]);
-  const [dropDown, setDropDown] = useState('all');
+  const [dropDown, setDropDown] = useState([]);
+
+  const searchAll = () => {
+    console.log('search all');
+  }
 
   const searchByTitle = () => {
     console.log('Button click')
@@ -43,25 +47,25 @@ const Home = () => {
       </div>
       <div className="input-group">
         <div className="input-group-btn search-panel">
-          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+          {/* <button type="button" class="btn btn-default dropdown-toggle" > */}
             <span id="search_concept"> Filter </span>
             <span class="caret"></span>
-          </button>
-          <div class="dropdown">
-          <ul class="dropdown-menu" role="menu">
-            
-            <li><a href="#All">All</a></li>
-            <li><a href="#Documents">Documents</a></li>
-            <li><a href="#Images">Images</a></li>
-            <li><a href="#Music">Music</a></li>
-            <li><a href="#Video">Video</a></li>
-          </ul>
-          </div>
+            <select id="catagory" onChange={()=> setDropDown(dropDown)} >
+            <option value="all" selected>All</option>
+            <option value="document">Documents</option>
+            <option value="image">Images</option>
+            <option value="audio">Audio</option>
+            <option value="video">Video</option>
+            </select>
+
+          
+          {/* </button> */}
+
           <Input type='text' value={query} 
           onChange={e => setQuery(e.target.value)} 
           placeholder='Search by title..' />
 
-          <button onClick={searchByTitle}>Search</button>
+          <button onClick={dropDown}>Search</button>
           <table id='results' display="none">
             <tr className='table-head'>
               <td>Title</td>
