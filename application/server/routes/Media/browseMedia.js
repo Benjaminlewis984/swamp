@@ -43,6 +43,7 @@ router.post('/browse', async (req, res, next) => {
       const userResult = await userManager.getUserFromID(result.acc_id);
       result['author_username'] = userResult[0].username;
       result.bought = 'false';
+      result.preview_path = result.preview_path.substr(result.preview_path.indexOf('preview/') + 8);
       
       if(req.body.user != undefined) {
         const bought = await checkoutManager.checkMediaInCheckout(req.body.user.acc_id, result['m_id']);
