@@ -44,19 +44,15 @@ const Home = () => {
       </div>
       <div className="input-group">
         <div className="input-group-btn search-panel">
-          <button type="button" class="btn btn-default dropdown-toggle" onChange={e => getValue(e)}>
             <span id="search_concept"> Filter </span>
             <span class="caret"></span>
-            <select id="category">
+            <select id="category" onChange={e => getValue(e)}>
             <option value="all" selected>All</option>
             <option value="document">Documents</option>
             <option value="image">Images</option>
             <option value="audio">Audio</option>
             <option value="video">Video</option>
             </select>
-
-          
-          </button>
 
           <Input type='text' value={query} 
           onChange={e => setQuery(e.target.value)} 
