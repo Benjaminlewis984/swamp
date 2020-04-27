@@ -90,15 +90,25 @@ exports.getPurchases = async (count, offset, accountID) => {
 
   let checkoutQuery = "SELECT DISTINCT * FROM `checkout` WHERE `reg_id` = " + registeredID + ";";
   const secondResult = await databaseManager.queryDatabase(checkoutQuery);
+  let approvedIDString = "";
   secondResult.forEach(async (result, idx) => {
-    let approvedID = result.approvedID;
+    approvedIDString += result.approved_id;
+    if (idx != secondResult.length - 1) {
+      approvedIDString += ", ";
+    }
   });
-  // const approvedID = secondResult[0].approved_id;
 
-  // queryString = "SELECT DISTINCT * FROM `approved media` WHERE `approved_id` = " + approvedID + " LIMIT " + count + " OFFSET " + offset + ";";
-  // const thirdResult = await databaseManager.queryDatabase(queryString);
+  let approvedMediaQuery = "SELECT DISTINCT * FROM `approved media` WHERE `approved_id` IN (" + approvedIDString + ") LIMIT " + count + " OFFSET " + offset + ";";
+  const thirdResult = await databaseManager.queryDatabase(approvedMediaQuery);
+  let mediaIDString = "";
+  thirdResult.forEach(async (result, idx) => {
+    mediaIDString += result.m_id;
+    if (idx != thirdResult.length - 1) {
+      mediaIDString += ", ";
+    }
+  });
 
-  // console.log(secondResult);
-
-  // queryString = "SELECT DISTINCT * FROM `approved media` WHERE `approved_id` = " + mediaID + " LIMIT " + count + " OFFSET " + offset + ";";
+  let mediaContentQuery = "SELECT DISTINCT * FROM `media content` WHERE `m_id` IN (" + approvedIDString + ");";
+  const fourthResult = await databaseManager.queryDatabase(mediaContentQuery);
+  return fourthResult;
 }
