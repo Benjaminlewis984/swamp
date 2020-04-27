@@ -4,9 +4,9 @@ import{
     setUserName,
     setPassword,
     setEmail,
-    signup
-    // setIsSignedUp,
-    // setLoadingState
+    setFirstName,
+    setLastName,
+    signup,
 } from '../redux/actions/signupAction';
 import { Redirect } from 'react-router-dom';
 
@@ -14,19 +14,16 @@ const Signup = ({
     username,
     password,
     email,
+    firstname,
+    lastname,
     isSignedUp,
-    loadingState,
+    isSignedUpLoadingState,
     dispatch,
     }) => {
-
 
     if(isSignedUp === true){
         return <Redirect to="/" />;
     }
-
-    // if (loadingState === 'loading') {
-    //     return <h2>Loading...</h2>;
-    // }
 
     return(
         <div>
@@ -54,7 +51,21 @@ const Signup = ({
                 />
             </div>
             <div>
-                {loadingState === 'error' && <b>userName is not valid, Enter new userName</b>}
+                First Name:
+                <input
+                    value={firstname}
+                    onChange={e => dispatch(setFirstName(e.target.value))}
+                />
+            </div>
+            <div>
+                Last Name:
+                <input
+                    value={lastname}
+                    onChange={e => dispatch(setLastName(e.target.value))}
+                />
+            </div>
+            <div>
+                {isSignedUpLoadingState === 'error' && <b>userName is not valid, Enter new userName</b>}
                 <button id="signup" onClick={()=> dispatch(signup())}>Sign Up</button>
             </div>
         </div>
@@ -67,7 +78,9 @@ const mapStateToProps = state => {
         username: state.signupReducer.username,
         password: state.signupReducer.password,
         email: state.signupReducer.email,
-        loadingState: state.signupReducer.loadingState,
+        firstname: state.signupReducer.firstname,
+        lastname: state.signupReducer.lastname,
+        isSignedUpLoadingState: state.signupReducer.isSignedUpLoadingState,
         isSignedUp: state.signupReducer.isSignedUp,
     };
 };
