@@ -10,31 +10,28 @@ import {connect } from 'react-redux';
 const Home = () => {
   const [query, setQuery] = useState('');
   const [result, setResult] = useState([]);
-  const [dropDown, setDropDown] = useState([]);
+  const [saveSelectedDropDown, setSaveSelectedDropDown] = useState('all');
 
-  const searchAll = () => {
-    console.log('search all');
+  const getValue = (val) => {
+    var e = document.getElementById("category");
+    console.log(e.selectedIndex);
+    console.log(e.options[e.selectedIndex].value);
+    setSaveSelectedDropDown(e.options[e.selectedIndex].value);
   }
 
   const searchByTitle = () => {
     console.log('Button click')
 
-    axios.post(`http://18.191.184.143:3001/browse`,  {
+    axios.post(`http://18.191.184.143:3001/browse`,   {
         "query": {
-          "category": "all",
-          "search": ""
+          "category": saveSelectedDropDown,
+          "search": query
         }    
-    // axios.get(`http://18.191.184.143:3001/browse?title=${query}`,  {
-      //category: 'all',
-      // search: query,
-      // searchResults: result, 
     })
     .then((res) => {
       console.log('TEST');
       console.log(res.data.results);
       setResult(res.data.results);
-      // setQuery('');
-
       let element = document.getElementById('results');
       element.style.display = "block";
     }).catch(err => console.log(err));
@@ -47,10 +44,10 @@ const Home = () => {
       </div>
       <div className="input-group">
         <div className="input-group-btn search-panel">
-          {/* <button type="button" class="btn btn-default dropdown-toggle" > */}
+          <button type="button" class="btn btn-default dropdown-toggle" onChange={e => getValue(e)}>
             <span id="search_concept"> Filter </span>
             <span class="caret"></span>
-            <select id="catagory" onChange={()=> setDropDown(dropDown)} >
+            <select id="category">
             <option value="all" selected>All</option>
             <option value="document">Documents</option>
             <option value="image">Images</option>
@@ -59,13 +56,13 @@ const Home = () => {
             </select>
 
           
-          {/* </button> */}
+          </button>
 
           <Input type='text' value={query} 
           onChange={e => setQuery(e.target.value)} 
           placeholder='Search by title..' />
 
-          <button onClick={dropDown}>Search</button>
+          <button onClick={searchByTitle}>Search</button>
           <table id='results' display="none">
             <tr className='table-head'>
               <td>Title</td>
