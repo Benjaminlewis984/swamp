@@ -45,10 +45,10 @@ export const signup = () => (dispatchEvent, getState) => {
             lastname: `${lastname}`,
         };
         
-        axios.post(`http://18.191.184.143:3001/register`,body) 
+        axios.post(`http://18.191.184.143:3001/register`,body, {validateStatus:false}) 
             .then((response) =>{
                 console.log("second url", response);
-                if(response.data.success){
+                if(response.data.success==='true'){
                     console.log("I'm here in if = true", response);
                     // dispatchEvent(setIsSignedUp(true));
                     dispatchEvent(setSignedUpLoadingState('good'));

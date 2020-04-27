@@ -23,22 +23,18 @@ export const login = () => (dispatchEvent, getState) => {
     const username = getState().loginReducer.username;
     const password = getState().loginReducer.password;
     if(username.length > 0 && password.length > 0){
-        // const url =(`/api/auth/authenticate?userName=${userName}&password=${password}`)
-        // fetch(url)
-        axios.post(`http://18.191.184.143:3001/login?username=${username}&password=${password}`)
+        axios.post(`http://18.191.184.143:3001/login?username=${username}&password=${password}`, {validateStatus:false})
         .then((response) => {
             console.log('Login data :::',response);
-            if(response.data.success){
+            if(response.data.success==='true'){
                 dispatchEvent(setIsLoggedIn('init'));
-            }else{
-                dispatchEvent(setLoadingState('error'));
             }
-            // if(data.data.value){
-            //     dispatchEvent(setIsLoggedIn('init'));
-            // }else{
-            //     dispatchEvent(setLoadingState('error'));
-            // }
-    })};
+           
+        })
+        .catch(e => {
+                dispatchEvent(setLoadingState('error'));
+        })
+};
 //     const url =(`http://18.191.184.143:3001/login?username=${username}&password=${password}`)
 //     fetch(url)
 //     .then((res) => {
