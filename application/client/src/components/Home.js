@@ -10,7 +10,7 @@ import {connect } from 'react-redux';
 const Home = () => {
   const [query, setQuery] = useState('');
   const [result, setResult] = useState([]);
-  const [dropDown, setDropDown] = useState('all');
+  const [dropDown, setDropDown] = useState([]);
 
   const searchAll = () => {
     console.log('search all');
