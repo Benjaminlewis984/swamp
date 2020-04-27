@@ -3,13 +3,14 @@ import axios from 'axios';
 import '../styles/Home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Label, Form, FormGroup, Input, Alert, Table } from 'reactstrap';
-import Search from "./Search";
+// import Search from "./Search";
 import { setSearchResults } from '../redux/actions/searchActions';
 import {connect } from 'react-redux';
 
 const Home = () => {
   const [query, setQuery] = useState('');
   const [result, setResult] = useState([]);
+  const [dropDown, setDropDown] = useState('all');
 
   const searchByTitle = () => {
     console.log('Button click')
@@ -47,6 +48,7 @@ const Home = () => {
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" role="menu">
+            <option value="#All" selected>All</option>
             <li><a href="#All">All</a></li>
             <li><a href="#Documents">Documents</a></li>
             <li><a href="#Images">Images</a></li>
