@@ -3,6 +3,7 @@ databaseManager.connect();
 
 const cors = require("cors");
 const createError = require('http-errors');
+const methodOverride = require('method-override');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -12,6 +13,7 @@ const fileUpload = require('express-fileupload');
 
 const app = express();
 app.use(cors());
+app.use(methodOverride('_method'));
 
 const indexRouter = require('./routes/index');
 const addUserRouter = require('./routes/Users/addUser');
@@ -23,7 +25,8 @@ const approveMediaRouter = require('./routes/Media/approveMedia');
 const downloadMediaRouter = require('./routes/Media/downloadMedia');
 const browseMediaRouter = require('./routes/Media/browseMedia');
 const documentationRouter = require('./routes/documentation');
-const cartRouter = require('./routes/ShoppingCart/addToCart');
+const cartRouter = require('./routes/ShoppingCart/cart');
+const checkoutRouter = require('./routes/ShoppingCart/checkout');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -54,6 +57,7 @@ app.use(downloadMediaRouter);
 app.use(browseMediaRouter);
 app.use(documentationRouter);
 app.use(cartRouter);
+app.use(checkoutRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

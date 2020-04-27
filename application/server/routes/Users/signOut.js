@@ -9,8 +9,7 @@ passport_config.pp_config(passport);
 router.get('/logout', passport_config.checkAuth, (req, res, next) => {
   req.session.destroy((err) => {
     req.logout();
-    res.status(200);
-    res.send({success: "true"});
+    return res.status(200).send({success: "true"});
   });
 });
 

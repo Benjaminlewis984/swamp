@@ -13,19 +13,20 @@ router.get('/upload', passport_config.checkAuth, passport_config.checkUser, (req
   res.render('upload', { title: 'Upload file' });
 });
 
-router.post('/upload', (req, res) => {
+router.post('/upload', async (req, res) => {
   if(!req.isAuthenticated()) {
     res.redirect('/register')
   }
   
-  let file = req.files.file;
-  let preview = req.files.preview;
+  const file = req.files.file;
+  const preview = req.files.preview;
+  const price = req.body.price;
+  const academic = 0;
+  const title = req.body.title;
+  const description = req.body.description;
+  const category = req.body.category;
+  const type = req.body.type;
 
-  let price = req.body.price;
-  let academic = 0;
-  let title = req.body.title;
-  let description = req.body.description;
-  let category = req.body.category;
   fs.readdir(mediaRawDirectory, (err, files) => {
     let fileStringList = [];
     for (let x = 0; x < files.length; x++) {
@@ -56,15 +57,13 @@ router.post('/upload', (req, res) => {
     file.mv('./media/' + rawPath, (err) => {
       if (previewPath.substr(0, 16) != "preview/default/") {
         preview.mv('./media/' + previewPath, (err) => {
-          mediaManager.addMedia(title, description, previewPath, rawPath, category, price, req.user.acc_id, academic);
-          res.status(200);
-          res.send({success: "true"});
+          mediaManager.addMedia(title, description, previewPath, rawPath, category, price, req.user.acc_id, academic, type);
+          return res.status(200).send({success: "true"});
         });
       }
       else {
-        mediaManager.addMedia(title, description, previewPath, rawPath, category, price, req.user.acc_id, academic);
-        res.status(200);
-        res.send({success: "true"});
+        mediaManager.addMedia(title, description, previewPath, rawPath, category, price, req.user.acc_id, academic, type);
+        return res.status(200).send({success: "true"});
       }
     });
   });

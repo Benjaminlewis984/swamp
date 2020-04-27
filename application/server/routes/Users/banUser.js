@@ -8,22 +8,17 @@ router.get('/ban', passport_config.checkAuth, passport_config.checkAdmin, (req, 
   res.render('ban');
 });
 
-router.post('/ban', (req, res, next) => {
-  let username = req.body.username;
-  userManager.getUserFromUsername(username, (user) => {
-    if(user == undefined) {
-      res.status(400).send({success: "false"});
-    } else {
-      userManager.checkUserBanned(user, (result) => {
-        if(result != undefined) {
-          userManager.banUser(user, req.user.admin_id, req.body.reason, parseInt(req.body.ban_length));
-          res.status(200).send({success: "true"});
-        } else {
-          res.status(400).send({success: "false"});
-        }
-      });
+router.post('/ban', async (req, res) => {
+  const user = await userManager.getUserFromUsername(req.body.username);
+  if(user != undefined) {
+    const banned = await userManager.checkUserBanned(user);
+    if(banned == undefined) {
+      await userManager.banUser(user, req.user.admin_id, req.body.reason, parseInt(req.body.ban_length));
+      return res.status(200).send({success: "true"});
     }
-  });
+  }
+
+  return res.status(400).send({success: "false"});
 });
 
 module.exports = router;
