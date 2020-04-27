@@ -10,6 +10,7 @@ export default class Details extends Component {
                 {(value) => {
                     const {id, author_username, preview_path, description, price, title, inCart}
                      = value.detailProduct;
+                     console.log(value.detailProduct);
                      return (
                          <div className="container py-5">
                              {/* title */}
@@ -23,7 +24,10 @@ export default class Details extends Component {
                              {/* product description */}
                              <div className="row">
                                  <div className="col-10 mx-auto col-md-6 my-3">
-                                    <img src={preview_path} className="img-fluid" alt="product" />
+                                    <img src={`http://18.191.184.143:3001/${preview_path}`} 
+                                    className="img-fluid" 
+                                    alt="product" 
+                                    />
                                  </div>
                                  {/* product text */}
                                  <div className="col-10 mx-auto col-md-6 my-3 text-capitalize">

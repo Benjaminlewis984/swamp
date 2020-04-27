@@ -21,7 +21,8 @@ export default class Model extends Component {
                                 col-lg-4 text-center text-capitalize">
                                     <h5>Item added</h5>
                                     <img src={img} className="img-fluid" 
-                                    alt="product"/>
+                                    alt="product" style={{width:'5rem', height: '5rem'}}
+                                    />
                                     <h5>{title}</h5>
                                     <h5 className="text-muted">price : $ {price}</h5>
                                     <Link to='/result'>

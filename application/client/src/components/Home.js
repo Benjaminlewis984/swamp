@@ -72,7 +72,7 @@ const Home = () => {
                 <td>{items.description}</td>
                 <td>{items.category}</td>
                 <td> 
-                  <img src={`http://18.191.184.143:3001/${items.preview_path}`}>
+                  <img src={`http://18.191.184.143:3001/${items.preview_path}`} alt="product" style={{width:'5rem', height: '5rem'}}>
                 </img>
                 </td>
               </tr>)}

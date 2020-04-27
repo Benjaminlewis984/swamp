@@ -27,8 +27,6 @@ class ProductProvider extends Component {
                 "category": "all",
                 "search": ""
               }  
-            // category: 'all',
-            // search: '',
         }).then((res) => {
             tempProducts = res.data.results;
 
