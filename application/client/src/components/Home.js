@@ -47,15 +47,16 @@ const Home = () => {
             <span id="search_concept"> Filter </span>
             <span class="caret"></span>
           </button>
+          <div class="dropdown">
           <ul class="dropdown-menu" role="menu">
-            <option value="#All" selected>All</option>
+            
             <li><a href="#All">All</a></li>
             <li><a href="#Documents">Documents</a></li>
             <li><a href="#Images">Images</a></li>
             <li><a href="#Music">Music</a></li>
             <li><a href="#Video">Video</a></li>
           </ul>
-
+          </div>
           <Input type='text' value={query} 
           onChange={e => setQuery(e.target.value)} 
           placeholder='Search by title..' />
