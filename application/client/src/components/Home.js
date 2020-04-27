@@ -3,7 +3,7 @@ import axios from 'axios';
 import '../styles/Home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Label, Form, FormGroup, Input, Alert, Table } from 'reactstrap';
-import { setSearchResults } from '../redux/actions/searchActions';
+import { setSearchResults } from '../redux/actions/searchAction';
 import {connect } from 'react-redux';
 import { ButtonContainer } from "./Button";
 
@@ -56,7 +56,25 @@ const Home = () => {
           placeholder='Search by title..' />
 
           <ButtonContainer onClick={searchByTitle}>Search</ButtonContainer>
-      </div>
+          </div>
+          <table id='results' display="none">
+            <tr className='table-head'>
+              <td>Title</td>
+              <td>Description</td>
+              <td>Category</td>
+              <td>Preview</td>
+            </tr>
+            {result.map(items =>
+              <tr>
+                <td>{items.title}</td>
+                <td>{items.description}</td>
+                <td>{items.category}</td>
+                <td> 
+                  <img src={`http://18.191.184.143:3001/${items.preview_path}`} alt="product" style={{width:'5rem', height: '5rem'}}>
+                </img>
+                </td>
+              </tr>)}
+          </table>
     </div>
   );
 };
