@@ -2,8 +2,10 @@ const INITIAL_STATE = {
     username: '',
     password: '',
     email: '',
+    firstname: '',
+    lastname: '',
     isSignedUp: false,
-    loadingState: 'init',
+    isSignedUpLoadingState: 'init',
 };
 
 const signupReducer = (state = INITIAL_STATE, action) => {
@@ -23,15 +25,25 @@ const signupReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 email: action.email,
             };
+        case 'USER_SET_FIRST_NAME':
+            return {
+                ...state,
+                firstname: action.firstname,
+            };
+        case 'USER_SET_LAST_NAME':
+            return {
+                ...state,
+                lastname: action.lastname,
+            };
         case 'USER_SET_IS_SIGNED_UP':
             return {
                 ...state,
                 isSignedUp: action.isSignedUp,
             };
-        case 'USER_SET_LOADING_STATE':
+        case 'USER_SET_IS_SIGNED_UP_LOADING_STATE':
             return {
                 ...state,
-                loadingState: action.loadingState,
+                isSignedUpLoadingState: action.isSignedUpLoadingState,
             };
         default:
             return state;
