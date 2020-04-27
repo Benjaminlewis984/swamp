@@ -3,9 +3,9 @@ import axios from 'axios';
 import '../styles/Home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Label, Form, FormGroup, Input, Alert, Table } from 'reactstrap';
-// import Search from "./Search";
 import { setSearchResults } from '../redux/actions/searchActions';
 import {connect } from 'react-redux';
+import { ButtonContainer } from "./Button";
 
 const Home = () => {
   const [query, setQuery] = useState('');
@@ -43,9 +43,6 @@ const Home = () => {
         <div className="col-10 mx-auto text-center text-title pt-5"> swamp </div>
       </div>
       <div className="input-group">
-        <div className="input-group-btn search-panel">
-            <span id="search_concept"> Filter </span>
-            <span class="caret"></span>
             <select id="category" onChange={e => getValue(e)}>
             <option value="all" selected>All</option>
             <option value="document">Documents</option>
@@ -58,26 +55,7 @@ const Home = () => {
           onChange={e => setQuery(e.target.value)} 
           placeholder='Search by title..' />
 
-          <button onClick={searchByTitle}>Search</button>
-          <table id='results' display="none">
-            <tr className='table-head'>
-              <td>Title</td>
-              <td>Description</td>
-              <td>Category</td>
-              <td>Preview</td>
-            </tr>
-            {result.map(items =>
-              <tr>
-                <td>{items.title}</td>
-                <td>{items.description}</td>
-                <td>{items.category}</td>
-                <td> 
-                  <img src={`http://18.191.184.143:3001/${items.preview_path}`} alt="product" style={{width:'5rem', height: '5rem'}}>
-                </img>
-                </td>
-              </tr>)}
-          </table>
-        </div>
+          <ButtonContainer onClick={searchByTitle}>Search</ButtonContainer>
       </div>
     </div>
   );

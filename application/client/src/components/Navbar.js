@@ -15,8 +15,8 @@ export default class Navbar extends Component {
                 </Link>
                 <ul className="navbar-nav align-items-center">
                     <li className="nav-item ml-5">
-                        <Link to="/result" className="nav-link text-lowercase">
-                            swamp.
+                        <Link to="/result" className="nav-link">
+                            Marketplace
                         </Link>
                     </li>
                     <li className="nav-item">
@@ -33,7 +33,7 @@ export default class Navbar extends Component {
                 </Link>
                 
                 <Link to="/login">
-                <ButtonContainer>
+                    <ButtonContainer>
                         <span className="mr-2">
                             <i className="fas fa-sign-in-alt"></i>
                         </span>
@@ -41,7 +41,7 @@ export default class Navbar extends Component {
                     </ButtonContainer>
                 </Link>
                 <Link to="/signup">
-                <ButtonContainer>
+                    <ButtonContainer>
                         <span className="mr-2">
                             <i className="fas fa-user-plus"></i>
                         </span>

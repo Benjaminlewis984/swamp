@@ -37,21 +37,21 @@ class ProductProvider extends Component {
 
     }
 
-    getItem = (id) => {
-        const product = this.state.products.find(item => item.id === id);
+    getItem = (m_id) => {
+        const product = this.state.products.find(item => item.m_id === m_id);
         return product;
     }
 
-    handleDetail = (id) => {
-        const product = this.getItem(id);
+    handleDetail = (m_id) => {
+        const product = this.getItem(m_id);
         this.setState(() => {
             return {detailProduct: product}
         })
     };
 
-    addToCart = id => {
+    addToCart = m_id => {
         let tempProducts = [...this.state.products];
-        const index = tempProducts.indexOf(this.getItem(id));
+        const index = tempProducts.indexOf(this.getItem(m_id));
 
         const product = tempProducts[index];
         product.inCart = true;
@@ -64,8 +64,8 @@ class ProductProvider extends Component {
         }, () => { this.addTotals(); });
     };
 
-    openModel = id => {
-        const product = this.getItem(id)
+    openModel = m_id => {
+        const product = this.getItem(m_id)
         this.setState(() => {
             return {modelProduct: product, modelOpen: true}
         })
@@ -77,12 +77,12 @@ class ProductProvider extends Component {
         })
     }
 
-    removeItem = (id) => {
+    removeItem = (m_id) => {
         let tempProducts = [...this.state.products];
         let tempCart = [...this.state.cart];
 
-        tempCart = tempCart.filter(item => item.id !== id);
-        const index = tempProducts.indexOf(this.getItem(id))
+        tempCart = tempCart.filter(item => item.m_id !== m_id);
+        const index = tempProducts.indexOf(this.getItem(m_id))
         let removedProduct = tempProducts[index]
         removedProduct.inCart = false;
         removedProduct.count = 0;

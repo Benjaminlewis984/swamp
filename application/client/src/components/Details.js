@@ -8,17 +8,17 @@ export default class Details extends Component {
         return (
             <ProductConsumer>
                 {(value) => {
-                    const {id, author_username, preview_path, description, price, title, inCart}
+                    const {m_id, acc_id, preview_path, description, price, title, inCart}
                      = value.detailProduct;
                      console.log(value.detailProduct);
                      return (
                          <div className="container py-5">
                              {/* title */}
-                             <div className="row">
+                             {/* <div className="row">
                                  <div className="col-10 mx-auto text-center text-slanted text-blue my-5">
                                      <h1>{title}</h1>
                                  </div>
-                             </div>
+                             </div> */}
                              {/* end title */}
 
                              {/* product description */}
@@ -31,9 +31,9 @@ export default class Details extends Component {
                                  </div>
                                  {/* product text */}
                                  <div className="col-10 mx-auto col-md-6 my-3 text-capitalize">
-                                     <h3>Model : {title}</h3>
+                                     <h3>title : {title}</h3>
                                      <h5 className="text-title text-uppercase text-muted mt-3 mb-2">
-                                         made by : <span className="text-uppercase">{author_username}</span>
+                                         made by : <span className="text-uppercase">{acc_id}</span>
                                      </h5>
                                      <h5 className="text-blue">
                                          <strong>
@@ -55,8 +55,8 @@ export default class Details extends Component {
                                          cart
                                          disabled={inCart ? true : false}
                                          onClick={() => {
-                                             value.addToCart(id);
-                                             value.openModel(id);
+                                             value.addToCart(m_id);
+                                             value.openModel(m_id);
                                          }}>
                                              {inCart ? "inCart" : "add to cart"}
                                          </ButtonContainer>

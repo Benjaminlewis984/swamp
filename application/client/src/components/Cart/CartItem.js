@@ -1,7 +1,7 @@
 import React from 'react'
 
 export default function CartItem({item, value}) {
-    const {id, title, preview_path, price} = item;
+    const {m_id, title, preview_path, price} = item;
     const {removeItem} = value;
 
     return (
@@ -17,7 +17,7 @@ export default function CartItem({item, value}) {
             </div>
 
             <div className="col-10 mx-auto col-lg-2">
-                <div className="cart-icon" onClick={() => removeItem(id)}>
+                <div className="cart-icon" onClick={() => removeItem(m_id)}>
                     <i className="fas fa-trash"></i>
                 </div>
             </div>

@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { ProductConsumer } from '../context';
 import { ButtonContainer } from './Button';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types'
+
 
 export default class Model extends Component {
     render() {
@@ -10,7 +12,7 @@ export default class Model extends Component {
             <ProductConsumer>
                 {(value) => {
                     const {modelOpen, closeModel} = value;
-                    const {img, title, price} = value.modelProduct;
+                    const {preview_path, title, price} = value.modelProduct;
 
                     if(!modelOpen) { return null; }
                     else {
@@ -20,7 +22,7 @@ export default class Model extends Component {
                                 <div id="model" className="col-8 mx-auto col-md-6 
                                 col-lg-4 text-center text-capitalize">
                                     <h5>Item added</h5>
-                                    <img src={img} className="img-fluid" 
+                                    <img src={`http://18.191.184.143:3001/${preview_path}`} className="img-fluid" 
                                     alt="product" style={{width:'5rem', height: '5rem'}}
                                     />
                                     <h5>{title}</h5>

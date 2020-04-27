@@ -6,13 +6,13 @@ import PropTypes from 'prop-types'
 
 export default class Product extends Component {
     render() {
-        const { id, title, preview_path, price, inCart } = this.props.product;
+        const { m_id, title, preview_path, price, inCart } = this.props.product;
         return (
             <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
                 <div className="card">
                     <ProductConsumer>
                     {(value) => (
-                    <div className="img-container p-5" onClick={() => value.handleDetail(id)}>
+                    <div className="img-container p-5" onClick={() => value.handleDetail(m_id)}>
                         <Link to="/details">
                             <img src={`http://18.191.184.143:3001/${preview_path}`} 
                             className="card-img-top" 
@@ -22,13 +22,13 @@ export default class Product extends Component {
                         </Link>
                         <button className="cart-btn" disabled={inCart ? true : false} 
                         onClick={() => {
-                            value.addToCart(id);
-                            value.openModel(id);
+                            value.addToCart(m_id);
+                            value.openModel(m_id);
                             }}>
                         {inCart ? 
                             (<p className="text-capitalize mb-0" disabled>
                             {" "}
-                            in inCart</p>) :
+                            In Cart</p>) :
                              (<i className="fas fa-cart-plus" />)}
                         </button>
                     </div>)}
