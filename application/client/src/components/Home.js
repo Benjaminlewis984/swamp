@@ -16,6 +16,13 @@ const Home = () => {
     console.log('search all');
   }
 
+  const getValue = (val) => {
+    var e = document.getElementById("category");
+    console.log(e.selectedIndex);
+    var result = e;
+    console.log(result);
+  }
+
   const searchByTitle = () => {
     console.log('Button click')
 
@@ -47,10 +54,10 @@ const Home = () => {
       </div>
       <div className="input-group">
         <div className="input-group-btn search-panel">
-          {/* <button type="button" class="btn btn-default dropdown-toggle" > */}
+          <button type="button" class="btn btn-default dropdown-toggle" onChange={e => getValue(e)}>
             <span id="search_concept"> Filter </span>
             <span class="caret"></span>
-            <select id="catagory" onChange={()=> setDropDown(dropDown)} >
+            <select id="category">
             <option value="all" selected>All</option>
             <option value="document">Documents</option>
             <option value="image">Images</option>
@@ -59,7 +66,7 @@ const Home = () => {
             </select>
 
           
-          {/* </button> */}
+          </button>
 
           <Input type='text' value={query} 
           onChange={e => setQuery(e.target.value)} 
