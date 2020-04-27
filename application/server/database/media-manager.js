@@ -82,3 +82,15 @@ exports.getMediaFilter = async (count, offset, filter) => {
   const result = await databaseManager.queryDatabase(queryString, params);
   return result;
 }
+
+exports.getPurchases = async (count, offset, accountID) => {
+  let queryString = "SELECT DISTINCT * FROM `registered users` WHERE `acc_id` = " + accountID + ";";
+  const firstResult = await databaseManager.queryDatabase(queryString);
+  const registeredID = firstResult[0].reg_id;
+
+  queryString = "SELECT DISTINCT * FROM `checkout` WHERE `reg_id` = " + registeredID + " LIMIT " + count + " OFFSET " + offset + ";";
+  const secondResult = await databaseManager.queryDatabase(queryString);
+  const approvedID = secondResult[0]
+
+  queryString = "SELECT DISTINCT * FROM `digital media` WHERE `reg_id` = " + registeredID + " LIMIT " + count + " OFFSET " + offset + ";";
+}
