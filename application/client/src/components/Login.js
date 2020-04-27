@@ -7,17 +7,20 @@ import {
   // setLoadingState,
   login
 } from '../redux/actions/loginAction';
-import {Redirect} from 'react-router-dom';
+// import {Redirect} from 'react-router-dom';
 
-const Login = ({ username,password,isLoggedIn,loadingState,dispatch,
+const Login = ({ username,
+  password,
+  isLoggedIn,
+  loginLoadingState,
+  dispatch,
 }) => {
   if(isLoggedIn){
-    return <Redirect to="/" />;
+    return  <div>
+              <p>Welcome {username}!!!</p>
+              <p>You are Loggen in</p>
+            </div> 
   }
-  if(loadingState === 'loading'){
-    return <h2> Loading ...</h2>
-  }
-  //const [user, setUser] = React.useState('');
   return (
     <div>
       <h2>Login</h2>
@@ -37,7 +40,7 @@ const Login = ({ username,password,isLoggedIn,loadingState,dispatch,
         />
       </div>
       <div>
-        {loadingState === 'error' && <b> Username or Password incorrect</b>}
+        {loginLoadingState === 'error' && <b> Username or Password incorrect</b>}
         <button id="login" onClick={()=>dispatch(login())}>Log in</button>
       </div>
     </div>
@@ -50,7 +53,7 @@ const mapStateToProps = state => {
     userName: state.loginReducer.username,
     password: state.loginReducer.password,
     isLoggedIn: state.loginReducer.isLoggedIn,
-    loadingState: state.loginReducer.loadingState,
+    loginLoadingState: state.loginReducer.loginLoadingState,
   };
 };
 

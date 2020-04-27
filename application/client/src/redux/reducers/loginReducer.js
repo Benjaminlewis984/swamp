@@ -2,7 +2,7 @@ const INITIAL_STATE = {
     username: '',
     password: '',
     isLoggedIn: false,
-    loadingState: 'init',
+    loginLoadingState: 'init',
 };
 
 const loginReducer = (state = INITIAL_STATE, action) => {
@@ -22,10 +22,10 @@ const loginReducer = (state = INITIAL_STATE, action) => {
                 ...state,
                 isLoggedIn: action.isLoggedIn,
             };
-        case 'USER_SET_LOADING_STATE':
+        case 'USER_SET_LOG_IN_LOADING_STATE':
             return {
                 ...state,
-                loadingState: action.loadingState,
+                loginLoadingState: action.loginLoadingState,
             };
         default:
             return state;

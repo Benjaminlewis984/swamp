@@ -44,28 +44,20 @@ export const signup = () => (dispatchEvent, getState) => {
             firstname: `${firstname}`,
             lastname: `${lastname}`,
         };
-        // axios.post(`http://18.191.184.143:3001/login?username=${username}&password=${password}`)
-        // .then((res) =>{
-        //     console.log(res.data);
-        // })
-        // .then((response) => {
-            // if(response.data.success){
-            //     dispatchEvent(setSignedUpLoadingState('error'));
-            // }
-            //lsof -i:3000
-            //else{
-                axios.post(`http://18.191.184.143:3001/register`,body) 
-                .then((response) =>{
-                    console.log("second url", response);
-                    if(response.data.success){
-                        console.log("I'm here in if = true", response);
-                        dispatchEvent(setIsSignedUp(true));
-                    }
-                    else{
-                        console.log("I'm here in else/ ", response)
-                        dispatchEvent(setSignedUpLoadingState('error'));
-                    }
-                })
+        
+        axios.post(`http://18.191.184.143:3001/register`,body) 
+            .then((response) =>{
+                console.log("second url", response);
+                if(response.data.success){
+                    console.log("I'm here in if = true", response);
+                    // dispatchEvent(setIsSignedUp(true));
+                    dispatchEvent(setSignedUpLoadingState('good'));
+                }
+                else{
+                    console.log("I'm here in else/ ", response)
+                    dispatchEvent(setSignedUpLoadingState('error'));
+                }
+            })
             //}
         // })
 }

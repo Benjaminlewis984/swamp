@@ -8,7 +8,7 @@ import{
     setLastName,
     signup,
 } from '../redux/actions/signupAction';
-import { Redirect } from 'react-router-dom';
+// import { Redirect } from 'react-router-dom';
 
 const Signup = ({
     username,
@@ -16,15 +16,16 @@ const Signup = ({
     email,
     firstname,
     lastname,
-    isSignedUp,
+    //isSignedUp,
     isSignedUpLoadingState,
     dispatch,
     }) => {
 
-    if(isSignedUp === true){
-        return <Redirect to="/" />;
+    if(isSignedUpLoadingState === 'good'){
+        return  <div> 
+                    Welcome {username}. You are Logged in
+                </div>
     }
-
     return(
         <div>
             <h2>SIGN UP</h2>
@@ -39,6 +40,7 @@ const Signup = ({
             <div>
                 password:
                 <input
+                    type="password"
                     value={password}
                     onChange={e => dispatch(setPassword(e.target.value))}
                 />
