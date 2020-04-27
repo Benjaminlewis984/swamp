@@ -19,13 +19,6 @@ const Home = () => {
     setSaveSelectedDropDown(e.options[e.selectedIndex].value);
   }
 
-  const getValue = (val) => {
-    var e = document.getElementById("category");
-    console.log(e.selectedIndex);
-    var result = e;
-    console.log(result);
-  }
-
   const searchByTitle = () => {
     console.log('Button click')
 
