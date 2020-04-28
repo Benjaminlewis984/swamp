@@ -13,6 +13,7 @@ router.get('/browse', (req, res, next) => {
     category = 'all';
   }
   request.post('http://0.0.0.0:3001/browse', {json: {query: req.query, user: req.user}}, (error, response, body) => {
+    console.log({results: body.results})
     res.render('browse', {results: body.results});
   });
 });

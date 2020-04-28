@@ -42,6 +42,9 @@
           <form action="/cart" method="post" style="display: inline-block;">
             <button type="submit" name="m_id" value="<%=obj.m_id%>" style="background-color: #4CAF50;">Add to Cart</button>
           </form>
+          <form action="/message" method="get" style="display: inline-block;">
+            <button type="submit" name="acc_id" value="<%=obj.acc_id%>" style="background-color: #4CAF50;">Message</button>
+          </form>
         </td>
         <% } else { %>
         <td style="text-align:center">
