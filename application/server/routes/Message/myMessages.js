@@ -4,6 +4,13 @@ const messageManager = require('../../database/message-manager.js');
 const databaseManager = require('../../database/database-manager.js');
 const passport_config = require('../../modules/passport-config.js');
 
+/**
+ * Queries the database to receive all the messages sent to your acc_id and returns them
+ * 
+ * @param req.user.acc_id:The user's acc_id
+ * @return: Json containing an array of messages sent to user
+ */
+
 router.get('/messagebox', passport_config.checkAuth, async (req, res) => {
   const acc_id = req.user.acc_id;
   const messages = await messageManager.receiveMessage(acc_id);
