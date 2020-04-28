@@ -118,3 +118,10 @@ exports.getListings = async (count, offset, accountID) => {
   const firstResult = await databaseManager.queryDatabase(mediaContentQuery);
   return firstResult;
 }
+
+exports.getPurchaseCount = async (mediaID) => {
+  let digitalMediaQuery = "SELECT DISTINCT * FROM `digital media` WHERE `m_id` = " + mediaID + ";";
+  const firstResult = await databaseManager.queryDatabase(digitalMediaQuery);
+
+  return firstResult[0].sold;
+}

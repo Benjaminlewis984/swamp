@@ -19,6 +19,7 @@ router.post('/listings', async (req, res, next) => {
     result['author_username'] = userResult[0].username;
     result.bought = 'false';
     result.preview_path = result.preview_path.substr(result.preview_path.indexOf('preview/') + 8);
+    result.purchase_count = await mediaManager.getPurchaseCount(result.m_id);
 
     if(idx == results.length - 1) { return res.status(200).send({success: true, results: results}); }
   });
