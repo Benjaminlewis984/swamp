@@ -3,11 +3,9 @@ import { connect } from 'react-redux';
 import {
   setUserName,
   setPassword,
-  // setIsLoggedIn,
-  // setLoadingState,
   login
 } from '../redux/actions/loginAction';
-// import {Redirect} from 'react-router-dom';
+import { ButtonContainer } from "./Button";
 
 const Login = ({ username,
   password,
@@ -15,41 +13,45 @@ const Login = ({ username,
   loginLoadingState,
   dispatch,
 }) => {
-  if(isLoggedIn){
-    return  <div>
-              <p>Welcome {username}!!!</p>
-              <p>You are Logged in</p>
-            </div> 
+  if (isLoggedIn) {
+    return <div>
+      <p>Welcome {username}!!!</p>
+      <p>You are Logged in</p>
+    </div>
   }
   return (
-    <div>
-      <h2>Login</h2>
-      <div >
-        Username: 
-        <input class="form-control " 
-        class="col-xs-3"
-        type="text" 
-        value={username}
-        onChange={e=> dispatch(setUserName(e.target.value))}
-        placeholder="Default input"></input>
-        {/* <input 
-        value={username}
-        onChange={e=> dispatch(setUserName(e.target.value))}
-        /> */}
-      </div>
-      <div >
-        Password: 
-        <input
-        type="password" 
-        value={password}
-        onChange={e=> dispatch(setPassword(e.target.value))}
-        />
-      </div>
-      <div>
-        {loginLoadingState === 'error' && <b> Username or Password incorrect</b>}
-        <button id="login" onClick={()=>dispatch(login())}>Log in</button>
+    <div class="container-fluid bg-light py-3">
+      <div class="row">
+        <div class="col-md-6 mx-auto">
+          <div class="card card-body">
+            <h3 class="text-center mb-4">Login</h3>
+            <fieldset>
+              <div class="form-group has-success">
+                <input class="form-control input-lg"
+                  placeholder="Username"
+                  name="username"
+                  type="text"
+                  value={username}
+                  onChange={e => dispatch(setUserName(e.target.value))}>
+                </input>
+              </div>
+              <div class="form-group has-success">
+                <input class="form-control input-lg"
+                  placeholder="Password"
+                  name="password"
+                  type="password"
+                  value={password}
+                  onChange={e => dispatch(setPassword(e.target.value))}>
+                </input>
+              </div>
+              <ButtonContainer id="login" onClick={()=> dispatch(login())}>Log In</ButtonContainer>
+              {loginLoadingState === 'error' && <b> Username or Password incorrect</b>}
+            </fieldset>
+          </div>
+        </div>
       </div>
     </div>
+
   );
 };
 // comment mapping function maps react to redux
