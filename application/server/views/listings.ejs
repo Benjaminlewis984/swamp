@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Purchases</title>
+    <title>Listings</title>
     <link rel='stylesheet', href='/stylesheets/style.css'>
   </head>
   <body>
-    <h1>Purchases</h1>
+    <h1>Listings</h1>
     <table width="100%">
       <tr>
+        <th>Author</th>
         <th>Title</th>
         <th>Description</th>
         <th>Category</th>
@@ -17,6 +18,7 @@
       </tr>
       <% results.forEach(function(obj){ %>
       <tr>
+        <td style="text-align:center"><%=obj.author_username%></td>
         <td style="text-align:center"><%=obj.title%></td>
         <td style="text-align:center"><%=obj.description%></td>
         <td style="text-align:center"><%=obj.category%></td>

@@ -112,3 +112,9 @@ exports.getPurchases = async (count, offset, accountID) => {
   const fourthResult = await databaseManager.queryDatabase(mediaContentQuery);
   return fourthResult;
 }
+
+exports.getListings = async (count, offset, accountID) => {
+  let mediaContentQuery = "SELECT DISTINCT * FROM `media content` WHERE `acc_id` = " + accountID + " LIMIT " + count + " OFFSET " + offset + ";";
+  const firstResult = await databaseManager.queryDatabase(mediaContentQuery);
+  return firstResult;
+}
