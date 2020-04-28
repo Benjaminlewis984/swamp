@@ -18,21 +18,27 @@ const Login = ({ username,
   if(isLoggedIn){
     return  <div>
               <p>Welcome {username}!!!</p>
-              <p>You are Loggen in</p>
+              <p>You are Logged in</p>
             </div> 
   }
   return (
     <div>
       <h2>Login</h2>
-      <div>
-        username:
-        <input 
+      <div >
+        Username: 
+        <input class="form-control " 
+        class="col-xs-3"
+        type="text" 
         value={username}
         onChange={e=> dispatch(setUserName(e.target.value))}
-        />
+        placeholder="Default input"></input>
+        {/* <input 
+        value={username}
+        onChange={e=> dispatch(setUserName(e.target.value))}
+        /> */}
       </div>
-      <div>
-        Password:
+      <div >
+        Password: 
         <input
         type="password" 
         value={password}

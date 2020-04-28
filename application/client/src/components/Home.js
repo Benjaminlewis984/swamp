@@ -3,9 +3,9 @@ import axios from 'axios';
 import '../styles/Home.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container, Row, Col, Label, Form, FormGroup, Input, Alert, Table } from 'reactstrap';
-import { setSearchResults } from '../redux/actions/searchAction';
+// import Search from "./Search";
+import { setSearchResults } from '../redux/actions/searchActions';
 import {connect } from 'react-redux';
-import { ButtonContainer } from "./Button";
 
 const Home = () => {
   const [query, setQuery] = useState('');
@@ -37,12 +37,17 @@ const Home = () => {
     }).catch(err => console.log(err));
   }
 
+
+
   return (
     <div className="container">
       <div className="row">
         <div className="col-10 mx-auto text-center text-title pt-5"> swamp </div>
       </div>
       <div className="input-group">
+        <div className="input-group-btn search-panel">
+            <span id="search_concept"> Filter </span>
+            <span class="caret"></span>
             <select id="category" onChange={e => getValue(e)}>
             <option value="all" selected>All</option>
             <option value="document">Documents</option>
@@ -55,8 +60,7 @@ const Home = () => {
           onChange={e => setQuery(e.target.value)} 
           placeholder='Search by title..' />
 
-          <ButtonContainer onClick={searchByTitle}>Search</ButtonContainer>
-          </div>
+          <button onClick={searchByTitle}>Search</button>
           <table id='results' display="none">
             <tr className='table-head'>
               <td>Title</td>
@@ -75,6 +79,8 @@ const Home = () => {
                 </td>
               </tr>)}
           </table>
+        </div>
+      </div>
     </div>
   );
 };
