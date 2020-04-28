@@ -22,6 +22,11 @@ router.post('/browse', async (req, res, next) => {
   let search = req.body.query.search;
   let search_array
 
+  let page = req.body.query.page;
+  if (req.body.query.page == undefined || req.body.query.page <= 0) {
+    page = 1;
+  }
+
   if(search == '') {
     search = undefined;
   }
@@ -34,7 +39,7 @@ router.post('/browse', async (req, res, next) => {
   if (category == 'all') { category = undefined; }
   filter = { status: 'approved', category: category, search: search };
   
-  const results = await mediaManager.getMediaFilter(25, 0, filter);
+  const results = await mediaManager.getMediaFilter(25, 25 * (page - 1), filter);
 
   if (results.length == 0) {
     return res.status(200).send({success: true, filter: filter, results: results});
