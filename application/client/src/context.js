@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import {storeProducts, detailProduct} from './data';
-import Home from './components/Home';
-
+import { detailProduct } from './data';
 const ProductContext = React.createContext();
 
 class ProductProvider extends Component {
@@ -15,24 +13,22 @@ class ProductProvider extends Component {
         cartTotal: 0
     };
 
-    componentDidMount() {
-        this.setProducts();
-    }
+    componentDidMount() { this.setProducts(); }
 
-    setProducts = () => {
+    setProducts = (category, query) => {
         let tempProducts;
+        let tempCategory = "all";
+        if (category !== "all") { tempCategory = category; }
 
         axios.post('http://18.191.184.143:3001/browse', {
             "query": {
-                "category": "all",
-                "search": ""
+                "category": tempCategory,
+                "search": query
               }  
         }).then((res) => {
             tempProducts = res.data.results;
 
             this.setState(() => { return {products: tempProducts} })
-            console.log(tempProducts[0].preview_path);
-            console.log(res.data.results);
         })
 
     }
@@ -48,6 +44,10 @@ class ProductProvider extends Component {
             return {detailProduct: product}
         })
     };
+
+    // handleError = () => {
+    //     return <Redirect component={Default} />
+    // }
 
     addToCart = m_id => {
         let tempProducts = [...this.state.products];
@@ -118,8 +118,8 @@ class ProductProvider extends Component {
                 openModel: this.openModel,
                 closeModel: this.closeModel,
                 removeItem: this.removeItem,
-                clearCart: this.clearCart
-
+                clearCart: this.clearCart,
+                setProducts: this.setProducts
             }}>
                 {this.props.children}
             </ProductContext.Provider>

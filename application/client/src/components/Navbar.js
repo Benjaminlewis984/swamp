@@ -16,7 +16,7 @@ export default class Navbar extends Component {
                 <ul className="navbar-nav align-items-center">
                     <li className="nav-item ml-5">
                         <Link to="/result" className="nav-link">
-                            Marketplace
+                            Browse
                         </Link>
                     </li>
                     <li className="nav-item">
@@ -55,7 +55,7 @@ export default class Navbar extends Component {
 const NavWrapper = styled.nav`
     background: var(--mainBlue);
     .nav-link {
-        color: var(--mainYellow) !important;
+        color: var(--mainWhite) !important;
         font-size: 1.3rem;
         text-transform: capitalize;
     }
