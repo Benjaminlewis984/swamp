@@ -16,23 +16,6 @@ router.get('/approve', passport_config.checkAuth, passport_config.checkAdmin, as
     });
   }
 });
-router.get('/approve', passport_config.checkAuth, passport_config.checkAdmin, (req, res, next) => {
-  mediaManager.getMediaFromStatus("pending", (results) => {
-    if(results == undefined) {
-      res.send("No media is pending for approval");
-    } else {
-      results.forEach((result, idx) => {
-        userManager.getUserFromID(result.acc_id, (user) => {
-          result["author_username"] = user[0].username;
-
-          if (idx == results.length - 1) {
-            res.render('approve', {results: results});
-          }
-        });
-      });
-    }
-  });
-});
 
 router.post('/approve', async (req, res, next) => {
   await mediaManager.approveMedia(req.body.id, req.user.admin_id);
