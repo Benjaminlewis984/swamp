@@ -13,7 +13,7 @@ router.post('/message', passport_config.checkAuth, (req, res) => {
   const message = req.body.message;
 
   if(req.user) {
-    messageManager.sendMessage(sender_id, receiver_id, message);
+    messageManager.sendMessage(sender_id, receiver_id, message, 1);
     return res.status(200).send({success: "true"});
   } else { return res.status(400).send({success: "false"}); }
 });
