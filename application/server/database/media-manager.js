@@ -83,8 +83,8 @@ exports.getMediaFilter = async (count, offset, filter) => {
   return result;
 }
 
-exports.getPurchases = async (count, offset, accountID) => {
-  let registeredUserQuery = "SELECT DISTINCT * FROM `registered users` WHERE `acc_id` = " + accountID + ";";
+exports.getPurchases = async (count, offset, acc_id) => {
+  let registeredUserQuery = "SELECT DISTINCT * FROM `registered users` WHERE `acc_id` = " + acc_id + ";";
   const firstResult = await databaseManager.queryDatabase(registeredUserQuery);
   const registeredID = firstResult[0].reg_id;
 
@@ -113,14 +113,14 @@ exports.getPurchases = async (count, offset, accountID) => {
   return fourthResult;
 }
 
-exports.getListings = async (count, offset, accountID) => {
-  let mediaContentQuery = "SELECT DISTINCT * FROM `media content` WHERE `acc_id` = " + accountID + " LIMIT " + count + " OFFSET " + offset + ";";
+exports.getListings = async (count, offset, acc_id) => {
+  let mediaContentQuery = "SELECT DISTINCT * FROM `media content` WHERE `acc_id` = " + acc_id + " LIMIT " + count + " OFFSET " + offset + ";";
   const firstResult = await databaseManager.queryDatabase(mediaContentQuery);
   return firstResult;
 }
 
-exports.getPurchaseCount = async (mediaID) => {
-  let digitalMediaQuery = "SELECT DISTINCT * FROM `digital media` WHERE `m_id` = " + mediaID + ";";
+exports.getPurchaseCount = async (m_id) => {
+  let digitalMediaQuery = "SELECT DISTINCT * FROM `digital media` WHERE `m_id` = " + m_id + ";";
   const firstResult = await databaseManager.queryDatabase(digitalMediaQuery);
 
   return firstResult[0].sold;
