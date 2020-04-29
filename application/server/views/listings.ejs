@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Purchases</title>
+    <title>Listings</title>
     <link rel='stylesheet', href='/stylesheets/style.css'>
   </head>
   <body>
-    <h1>Purchases</h1>
+    <h1>Listings</h1>
     <table width="100%">
       <tr>
         <th>Title</th>
@@ -14,6 +14,7 @@
         <th>Preview Image</th>
         <th>Price</th>
         <th>Status</th>
+        <th>Purchase Count</th>
         <th>Controls</th>
       </tr>
       <% results.forEach(function(obj){ %>
@@ -25,6 +26,8 @@
            <img src="./<%=obj.preview_path%>" style="width: 100px; height: 100px;"> 
         </td>
         <td style="text-align:center">$<%=obj.price%></td>
+        <td style="text-align:center"><%=obj.status%></td>
+        <td style="text-align:center"><%=obj.purchase_count%></td>
         <td style="text-align:center">
           <form action="/download" method="post" style="display: inline-block;">
             <button type="submit" name="path" value="<%=obj.raw_path%>">Download</button>

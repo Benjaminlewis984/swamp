@@ -16,7 +16,7 @@ router.post('/register', async (req, res) => {
   const last_name = req.body.lastname;
 
   try { var hash_pass = await bcrypt.hash(req.body.password, 10); }
-  catch { return res.status(200).send({success: "false"}); }
+  catch { return res.status(404).send({success: "false"}); }
 
   if(username == username.replace(/[^A-Za-z0-9]/gi,'')) {
     if(/[A-Za-z0-9]*@mail\.sfsu\.edu/gi.test(email)) {
@@ -29,7 +29,7 @@ router.post('/register', async (req, res) => {
     }
   }
 
-  return res.status(200).send({success: "false"});
+  return res.status(400).send({success: "false"});
 });
 
 module.exports = router;

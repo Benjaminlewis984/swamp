@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Messages</title>
+    <link rel='stylesheet', href='/stylesheets/style.css'>
+  </head>
+  <body>
+    <h1>My Messages</h1>
+    <table width="100%">
+      <tr>
+        <th>Sender</th>
+        <th>Message</th>
+        <th>Date</th>
+        <th>Time</th>
+      </tr>
+      <% results.forEach(function(obj){ %>
+      <tr>
+        <td style="text-align:center"><%=obj.sender%></td>
+        <td style="text-align:center"><%=obj.message%></td>
+        <td style="text-align:center"><%=obj.date%></td>
+        <td style="text-align:center"><%=obj.time%></td>
+      </tr>
+      <%})%>
+    </table>
+  </body>
+</html>
