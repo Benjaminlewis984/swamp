@@ -5,8 +5,13 @@ const userManager = require('../../database/user-manager.js');
 const express = require('express');
 const router = express.Router();
 const request = require('request');
-const passport_config = require('../../modules/passport-config.js');
 
+/**
+ * Renders the results page and also sends, in JSON, all the approved media content
+ * 
+ * @param req.body.category: Category of search query. Defaults to 'all'
+ * @return: All the approved media content
+ */
 router.get('/browse', (req, res, next) => {
   let category = req.body.category;
   if (category === undefined) {
@@ -17,7 +22,16 @@ router.get('/browse', (req, res, next) => {
     res.render('browse', {results: body.results});
   });
 });
-
+/**
+ * Extracts necessary information from the body. The information sent 
+ * is then used to filter out the database results to find
+ * media content that meets the requirements.
+ * 
+ * @param req.body.query.category: Category filter
+ * @param req.body.query.search: Search filter
+ * @param req.body.query.page: Page of the browse
+ * @return: Returns the 
+ */
 router.post('/browse', async (req, res, next) => {
   let category = req.body.query.category;  
   let search = req.body.query.search;
