@@ -46,24 +46,18 @@ const Login = ({ username,
                   onChange={e => dispatch(setPassword(e.target.value))}>
                 </input>
               </div>
-             
               <ButtonContainer id="login" onClick={()=> dispatch(login())}>Log In</ButtonContainer>
               <p className="text-center"> 
                 <a href='signup'>
-                  Don’t have account 
+                  Don’t have account? 
                 </a>
               </p>
-              {/* <p className="text-center" onClick={()=>signupRedirect()}> Dont have the account?</p> */}
-              {/* <ButtonContainer id="signup" onClick={()=> dispatch(login())}>Log In</ButtonContainer> */}
-              {loginLoadingState === 'error' && <b> Username or Password incorrect</b>}
-              
-              {/* <p className=“text-center”> <a href=“signup”>Don’t have account </a> <p></p> */}
+              {loginLoadingState === 'error' && <p className="text-center alert alert-danger alert-dismissible" > Username or Password incorrect</p>}
             </fieldset>
           </div>
         </div>
       </div>
     </div>
-
   );
 };
 // comment mapping function maps react to redux
