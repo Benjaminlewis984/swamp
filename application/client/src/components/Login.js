@@ -56,7 +56,7 @@ const Login = ({ username,
               {/* <p className="text-center" onClick={()=>signupRedirect()}> Dont have the account?</p> */}
               {/* <ButtonContainer id="signup" onClick={()=> dispatch(login())}>Log In</ButtonContainer> */}
               {loginLoadingState === 'error' && <b> Username or Password incorrect</b>}
-              <p className="text-center"> <a href="signup">Dont have account?</a></p>
+              
               {/* <p className=“text-center”> <a href=“signup”>Don’t have account </a> <p></p> */}
             </fieldset>
           </div>
