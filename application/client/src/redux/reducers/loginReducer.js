@@ -3,6 +3,7 @@ const INITIAL_STATE = {
     password: '',
     isLoggedIn: false,
     loginLoadingState: 'init',
+    authenticated: false,
 };
 
 const loginReducer = (state = INITIAL_STATE, action) => {
@@ -26,6 +27,11 @@ const loginReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 loginLoadingState: action.loginLoadingState,
+            };
+        case 'USER_SET_AUTHENTICATED':
+            return {
+                ...state,
+                authenticated: action.authenticated,
             };
         default:
             return state;

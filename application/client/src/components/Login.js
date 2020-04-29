@@ -16,22 +16,22 @@ const Login = ({ username,
   loginLoadingState,
   dispatch,
 }) => {
-  const [auth, setAuth] = React.useState(false);
+  // const [auth, setAuth] = React.useState(false);
 
-  const readCookie = () => {
-    const user = Cookies.get(username);
+  // const readCookie = () => {
+  //   const user = Cookies.get(username);
     
-    if(user){
-      setAuth(true);
-    }
-  }
-  Cookies.set('isLoggedIn',true);
-  Cookies.set('username',username);
+  //   if(user){
+  //     setAuth(true);
+  //   }
+  // }
+  // Cookies.set('isLoggedIn',true);
+  // Cookies.set('username',username);
 
 
-  React.useEffect(() => {
-    readCookie();
-  },[])
+  // React.useEffect(() => {
+  //   readCookie();
+  // },[])
   
 
   if (isLoggedIn) {
