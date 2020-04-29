@@ -8,24 +8,6 @@ const Upload = () => {
     const [description, setDescription] = useState("");
 
     return (
-        // <div class="container p-5">
-        //     <div class="row mb-5 text-center text-black">
-        //         <div class="col-lg-10 mx-auto">
-        //             <h4 class="display-4">Upload</h4>
-        //             <p class="lead">contribute to the swamp</p>
-        //         </div>
-        //     </div>
-        //     <div class="row">
-        //         <div class="col-lg-5 mx-auto">
-        //             <div class="p-5 bg-white shadow rounded-lg">
-        //                 <img src={logo} alt="" width="200" class="d-block mx-auto mb-4 rounded-pill"></img>
-        //             <label for="fileUpload" class="file-upload btn btn-primary btn-block rounded-pill shadow"><i class="fa fa-upload mr-2"></i>Browse
-        //             <input id="fileUpload" type="file"></input>
-        //             </label>
-        //             </div>
-        //         </div>
-        //     </div>
-        // </div>
         <div class="container-fluid bg-light py-3">
             <div class="row">
                 <div class="col-md-6 mx-auto">
@@ -62,10 +44,12 @@ const Upload = () => {
                                 </input>
                             </div>
                             <div class="form-group has-success">
-                            <label for="upload">Upload file here</label>
+                                <label for="upload">Upload file here</label>
                                 <div class="col-lg-5 mx-auto">
-                                    <label for="fileUpload" class="file-upload btn btn-block rounded-pill shadow"><i class="fa fa-upload mr-2"></i>Browse
-                         <input id="fileUpload" type="file"></input>
+                                    <label for="fileUpload"
+                                        class="file-upload btn btn-block rounded-pill shadow">
+                                        <i class="fa fa-upload mr-2"></i>Browse
+                                    <input id="fileUpload" type="file"></input>
                                     </label>
                                 </div>
                             </div>
