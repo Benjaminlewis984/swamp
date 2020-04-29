@@ -24,10 +24,9 @@ const Login = ({ username,
   return (
     <div>
       <h2>Login</h2>
-      <div >
+      <div>
         Username: 
-        <input class="form-control " 
-        class="col-xs-3"
+        <input class="form-control" 
         type="text" 
         value={username}
         onChange={e=> dispatch(setUserName(e.target.value))}
