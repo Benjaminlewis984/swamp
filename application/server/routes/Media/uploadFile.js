@@ -73,7 +73,7 @@ router.post('/upload', async (req, res) => {
 
     file.mv('./media/' + rawPath, (err) => {
       if (previewPath.substr(0, 16) != "preview/default/") {
-        preview.mv('./media/' + previewPath, (err) => {
+        preview.mv('./media/public/' + previewPath, (err) => {
           mediaManager.addMedia(title, description, previewPath, rawPath, category, price, req.user.acc_id, academic, type);
           return res.status(200).send({success: "true"});
         });

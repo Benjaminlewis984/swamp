@@ -26,7 +26,6 @@ router.post('/purchases', async (req, res, next) => {
   results.forEach(async (result, idx) => {
     const userResult = await userManager.getUserFromID(result.acc_id);
     result['author_username'] = userResult[0].username;
-    result.preview_path = result.preview_path.substr(result.preview_path.indexOf('preview/') + 8);
 
     if(idx == results.length - 1) { return res.status(200).send({success: true, results: results}); }
   });
