@@ -8,6 +8,7 @@ import {
 import { Redirect } from "react-router-dom";
 import { ButtonContainer } from "./Button";
 import { Dashboard } from './Dashboard';
+import Cookies from 'js-cookie';
 
 const Login = ({ username,
   password,
@@ -15,12 +16,28 @@ const Login = ({ username,
   loginLoadingState,
   dispatch,
 }) => {
+  const [auth, setAuth] = React.useState(false);
+
+  const readCookie = () => {
+    const user = Cookies.get(username);
+    
+    if(user){
+      setAuth(true);
+    }
+  }
+  Cookies.set(isLoggedIn,true);
+
+  React.useEffect(() => {
+    readCookie();
+  },[])
+
   if (isLoggedIn) {
     return <div>
       <p>Welcome {username}!!!</p>
       <Redirect path='/dashboard'></Redirect>
     </div>
   }
+  
   return (
     <div class="container-fluid bg-light py-3">
       <div class="row">
@@ -64,7 +81,7 @@ const Login = ({ username,
 const mapStateToProps = state => {
   // this map react props to redux state
   return {
-    userName: state.loginReducer.username,
+    username: state.loginReducer.username,
     password: state.loginReducer.password,
     isLoggedIn: state.loginReducer.isLoggedIn,
     loginLoadingState: state.loginReducer.loginLoadingState,
