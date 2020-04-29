@@ -4,10 +4,21 @@ import styled from 'styled-components';
 import { ButtonContainer } from "./Button";
 import logo from '../imgs/gator.png';
 import Cookies from 'js-cookie';
+//import Login from '../components/Login';
+
+// const toRefreshPage = () => {
+//     React.useEffect(()=> {
+//         Navbar();
+//     },[])
+// }
 
 const Navbar = () =>{
     const authenticated = Cookies.get('isLoggedIn');
-    // React.useEffect(() => {},[])
+
+    React.useEffect(()=> {
+        Cookies.get('isLoggedIn')
+    },[])
+
         return (
             <NavWrapper className="navbar navbar-expand-sm 
             navbar-dark px-sm-5">
@@ -32,6 +43,9 @@ const Navbar = () =>{
                         cart
                     </ButtonContainer>
                 </Link>
+                {authenticated && (
+                    'welcome!!!'
+                )}   
                 {!authenticated && (
                 <div className="notLogin">
                 <Link to="/login">
@@ -43,6 +57,7 @@ const Navbar = () =>{
                     </ButtonContainer>
                 </Link>
                 </div>)}
+
                 <Link to="/signup">
                     <ButtonContainer>
                         <span className="mr-2">

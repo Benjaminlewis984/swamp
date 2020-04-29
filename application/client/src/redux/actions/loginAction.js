@@ -1,3 +1,5 @@
+// import Login from '../../components/Login';
+
 export const setUserName = username => ({
     type: 'USER_SET_USERNAME',
     username,
@@ -25,19 +27,12 @@ export const login = () => (dispatchEvent, getState) => {
     const axios = require("axios");
     const Cookies = require("js-cookie");
     const React = require("react");
-    
-    //const [auth, setAuth] = React.useState(false);
 
-    // const readCookie = () => {
-    // const user = Cookies.get(username);
-    // }    
     const username = getState().loginReducer.username;
     const password = getState().loginReducer.password;
 
     Cookies.set('username',username);
-//   React.useEffect(() => {
-//     readCookie();
-//   },[])
+
     if(username.length > 0 && password.length > 0){
         axios.post(`http://18.191.184.143:3001/login?username=${username}&password=${password}`, {validateStatus:false})
         .then((response) => {
@@ -48,6 +43,9 @@ export const login = () => (dispatchEvent, getState) => {
                 dispatchEvent(setAuthenticated(true));
                 const authenticated = getState().loginReducer.authenticated;
                 Cookies.set('isLoggedIn',authenticated);
+                // React.useEffect(()=>{
+                //     Login()
+                // },[])
             }  
         })
         .catch(e => {
