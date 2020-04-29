@@ -30,7 +30,7 @@ exports.checkoutItems = async (acc_id) => {
     }
     let sold_count = await databaseManager.queryDatabase(`SELECT sold FROM \`digital media\` WHERE m_id = ?;`, [m_id]);
     let sold = sold_count[0]['sold'] + 1;
-    await databaseManager.queryDatabase(`UPDATE \`digital media\` SET sold = ? WHERE m_id = ?;`, [sold + 1, m_id]);
+    await databaseManager.queryDatabase(`UPDATE \`digital media\` SET sold = ? WHERE m_id = ?;`, [sold, m_id]);
     await cartManager.deleteFromCart(m_id, acc_id);
     const last_id = await databaseManager.queryDatabase(`SELECT order_id FROM checkout ORDER BY order_id DESC`, []);
     const order_id = last_id[0]['order_id'];

@@ -12,7 +12,6 @@ export default class ProductList extends Component {
                     <div className="container">
                         {/* <Title name="our" title="products" /> */}
                         
-
                         <div className="row">
                             <ProductConsumer>
                                 {value => {

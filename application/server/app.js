@@ -28,6 +28,9 @@ const documentationRouter = require('./routes/documentation');
 const cartRouter = require('./routes/ShoppingCart/cart');
 const checkoutRouter = require('./routes/ShoppingCart/checkout');
 const purchasesRouter = require('./routes/Media/purchases');
+const listingsRouter = require('./routes/Media/listings');
+const messageRouter = require('./routes/Message/messageUser');
+const messageBoxRouter = require('./routes/Message/myMessages');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -60,6 +63,9 @@ app.use(documentationRouter);
 app.use(cartRouter);
 app.use(checkoutRouter);
 app.use(purchasesRouter);
+app.use(listingsRouter);
+app.use(messageRouter);
+app.use(messageBoxRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

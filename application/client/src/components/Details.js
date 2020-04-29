@@ -8,7 +8,7 @@ export default class Details extends Component {
         return (
             <ProductConsumer>
                 {(value) => {
-                    const {m_id, acc_id, preview_path, description, price, title, inCart}
+                    const {m_id, author_username, preview_path, description, price, title, inCart}
                      = value.detailProduct;
                      console.log(value.detailProduct);
                      return (
@@ -33,7 +33,7 @@ export default class Details extends Component {
                                  <div className="col-10 mx-auto col-md-6 my-3 text-capitalize">
                                      <h3>title : {title}</h3>
                                      <h5 className="text-title text-uppercase text-muted mt-3 mb-2">
-                                         made by : <span className="text-uppercase">{acc_id}</span>
+                                         made by : <span className="text-uppercase">{author_username}</span>
                                      </h5>
                                      <h5 className="text-blue">
                                          <strong>
@@ -47,7 +47,7 @@ export default class Details extends Component {
                                      <p className="text-muted lead">{description}</p>
                                      {/* buttons */}
                                      <div>
-                                         <Link to="/">
+                                         <Link to="/result">
                                              <ButtonContainer>Back</ButtonContainer>
                                          </Link>
 

@@ -288,3 +288,146 @@ title: Swamp backend
               {
                 "success": true,
               }
+
+/listings:
+  get:
+    description: Renders the listings page
+  post:
+    description: Get the first 25 media posted from the current user
+    queryParameters:
+    responses:
+      200:
+        description: Media successfully fetched
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
+                "results": 
+                [
+                  {
+                    "id":31,
+                    "author_id":25,
+                    "title":"My Music File",
+                    "description":"This is an audio file from my class",
+                    "preview_path":"default/audio.png",
+                    "raw_path":"raw/2020-03-07:3.cu",
+                    "category":"audio",
+                    "status":"approved",
+                    "author_username":"william"
+                  },
+                  {
+                    "id":33,
+                    "author_id":25,
+                    "title":"Test File",
+                    "description":"Test Description",
+                    "preview_path":"preview/2020-03-10:1.jpg",
+                    "raw_path":"raw/2020-03-10:1.jpg",
+                    "category":"audio",
+                    "status":"approved",
+                    "author_username":"kevin"
+                  }
+                ]
+              }
+
+/purchases:
+  get:
+    description: Renders the purchases page
+  post:
+    description: Get the first 25 media purchased from the current user
+    queryParameters:
+    responses:
+      200:
+        description: Media successfully fetched
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
+                "results": 
+                [
+                  {
+                    "id":31,
+                    "author_id":25,
+                    "title":"My Music File",
+                    "description":"This is an audio file from my class",
+                    "preview_path":"default/audio.png",
+                    "raw_path":"raw/2020-03-07:3.cu",
+                    "category":"audio",
+                    "status":"approved",
+                    "author_username":"william"
+                  },
+                  {
+                    "id":33,
+                    "author_id":25,
+                    "title":"Test File",
+                    "description":"Test Description",
+                    "preview_path":"preview/2020-03-10:1.jpg",
+                    "raw_path":"raw/2020-03-10:1.jpg",
+                    "category":"audio",
+                    "status":"approved",
+                    "author_username":"kevin"
+                  }
+                ]
+              }
+
+/message:
+  get:
+    description: Renders the message page with textbox form
+  post:
+    description: Sends message to seller of media listing
+    queryParameters:
+      sender_id:
+        displayName: sender_id
+        type: number
+        required: true
+      receiver_id:
+        displayName: receiver_id
+        type: number
+        required: true
+      message:
+        displayName: Message
+        type: string
+        required: true
+    responses:
+      200:
+        description: Message successfully sent
+        body:
+          application/json:
+            example: |
+              {
+                "success": "true"
+              }
+      400:
+        description: User isn't logged in
+        body:
+          application/json:
+            example: |
+              {
+                "success": "false"
+              }
+
+/messagebox:
+  get:
+    description: Displays all messages sent to you
+    queryParameters:
+    reponses:
+      200:
+        description: Successfully retrieved messages send to you
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
+                "results": 
+                [
+                  {
+                    "sender_id":5,
+                    "acc_id":3,
+                    "message":"hello world",
+                    "date":"2020-04-28",
+                    "time":"01:43:55",
+                    "read":0
+                  }
+                ]
+              }

@@ -12,7 +12,12 @@ export default class Product extends Component {
                 <div className="card">
                     <ProductConsumer>
                     {(value) => (
-                    <div className="img-container p-5" onClick={() => value.handleDetail(m_id)}>
+                    <div className="img-container p-5" onClick={() => {
+                        if (m_id >= 0) { value.handleDetail(m_id); }
+                        // Else should route to Default component
+                        else { console.log("No product ID") }
+                        }
+                    }>
                         <Link to="/details">
                             <img src={`http://18.191.184.143:3001/${preview_path}`} 
                             className="card-img-top" 
@@ -23,6 +28,7 @@ export default class Product extends Component {
                         <button className="cart-btn" disabled={inCart ? true : false} 
                         onClick={() => {
                             value.addToCart(m_id);
+                            value.setProducts('document', '');
                             value.openModel(m_id);
                             }}>
                         {inCart ? 
@@ -53,8 +59,8 @@ export default class Product extends Component {
 
 Product.propTypes = {
     product: PropTypes.shape({
-        id: PropTypes.number,
-        img: PropTypes.string,
+        m_id: PropTypes.number,
+        preview_path: PropTypes.string,
         title: PropTypes.string,
         price: PropTypes.number,
         inCart: PropTypes.bool
