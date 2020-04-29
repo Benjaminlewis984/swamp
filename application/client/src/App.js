@@ -1,33 +1,4 @@
-// import React, { Component } from 'react';
-// import './App.css';
-// import { Switch, Route, Link, BrowserRouter } from "react-router-dom";
-
-// import Home from './components/Home';
-
-// const App = () => {
-//   return (
-//     <div className="App">
-//       <BrowserRouter>
-//         <div className="nav-bar">
-//             <Link to="/">Home</Link>
-//             <Link to="/about">About</Link>
-//         </div>
-//         <Switch>
-//           <Route exact path="/" component={Home} />
-          // <Route exact path="/about" component={Team} />
-          // <Route exact path="/dang" component={Dang} />
-          // <Route exact path="/will" component={William} />
-          // <Route exact path="/joe" component={Joe} />
-          // <Route exact path="/kevin" component={Kevin} />
-          // <Route exact path="/ben" component={Ben} />
-          // <Route exact path="/onu" component={Onu} />
-//         </Switch>
-//       </BrowserRouter>
-//     </div>
-//   );
-// }
-
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Switch, Route } from "react-router-dom";
@@ -50,8 +21,10 @@ import Kevin from './components/About/Kevin';
 import Ben from './components/About/Ben';
 import Onu from './components/About/Onu';
 
-class App extends Component {
-  render() {
+//import readCookie from './components/Login';
+
+const App = () => {
+
     return (
         <React.Fragment>
           <Navbar />
@@ -62,7 +35,6 @@ class App extends Component {
             <Route path="/cart" component={Cart} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
-
             <Route path="/about" component={Team} />
             <Route path="/dang" component={Dang} />
             <Route path="/will" component={William} />
@@ -76,7 +48,7 @@ class App extends Component {
           <Model />
         </React.Fragment>
     );
-  }
+  
 }
 
 export default App;

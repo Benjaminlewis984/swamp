@@ -21,7 +21,7 @@ const Home = () => {
         <div className="container">
           <Title name="swamp." />
 
-          <div className="row text-center col-10 mx-auto my-2">
+          <div className="row text-center col-10 mx-auto my-2 justify-content-center">
             <h3>A media marketplace for gators, by gators.</h3>
           </div>
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {
   setUserName,
@@ -25,11 +25,14 @@ const Login = ({ username,
       setAuth(true);
     }
   }
-  Cookies.set(isLoggedIn,true);
+  Cookies.set('isLoggedIn',true);
+  Cookies.set('username',username);
+
 
   React.useEffect(() => {
     readCookie();
   },[])
+  
 
   if (isLoggedIn) {
     return <div>

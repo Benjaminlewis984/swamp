@@ -1,12 +1,13 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { ButtonContainer } from "./Button";
 import logo from '../imgs/gator.png';
+import Cookies from 'js-cookie';
 
-
-export default class Navbar extends Component {
-    render() {
+const Navbar = () =>{
+    const authenticated = Cookies.get('isLoggedIn');
+    // React.useEffect(() => {},[])
         return (
             <NavWrapper className="navbar navbar-expand-sm 
             navbar-dark px-sm-5">
@@ -31,7 +32,8 @@ export default class Navbar extends Component {
                         cart
                     </ButtonContainer>
                 </Link>
-                
+                {!authenticated && (
+                <div className="notLogin">
                 <Link to="/login">
                     <ButtonContainer>
                         <span className="mr-2">
@@ -40,6 +42,7 @@ export default class Navbar extends Component {
                         login
                     </ButtonContainer>
                 </Link>
+                </div>)}
                 <Link to="/signup">
                     <ButtonContainer>
                         <span className="mr-2">
@@ -51,7 +54,8 @@ export default class Navbar extends Component {
             </NavWrapper>
         )
     }
-}
+
+export default Navbar;
 const NavWrapper = styled.nav`
     background: var(--mainBlue);
     .nav-link {
