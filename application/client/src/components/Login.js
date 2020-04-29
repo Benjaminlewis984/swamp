@@ -5,7 +5,9 @@ import {
   setPassword,
   login
 } from '../redux/actions/loginAction';
+import { Redirect } from "react-router-dom";
 import { ButtonContainer } from "./Button";
+import { Dashboard } from './Dashboard';
 
 const Login = ({ username,
   password,
@@ -16,7 +18,7 @@ const Login = ({ username,
   if (isLoggedIn) {
     return <div>
       <p>Welcome {username}!!!</p>
-      <p>You are Logged in</p>
+      <Redirect path='/dashboard'></Redirect>
     </div>
   }
   return (
@@ -54,6 +56,8 @@ const Login = ({ username,
               {/* <p className="text-center" onClick={()=>signupRedirect()}> Dont have the account?</p> */}
               {/* <ButtonContainer id="signup" onClick={()=> dispatch(login())}>Log In</ButtonContainer> */}
               {loginLoadingState === 'error' && <b> Username or Password incorrect</b>}
+              <p className="text-center"> <a href="signup">Dont have account?</a></p>
+              {/* <p className=“text-center”> <a href=“signup”>Don’t have account </a> <p></p> */}
             </fieldset>
           </div>
         </div>
