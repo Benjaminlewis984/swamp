@@ -98,6 +98,10 @@ exports.getPurchases = async (count, offset, acc_id) => {
     }
   });
 
+  if (secondResult.length == 0) {
+    return [];
+  }
+
   let approvedMediaQuery = "SELECT DISTINCT * FROM `approved media` WHERE `approved_id` IN (" + approvedIDString + ") LIMIT " + count + " OFFSET " + offset + ";";
   const thirdResult = await databaseManager.queryDatabase(approvedMediaQuery);
   let mediaIDString = "";
