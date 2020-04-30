@@ -30,7 +30,10 @@
       </tr>
       <% results.forEach(function(obj){ %>
       <tr>
-        <td style="text-align:center"><%=obj.author_username%></td>
+        <td style="text-align:center">
+          <img src="./<%=obj.author_profile_path%>" style="width: 50px; height: 50px;"> 
+          <%=obj.author_username%>
+        </td>
         <td style="text-align:center"><%=obj.title%></td>
         <td style="text-align:center"><%=obj.description%></td>
         <td style="text-align:center"><%=obj.category%></td>

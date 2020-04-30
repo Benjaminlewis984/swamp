@@ -60,7 +60,8 @@ router.post('/browse', async (req, res, next) => {
   } else {
     results.forEach(async (result, idx) => {
       const userResult = await userManager.getUserFromID(result.acc_id);
-      result['author_username'] = userResult[0].username;
+      result.author_username = userResult[0].username;
+      result.author_profile_path = userResult[0].profile_path;
       result.bought = 'false';
       
       if(req.body.user != undefined) {
