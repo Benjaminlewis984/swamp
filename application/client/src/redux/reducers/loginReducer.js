@@ -1,6 +1,10 @@
 const INITIAL_STATE = {
     username: '',
     password: '',
+    email: '',
+    firstname: 'onu',
+    lastname: 'wami',
+    acc_id: '',
     isLoggedIn: false,
     loginLoadingState: 'init',
     authenticated: false,
@@ -32,6 +36,26 @@ const loginReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 authenticated: action.authenticated,
+            };
+        case 'SET_EMAIL':
+            return {
+                ...state,
+                email: action.email,
+            };
+        case 'SET_FIRST_NAME':
+            return {
+                ...state,
+                firstname: action.firstname,
+            };
+        case 'SET_LAST_NAME':
+            return {
+                ...state,
+                lastname: action.lastname,
+            };
+        case 'SET_ACC_ID':
+            return {
+                ...state,
+                acc_id: action.acc_id,
             };
         default:
             return state;

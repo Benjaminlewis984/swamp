@@ -4,15 +4,21 @@ import logo from '../imgs/gator.png';
 import Cookies from 'js-cookie';
 import '../styles/Dashboard.css';
 import { ButtonContainer } from './Button';
+import { connect } from 'react-redux';
 
-const uploadNewPost = () => {
-    return (
-        <Link to='/upload'></Link>
-    )
-}
 
-export default class Dashboard extends Component {
-    render() {
+const Dashboard = ({ 
+    username,
+    password,
+    firstname,
+    lastname,
+    email,
+    isLoggedIn,
+    loginLoadingState,
+    dispatch,
+    //authenticated,
+  }) => {
+      console.log(username);
         return (
             <div class="container user-profile">
                 <form method="post">
@@ -29,7 +35,7 @@ export default class Dashboard extends Component {
                         <div class="col-md-6">
                             <div class="profile-head">
                                 <h5>
-                                    FirstName LastName
+                                    {firstname} {lastname}
                                     </h5>
                                 <h6>
                                     Status: Student, Faculty, Admin
@@ -46,10 +52,9 @@ export default class Dashboard extends Component {
                         <div class="col-md-4">
                             <div class="profile-info">
                                 <p>Gator information here</p>
-                                <p>username: Username goes here</p>
-                                <p>Full Name: First and Last name go here</p>
-                                <p>Email: Email goes here</p>
-                                <p>Password: password goes here...psyche</p>
+                                <p>username: {username} </p>
+                                <p>Full Name: {firstname} {lastname}</p>
+                                <p>Email: {email} </p>
                                 <ButtonContainer>Edit Profile</ButtonContainer>
                             </div>
                         </div>
@@ -59,7 +64,7 @@ export default class Dashboard extends Component {
                                 </div>
                                 <p>Users post information will go here.</p>
                                 <p>Wow. Such empty.</p>
-                                <ButtonContainer onClick={uploadNewPost}>
+                                <ButtonContainer>
                                         <i class="fas fa-plus text-blue"></i>
                                 </ButtonContainer>
                             </div>
@@ -68,5 +73,22 @@ export default class Dashboard extends Component {
                 </form>
             </div>
         )
-    }
+    
 }
+
+const mapStateToProps = state => {
+    // this map react props to redux state
+    return {
+      username: state.loginReducer.username,
+      password: state.loginReducer.password,
+      email: state.loginReducer.email,
+      firstname: state.loginReducer.firstname,
+      lastname: state.loginReducer.lastname,
+      acc_id: state.loginReducer.acc_id,
+      isLoggedIn: state.loginReducer.isLoggedIn,
+      loginLoadingState: state.loginReducer.loginLoadingState,
+      authenticated: state.loginReducer.authenticated,
+    };
+  };
+  
+  export default connect(mapStateToProps)(Dashboard);

@@ -2,7 +2,6 @@ import React, { Component, useEffect, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { ButtonContainer } from "./Button";
-import Home from './Home';
 import logo from '../imgs/gator.png';
 import Cookies from 'js-cookie';
 
