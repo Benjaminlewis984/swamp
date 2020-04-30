@@ -84,6 +84,7 @@ const Login = ({
 // comment mapping function maps react to redux
 const mapStateToProps = state => {
   // this map react props to redux state
+  
   return {
     username: state.loginReducer.username,
     password: state.loginReducer.password,
