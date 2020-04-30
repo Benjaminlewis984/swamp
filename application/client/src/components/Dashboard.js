@@ -18,7 +18,6 @@ const Dashboard = ({
     dispatch,
     //authenticated,
   }) => {
-      console.log(username);
         return (
             <div class="container user-profile">
                 <form method="post">

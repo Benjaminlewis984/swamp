@@ -49,10 +49,8 @@ const Login = ({
                 dispatchEvent(setFirstName(response.data.user.first_name));
                 dispatchEvent(setLastName(response.data.user.last_name));
 
-                console.log("email:", email);
-                alert(response.data.user.email);
-    
                 Cookies.set('isLoggedIn', true);
+                Cookies.set('user', JSON.stringify(response.data.user));
                 window.location.reload(false)
             }
            

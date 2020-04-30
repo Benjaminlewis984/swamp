@@ -1,10 +1,14 @@
+const Cookie = require("js-cookie");
+const user = Cookie.get('user');
+const user_data = JSON.parse(user)
+
 const INITIAL_STATE = {
-    username: '',
-    password: '',
-    email: '',
-    firstname: 'onu',
-    lastname: 'wami',
-    acc_id: '',
+    username: user_data['username'] || '',
+    password: user_data['password'] || '',
+    email: user_data['email'] || '',
+    firstname: user_data['first_name'] || '',
+    lastname: user_data['last_name'] || '',
+    acc_id: user_data['acc_id'] || '',
     isLoggedIn: false,
     loginLoadingState: 'init',
     authenticated: false,
@@ -13,11 +17,14 @@ const INITIAL_STATE = {
 const loginReducer = (state = INITIAL_STATE, action) => {
     switch(action.type) {
         case 'USER_SET_USERNAME':
+            INITIAL_STATE.username = action.username
             return {
                 ...state,
                 username: action.username,
             };
         case 'USER_SET_PASSWORD':
+            INITIAL_STATE.password = action.password
+            console.log(INITIAL_STATE)
             return {
                 ...state,
                 password: action.password,
