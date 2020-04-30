@@ -5,6 +5,10 @@ import { ButtonContainer } from "./Button";
 import logo from '../imgs/gator.png';
 import Cookies from 'js-cookie';
 import axios from 'axios';
+import { ProductConsumer } from "../context";
+import { useHistory } from "react-router-dom";
+import { Input } from "reactstrap";
+
 
 const authenticate = () => {
     return Cookies.get("isLoggedIn");
@@ -26,8 +30,11 @@ const logout = () => {
     )
 }
 
-export default class Navbar extends Component {
-    render() {
+const Navbar = () => {
+    const [query, setQuery] = useState("");
+    const [category, setCategory] = useState("all");
+    let history = useHistory();
+ 
         return (
             <NavWrapper className="navbar navbar-expand-sm 
             navbar-dark px-sm-5">
@@ -44,6 +51,45 @@ export default class Navbar extends Component {
                         <Link to="/about" className="nav-link">About</Link>
                     </li>
                 </ul>
+
+
+                <ProductConsumer>
+      {(value) => (
+        
+
+          <div className="input-group">
+            <select id="category" onChange={(e) => setCategory(e.target.value)}>
+              <option value="all" selected>
+                All
+              </option>
+              <option value="document">Documents</option>
+              <option value="image">Images</option>
+              <option value="audio">Audio</option>
+              <option value="video">Video</option>
+            </select>
+
+            <Input
+              type="text"
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              placeholder="Search by title.."
+            />
+
+            <ButtonContainer
+              onClick={() => {
+                value.setProducts(category, query);
+                history.push("/result");
+              }}
+            >
+              Search
+            </ButtonContainer>
+          </div>
+        
+      )}
+    </ProductConsumer>
+
+
+
                 <Link to="/cart" className="ml-auto">
                     <ButtonContainer>
                         <span className="mr-2">
@@ -95,8 +141,9 @@ export default class Navbar extends Component {
 
             </NavWrapper>
         )
-    }
 }
+
+export default Navbar;
 const NavWrapper = styled.nav`
     background: var(--mainBlue);
     .nav-link {
