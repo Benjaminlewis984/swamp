@@ -5,7 +5,6 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import Cookies from 'js-cookie';
 
 import Navbar from './components/Navbar';
-import Home from './components/Home';
 import ProductList from './components/ProductList';
 import Details from './components/Details';
 import Cart from './components/Cart';

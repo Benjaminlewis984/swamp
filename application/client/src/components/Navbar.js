@@ -79,8 +79,7 @@ const Navbar = () => {
                             onClick={() => {
                                 value.setProducts(category, query);
                                 history.push("/result");
-                            }}
-                        >
+                            }}>
                             Search
             </ButtonContainer>
                     </div>
