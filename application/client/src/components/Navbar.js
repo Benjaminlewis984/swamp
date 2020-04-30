@@ -1,8 +1,25 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Component, useEffect, useState } from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { ButtonContainer } from "./Button";
+import Home from './Home';
 import logo from '../imgs/gator.png';
+import Cookies from 'js-cookie';
+
+const authenticate = () => {
+    return Cookies.get("isLoggedIn");
+}
+
+const logout = () => {
+    console.log("Removing Cookies");
+    Cookies.remove('isLoggedIn');
+    Cookies.remove('username');
+    
+    window.location.reload(false)
+    return (
+        <Redirect to="/"></Redirect>
+    )
+}
 
 
 export default class Navbar extends Component {
@@ -31,23 +48,47 @@ export default class Navbar extends Component {
                         cart
                     </ButtonContainer>
                 </Link>
-                
-                <Link to="/login">
-                    <ButtonContainer>
-                        <span className="mr-2">
-                            <i className="fas fa-sign-in-alt"></i>
-                        </span>
+
+                {!authenticate() && (
+                    <Link to="/login">
+                        <ButtonContainer>
+                            <span className="mr-2">
+                                <i className="fas fa-sign-in-alt"></i>
+                            </span>
                         login
                     </ButtonContainer>
-                </Link>
-                <Link to="/signup">
-                    <ButtonContainer>
-                        <span className="mr-2">
-                            <i className="fas fa-user-plus"></i>
-                        </span>
+                    </Link>)}
+                {!authenticate() && (
+                    <Link to="/signup">
+                        <ButtonContainer>
+                            <span className="mr-2">
+                                <i className="fas fa-user-plus"></i>
+                            </span>
                         sign up
                     </ButtonContainer>
-                </Link>
+                    </Link>)}
+                {authenticate() && (
+                    <Link to="/dashboard">
+                        <ButtonContainer>
+                            <span className="mr-2">
+                                <i className="fas fa-home"></i>
+                            </span>
+                    Dashboard
+                </ButtonContainer>
+                    </Link>
+                )}
+                {authenticate() && (
+                    <Link to="/" >
+                        <ButtonContainer onClick={logout}>
+                            <span className="mr-2">
+                                <i className="fas fa-sign-out-alt"></i>
+                            </span>
+                    Logout
+                </ButtonContainer>
+                    </Link>
+                )}
+
+
             </NavWrapper>
         )
     }

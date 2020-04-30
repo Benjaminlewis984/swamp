@@ -18,15 +18,11 @@ const Login = ({ username,
 }) => {
   const [auth, setAuth] = React.useState(false);
 
-  const readCookie = () => {
-    const user = Cookies.get(username);
-    
-    if(user){
+  const readCookie = () => {    
+    if(Cookies.get(username)){
       setAuth(true);
     }
   }
-  Cookies.set(isLoggedIn,true);
-
   React.useEffect(() => {
     readCookie();
   },[])

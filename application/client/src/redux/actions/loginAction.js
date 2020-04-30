@@ -1,8 +1,9 @@
+import Cookies from 'js-cookie';
+
 export const setUserName = username => ({
     type: 'USER_SET_USERNAME',
     username,
 });
-// setUser('hello') -> {type: 'USER_SET_USER', user: 'hello'}
 export const setPassword = password => ({
     type: 'USER_SET_PASSWORD',
     password,
@@ -28,6 +29,8 @@ export const login = () => (dispatchEvent, getState) => {
             console.log('Login data :::',response);
             if(response.data.success==='true'){
                 dispatchEvent(setIsLoggedIn('init'));
+                Cookies.set('isLoggedIn', true);
+                window.location.reload(false)
             }
            
         })
@@ -35,14 +38,4 @@ export const login = () => (dispatchEvent, getState) => {
                 dispatchEvent(setLoadingState('error'));
         })
 };
-//     const url =(`http://18.191.184.143:3001/login?username=${username}&password=${password}`)
-//     fetch(url)
-//     .then((res) => {
-//         if(res.data){
-//             dispatchEvent(setIsLoggedIn('init'));
-//         }else{
-//             dispatchEvent(setLoadingState('error'));
-//         }
-// })
 };
-//}
