@@ -12,7 +12,7 @@ const authenticate = () => {
 const logout = () => {
     console.log("Removing Cookies");
     Cookies.remove('isLoggedIn');
-    Cookies.remove('username');
+    Cookies.remove('user');
     
     window.location.reload(false)
     return (

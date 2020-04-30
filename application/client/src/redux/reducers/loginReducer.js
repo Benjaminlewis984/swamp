@@ -1,6 +1,7 @@
 const Cookie = require("js-cookie");
+let user_data
 const user = Cookie.get('user');
-const user_data = JSON.parse(user)
+user_data = (user ? JSON.parse(user) : {})
 
 const INITIAL_STATE = {
     username: user_data['username'] || '',
@@ -17,14 +18,11 @@ const INITIAL_STATE = {
 const loginReducer = (state = INITIAL_STATE, action) => {
     switch(action.type) {
         case 'USER_SET_USERNAME':
-            INITIAL_STATE.username = action.username
             return {
                 ...state,
                 username: action.username,
             };
         case 'USER_SET_PASSWORD':
-            INITIAL_STATE.password = action.password
-            console.log(INITIAL_STATE)
             return {
                 ...state,
                 password: action.password,
