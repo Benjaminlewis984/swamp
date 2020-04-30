@@ -23,11 +23,16 @@ router.post('/listings', async (req, res, next) => {
   let accountID = req.body.user.acc_id;
   const results = await mediaManager.getListings(25, 0, accountID);
 
-  results.forEach(async (result, idx) => {
-    result.purchase_count = await mediaManager.getPurchaseCount(result.m_id);
+  if (results.length == 0) {
+    return res.status(200).send({success: true, results: results});
+  }
+  else {
+    results.forEach(async (result, idx) => {
+      result.purchase_count = await mediaManager.getPurchaseCount(result.m_id);
 
-    if(idx == results.length - 1) { return res.status(200).send({success: true, results: results}); }
-  });
+      if(idx == results.length - 1) { return res.status(200).send({success: true, results: results}); }
+    });
+  }
 });
 
 module.exports = router;
