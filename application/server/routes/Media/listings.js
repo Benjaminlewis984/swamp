@@ -24,7 +24,6 @@ router.post('/listings', async (req, res, next) => {
   const results = await mediaManager.getListings(25, 0, accountID);
 
   results.forEach(async (result, idx) => {
-    result['author_username'] = req.user.username;
     result.purchase_count = await mediaManager.getPurchaseCount(result.m_id);
 
     if(idx == results.length - 1) { return res.status(200).send({success: true, results: results}); }
