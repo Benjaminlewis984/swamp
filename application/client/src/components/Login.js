@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component, useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
   setUserName,
@@ -10,11 +10,13 @@ import { ButtonContainer } from "./Button";
 import { Dashboard } from './Dashboard';
 import Cookies from 'js-cookie';
 
-const Login = ({ username,
+const Login = ({ 
+  username,
   password,
   isLoggedIn,
   loginLoadingState,
   dispatch,
+  //authenticated,
 }) => {
   const [auth, setAuth] = React.useState(false);
 
@@ -29,8 +31,8 @@ const Login = ({ username,
 
   if (isLoggedIn) {
     return <div>
-      <p>Welcome {username}!!!</p>
-      <Redirect path='/dashboard'></Redirect>
+      {/* <p>Welcome {username}!!!</p> */}
+      <Redirect path='/'></Redirect>
     </div>
   }
   
@@ -59,7 +61,13 @@ const Login = ({ username,
                   onChange={e => dispatch(setPassword(e.target.value))}>
                 </input>
               </div>
-              <ButtonContainer id="login" onClick={()=> dispatch(login())}>Log In</ButtonContainer>
+              <ButtonContainer id="login" 
+              onClick={()=>dispatch(login())
+                // ,()=>{loginRefresh()}
+                
+              }
+              
+              >Log In</ButtonContainer>
               <p className="text-center"> 
                 <a href='signup'>
                   Don’t have account? 
@@ -81,6 +89,7 @@ const mapStateToProps = state => {
     password: state.loginReducer.password,
     isLoggedIn: state.loginReducer.isLoggedIn,
     loginLoadingState: state.loginReducer.loginLoadingState,
+    authenticated: state.loginReducer.authenticated,
   };
 };
 
