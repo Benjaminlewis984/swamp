@@ -21,31 +21,23 @@ export const setAuthenticated = authenticated => ({
     authenticated,
 });
 
-export const login = () => (dispatchEvent, getState) => {
-    console.log('Log In Function !!!');
-    const axios = require("axios");
-    const Cookies = require("js-cookie");
-    const React = require("react");
+export const setACCID = acc_id => ({
+    type: 'SET_ACC_ID',
+    acc_id,
+});
 
-    const username = getState().loginReducer.username;
-    const password = getState().loginReducer.password;
+export const setEmail = email => ({
+    type: 'SET_EMAIL',
+    email,
+});
 
-    Cookies.set('username',username);
+export const setLastName = lastname => ({
+    type: 'SET_LAST_NAME',
+    lastname,
+});
 
-    if(username.length > 0 && password.length > 0){
-        axios.post(`http://18.191.184.143:3001/login?username=${username}&password=${password}`, {validateStatus:false})
-        .then((response) => {
-            console.log('Login data :::',response);
-            if(response.data.success==='true'){
-                console.log("After Dispatch, Login is updated to accurate to correct value");
-                dispatchEvent(setIsLoggedIn('init'));
-                Cookies.set('isLoggedIn', true);
-                window.location.reload(false)
-            }
-           
-        })
-        .catch(e => {
-                dispatchEvent(setLoadingState('error'));
-        })
-};
-};
+export const setFirstName = firstname => ({
+    type: 'SET_FIRST_NAME',
+    firstname,
+});
+

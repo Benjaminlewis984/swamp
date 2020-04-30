@@ -2,9 +2,9 @@ import React, { Component, useEffect, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import { ButtonContainer } from "./Button";
-import Home from './Home';
 import logo from '../imgs/gator.png';
 import Cookies from 'js-cookie';
+import axios from 'axios';
 
 const authenticate = () => {
     return Cookies.get("isLoggedIn");
@@ -13,7 +13,12 @@ const authenticate = () => {
 const logout = () => {
     console.log("Removing Cookies");
     Cookies.remove('isLoggedIn');
-    Cookies.remove('username');
+    Cookies.remove('user');
+    axios.get(`http://18.191.184.143:3001/logout`)
+    .then((res) => {
+        console.log(res);
+        console.log(res.data.success);
+    })
     
     window.location.reload(false)
     return (

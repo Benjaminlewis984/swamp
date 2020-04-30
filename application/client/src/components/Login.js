@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import {
   setUserName,
   setPassword,
-  login
+  setEmail,
+  setFirstName,
+  setLastName,
+  setIsLoggedIn
 } from '../redux/actions/loginAction';
 import { Redirect } from "react-router-dom";
 import { ButtonContainer } from "./Button";
@@ -13,12 +16,51 @@ import Cookies from 'js-cookie';
 const Login = ({ 
   username,
   password,
+  firstName,
+  lastName,
+  email,
   isLoggedIn,
   loginLoadingState,
   dispatch,
   //authenticated,
 }) => {
   const [auth, setAuth] = React.useState(false);
+
+  const login = () => (dispatchEvent, getState) => {
+    console.log('Log In Function !!!');
+    const axios = require("axios");
+    const Cookies = require("js-cookie");
+    const React = require("react");
+
+    const username = getState().loginReducer.username;
+    const password = getState().loginReducer.password;
+
+    Cookies.set('username',username);
+
+    if(username.length > 0 && password.length > 0){
+        axios.post(`http://18.191.184.143:3001/login?username=${username}&password=${password}`, {validateStatus:false})
+        .then((response) => {
+            console.log('Login data :::',response);
+            if(response.data.success==='true'){
+                console.log("After Dispatch, Login is updated to accurate to correct value");
+                dispatchEvent(setIsLoggedIn('init'));
+                dispatchEvent(setUserName(response.data.user.username));
+                dispatchEvent(setEmail(response.data.user.email));
+                dispatchEvent(setFirstName(response.data.user.first_name));
+                dispatchEvent(setLastName(response.data.user.last_name));
+
+                Cookies.set('isLoggedIn', true);
+                Cookies.set('user', JSON.stringify(response.data.user));
+                window.location.reload(false)
+            }
+           
+        })
+        .catch(e => {
+                // dispatchEvent(setLoadingState('error'));
+        })
+};
+};
+
 
   const readCookie = () => {    
     if(Cookies.get(username)){
@@ -88,6 +130,9 @@ const mapStateToProps = state => {
   return {
     username: state.loginReducer.username,
     password: state.loginReducer.password,
+    email: state.loginReducer.email,
+    firstName: state.loginReducer.firstName,
+    lastName: state.loginReducer.lastName,
     isLoggedIn: state.loginReducer.isLoggedIn,
     loginLoadingState: state.loginReducer.loginLoadingState,
     authenticated: state.loginReducer.authenticated,
