@@ -27,10 +27,8 @@ class ProductProvider extends Component {
               }  
         }).then((res) => {
             tempProducts = res.data.results;
-
             this.setState(() => { return {products: tempProducts} })
         })
-
     }
 
     getItem = (m_id) => {
