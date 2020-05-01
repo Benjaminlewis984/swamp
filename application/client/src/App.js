@@ -14,6 +14,7 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
 import Upload from './components/Upload';
+import Home from './components/Home';
 
 import Team from './components/Team';
 import Dang from './components/About/Dang';
@@ -30,6 +31,7 @@ class App extends Component {
         <React.Fragment>
           <Navbar />
           <Switch>
+            <Route exact path="/" component={ProductList} />
             <Route path="/result" component={ProductList} />
             <Route path="/details" component={Details} />
             <Route path="/cart" component={Cart} />
