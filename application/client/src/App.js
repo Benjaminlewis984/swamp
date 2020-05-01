@@ -30,6 +30,7 @@ class App extends Component {
         <React.Fragment>
           <Navbar />
           <Switch>
+            {/* <Route path="/" component={} /> */}
             <Route path="/result" component={ProductList} />
             <Route path="/details" component={Details} />
             <Route path="/cart" component={Cart} />

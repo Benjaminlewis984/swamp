@@ -72,9 +72,11 @@ const Login = ({
   },[])
 
   if (isLoggedIn) {
+    console.log("Test ::: I'm here ");
     return <div>
       {/* <p>Welcome {username}!!!</p> */}
-      <Redirect path='/'></Redirect>
+      <Redirect path='/result'></Redirect>
+      
     </div>
   }
   
