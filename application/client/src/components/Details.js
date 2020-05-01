@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { ProductConsumer } from '../context';
 import { Link } from 'react-router-dom';
 import { ButtonContainer } from './Button';
+import Axios from 'axios';
 
 export default class Details extends Component {
     render() {
@@ -65,7 +66,9 @@ export default class Details extends Component {
                                          disabled={false}
                                          onClick={() => {
                                              if((price === 0)){
-                                                 alert('downloadable');
+                                                //  alert('downloadable');
+                                                 Axios.post(`http://18.191.184.143:3001/download?${raw_path}`)
+                                                 
                                              } else {
                                                  alert('Not downloadable');
                                              }
