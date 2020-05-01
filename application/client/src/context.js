@@ -17,17 +17,15 @@ class ProductProvider extends Component {
 
     setProducts = (category, query) => {
         let tempProducts;
-        let tempCategory = "all";
-        if (category !== "all") { tempCategory = category; }
+        let tempCategory = category;
 
         axios.post('http://18.191.184.143:3001/browse', {
             "query": {
                 "category": tempCategory,
                 "search": query
-              }  
+            }  
         }).then((res) => {
             tempProducts = res.data.results;
-
             this.setState(() => { return {products: tempProducts} })
         })
 

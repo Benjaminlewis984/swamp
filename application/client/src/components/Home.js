@@ -1,11 +1,8 @@
 import React, { useState } from "react";
-import axios from "axios";
+import styled from 'styled-components';
 import "../styles/Home.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Input } from "reactstrap";
-// import { setSearchResults } from '../redux/actions/searchActions';
 import { connect } from "react-redux";
-import { ButtonContainer } from "./Button";
 import { ProductConsumer } from "../context";
 import { useHistory } from "react-router-dom";
 import Title from "./Title";
@@ -18,36 +15,53 @@ const Home = () => {
   return (
     <ProductConsumer>
       {(value) => (
-        
+        <HomeWrapper className="container">
+          <Title name="swamp." />
 
-          <div className="input-group">
-            <select id="category" onChange={(e) => setCategory(e.target.value)}>
-              <option value="all" selected>
-                All
-              </option>
-              <option value="document">Documents</option>
-              <option value="image">Images</option>
-              <option value="audio">Audio</option>
-              <option value="video">Video</option>
-            </select>
-
-            <Input
-              type="text"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search by title.."
-            />
-
-            <ButtonContainer
-              onClick={() => {
-                value.setProducts(category, query);
-                history.push("/result");
-              }}
-            >
-              Search
-            </ButtonContainer>
+          <div className="row col-10 mx-auto my-2 justify-content-center">
+            <h3>A media marketplace for gators, by gators.</h3>
           </div>
-        
+
+          <div className="container justify-content-center ml-auto">
+            <form>
+              <div className="input-group">
+                <div className="input-group-prepend">
+                  <select
+                    id="category-field"
+                    class="form-control dropdown toggle"
+                    data-toggle="dropdown"
+                    aria-hashpopup="true"
+                    aria-expanded="false"
+                    onChange={(e) => setCategory(e.target.value)}>
+                      <option value="all">All</option>
+                      <option value="document">Documents</option>
+                      <option value="image">Images</option>
+                      <option value="audio">Audio</option>
+                      <option value="video">Video</option>
+                  </select>
+                </div>
+
+                <input
+                  id="userInput"
+                  class="form-control"
+                  type="text"
+                  aria-label="Text input with dropdown button"
+                  placeholder="Search by title.."
+                  value={query}
+                  onChange={(e) => setQuery(e.target.value)}
+                ></input>
+
+                <button
+                  className="btn btn-dark"
+                  onClick={() => {
+                    value.setProducts(category, query);
+                    history.push("/result"); }}>
+                  <i class="fas fa-search"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </HomeWrapper>
       )}
     </ProductConsumer>
   );
@@ -60,3 +74,7 @@ const mapStateToProps = (state) => {
 };
 
 export default connect(mapStateToProps)(Home);
+
+const HomeWrapper = styled.nav`
+padding-top: 10rem;
+`
