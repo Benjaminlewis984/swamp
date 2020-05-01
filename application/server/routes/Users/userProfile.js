@@ -32,8 +32,7 @@ router.post('/profile', (req, res) => {
     }
 
     const profilePath = "profile/" + dateString + fileNumber + fileExtension;
-    console.log(profilePath)
-    file.mv('./media/' + profilePath, (err) => {
+    file.mv('./media/public/' + profilePath, (err) => {
       userManager.updateUserProfilePicture(profilePath, req.user.acc_id);
       res.status(200).send({success: "true"});
     });
