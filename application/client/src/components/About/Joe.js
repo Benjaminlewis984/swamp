@@ -1,5 +1,5 @@
 import React from 'react';
-import joe from "../imgs/Joe.jpg";
+import joe from "../../imgs/Joe.jpg";
 
 const Joe = () => {
     return (

@@ -1,58 +1,42 @@
-.App {
-  text-align: center;
+:root {
+  --mainYellow:#ffa400;
+  --mainBlue:#9932CC;
+  --mainDark:#232528;
+  --lightBlue:#FFD700;
+  --mainWhite:#f3f3f3;
 }
 
-.App-logo {
-  height: 40vmin;
+body {
+  font-family: 'Oswald', sans-serif !important;
+  background: var(--mainWhite) !important;
+  color: var(--mainDark) !important;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.text-title {
+  font-family: 'Permanent Marker', cursive;
+  letter-spacing: 0.3rem;
+  text-transform: uppercase;
 }
 
-.App-link {
-  color: #09d3ac;
+.text-blue {
+  color: var(--mainBlue);
 }
 
-.nav-bar{
-  display: flex;
-  justify-content: center;
-  color: white;
-  background-color: rgb(236, 216, 98);
+.text-bright{
+  color: var(--lightBlue);
+}
+.cart-icon {
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: var(--mainYellow);
 }
 
-.nav-bar a{
-  padding: 5px;
-}
+/* ............ */
 
 .profile {
   border-radius: 50%;
   width: 220px;
   height: 220px;
-}
-
-.container {
-  align-content: center;
-  display: inline-block;
-}
-
-.team-box {
- display: inline-flex;
-}
-
-h2 {
-  text-decoration: underline;
-}
-
-td {
-  padding: 20px;
 }
 
 .title {
