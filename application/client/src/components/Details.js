@@ -66,8 +66,10 @@ export default class Details extends Component {
                                          disabled={false}
                                          onClick={() => {
                                              if((price === 0)){
-                                                //  alert('downloadable');
-                                                 Axios.post(`http://18.191.184.143:3001/download?${raw_path}`)
+                                                Axios.post(`http://18.191.184.143:3001/download`, {'path':`${raw_path}`})
+                                                //  .then(res => {
+                                                //      console.log(res);
+                                                //  })
                                                  
                                              } else {
                                                  alert('Not downloadable');
