@@ -106,11 +106,8 @@ const Login = ({
                 </input>
               </div>
               <ButtonContainer id="login" 
-              onClick={()=>dispatch(login())
-                // ,()=>{loginRefresh()}
-                
-              }
-              
+              onClick={()=>dispatch(login())                
+              } 
               >Log In</ButtonContainer>
               <p className="text-center"> 
                 <a href='signup'>

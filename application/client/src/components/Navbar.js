@@ -75,7 +75,7 @@ const Navbar = () => {
                             placeholder="Search by title.."
                         />
 
-                        <ButtonContainer
+                        <ButtonContainer 
                             onClick={() => {
                                 value.setProducts(category, query);
                                 history.push("/result");
@@ -86,9 +86,6 @@ const Navbar = () => {
 
                 )}
             </ProductConsumer>
-
-
-
             <Link to="/cart" className="ml-auto">
                 <ButtonContainer>
                     <span className="mr-2">
