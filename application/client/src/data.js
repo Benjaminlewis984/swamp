@@ -2,6 +2,7 @@ export const detailProduct = {
   m_id: 100,
   title: "Sample product",
   img: "img/product-1.png",
+  raw: "img.png",
   price: 1000,
   author_username: "Ben",
   description:

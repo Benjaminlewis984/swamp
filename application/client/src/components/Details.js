@@ -8,9 +8,10 @@ export default class Details extends Component {
         return (
             <ProductConsumer>
                 {(value) => {
-                    const {m_id, author_username, preview_path, description, price, title, inCart}
+                    const {m_id, author_username, preview_path, description, price, title, inCart, raw_path}
                      = value.detailProduct;
                      console.log(value.detailProduct);
+                     console.log(value.detailProduct.raw_path)
                      return (
                          <div className="container py-5">
                              {/* title */}
@@ -59,6 +60,18 @@ export default class Details extends Component {
                                              value.openModel(m_id);
                                          }}>
                                              {inCart ? "inCart" : "add to cart"}
+                                         </ButtonContainer>
+                                         <ButtonContainer 
+                                         disabled={false}
+                                         onClick={() => {
+                                             if((price === 0)){
+                                                 alert('downloadable');
+                                             } else {
+                                                 alert('Not downloadable');
+                                             }
+                                         }}
+                                         >
+                                         {price === 0 ? "Download" : "Contact seller"}
                                          </ButtonContainer>
                                      </div>
                                  </div>
