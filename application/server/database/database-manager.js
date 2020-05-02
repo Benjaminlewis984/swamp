@@ -1,12 +1,21 @@
-var mysql = require('mysql');
+const mysql = require('mysql');
 
-var connectionInformation = {
+const connectionInformation = {
 	host: 'swamp-database-instance.c7yirp5jbhfm.us-east-2.rds.amazonaws.com',
 	user: 'admin',
 	password: '1vFhxpUjr0vof3KErgPi',
-	database: 'swamp'
+	database: 'mydb'
 };
-var connection = mysql.createConnection(connectionInformation);
+
+// Local DB for testing
+// const connectionInformation = {
+// 	host: 'localhost',
+// 	user: 'root',
+// 	password: 'password',
+// 	database: 'mydb'
+// }
+
+const connection = mysql.createConnection(connectionInformation);
 
 exports.connect = () => {
 	connection.connect((error) => {
@@ -22,11 +31,12 @@ exports.end = () => {
 	});
 }
 
-exports.queryDatabase = (query, action) => {
-	connection.query(query, (error, result) => {
-		if (error) throw error;
-		// console.log("query: " + query);
-
-		action(result);
+exports.queryDatabase = (query, param) => {
+	return new Promise((resolve, reject) => {
+		query = query.replace(/[\n]/gm, ' ');
+		connection.query(query, param, (err, result) => {
+			if(err) { reject(err); }
+			else { resolve(result); }
+		});
 	});
 }

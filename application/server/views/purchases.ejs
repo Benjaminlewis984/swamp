@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Purchases</title>
+    <link rel='stylesheet', href='/stylesheets/style.css'>
+  </head>
+  <body>
+    <h1>Purchases</h1>
+    <table width="100%">
+      <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>Preview Image</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Controls</th>
+      </tr>
+      <% results.forEach(function(obj){ %>
+      <tr>
+        <td style="text-align:center"><%=obj.title%></td>
+        <td style="text-align:center"><%=obj.description%></td>
+        <td style="text-align:center"><%=obj.category%></td>
+        <td style="text-align:center">
+           <img src="./<%=obj.preview_path%>" style="width: 100px; height: 100px;"> 
+        </td>
+        <td style="text-align:center">$<%=obj.price%></td>
+        <td style="text-align:center">
+          <form action="/download" method="post" style="display: inline-block;">
+            <button type="submit" name="path" value="<%=obj.raw_path%>">Download</button>
+          </form>
+        </td>
+      </tr>
+      <%})%>
+    </table>
+  </body>
+</html>

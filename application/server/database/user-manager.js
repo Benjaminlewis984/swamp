@@ -1,70 +1,78 @@
-var databaseManager = require('./database-manager.js');
+const databaseManager = require('./database-manager.js');
 
-exports.addUser = (username, password, email) => {
-	var queryString = "('" + username + "', '" + password + "', '" + email + "');";
-	databaseManager.queryDatabase("INSERT INTO users(username, password, email) VALUES " + queryString, (result) => {});
-}
-/*
-Instead of deleting by usernames, we should just modify privilege to 'banned'
+exports.addUser = async (username, password, email, first_name, last_name) => {
+  await databaseManager.queryDatabase(`INSERT INTO accounts
+    (username, password, email, first_name, last_name)
+    VALUES (?, ?, ?, ?, ?);`, [username, password, email, first_name, last_name]);
 
-exports.deleteUser = (username) => {
-	var queryString = "'" + username + "';";
-	databaseManager.queryDatabase("DELETE FROM users WHERE username = " + queryString, (result) => {});
-}*/
-
-exports.updateUserPrivilege = (username, privilege) => {
-	var usernameQueryString = "'" + username + "';";
-	var privilegeQueryString = "'" + privilege + "'";
-	databaseManager.queryDatabase("UPDATE users SET privilege = " + privilegeQueryString + " WHERE username = " + usernameQueryString, (result) => {});
+  await databaseManager.queryDatabase(`INSERT INTO \`registered users\`(acc_id)
+    VALUES ((SELECT acc_id FROM accounts WHERE username = ?));`, [username]);
 }
 
-exports.getUserFromUsername = (username, action) => {
-	var queryString = "'" + username + "');";
-	databaseManager.queryDatabase("SELECT EXISTS(SELECT * FROM users WHERE username = " + queryString, (existsResult) => {
-		if (Object.values(existsResult[0])[0] == 1) {
-			queryString = "'" + username + "';";
-			databaseManager.queryDatabase("SELECT * FROM users WHERE username = " + queryString, (userResult) => {
-				action(userResult);
-			});
-		}
-		else {
-			action(undefined);
-		}
-	});
+exports.banUser = async (user, admin_id, reason, ban_length) => {
+  let current_date = new Date();
+  const date = current_date.toJSON().slice(0,10);
+  current_date.setDate(current_date.getDate() + ban_length);
+  const unban_date = current_date.toJSON().slice(0,10);
+
+  const user_acc_id = user[0]['acc_id'];
+  const reg = await this.getRegIDFromUser(user_acc_id)
+    const reg_id = reg[0]['reg_id'];
+    await databaseManager.queryDatabase(`INSERT INTO \`banned users\`
+      (reg_id, banned_by, reason, ban_date, unban_date, ban_active)
+      VALUES (?, ?, ?, ?, ?, ?);`, [reg_id, admin_id, reason, date, unban_date, 1])
 }
 
-exports.getUserFromEmail = (email, action) => {
-  var queryString = "'" + email + "');";
-  databaseManager.queryDatabase("SELECT EXISTS(SELECT * FROM users WHERE email = " + queryString, (existsResult) => {
-    if (Object.values(existsResult[0])[0] == 1) {
-      queryString = "'" + email + "';";
-      databaseManager.queryDatabase("SELECT * FROM users WHERE email = " + queryString, (userResult) => {
-        action(userResult);
-      });
-    }
-    else {
-      action(undefined);
-    }
-  });
+exports.getUserFromUsername = async (username) => {
+  const count = await databaseManager.queryDatabase(`SELECT COUNT(*) FROM accounts WHERE username = ?;`, [username]);
+  if(count[0]['COUNT(*)'] > 0) {
+    const userResult = await databaseManager.queryDatabase(`SELECT * FROM accounts WHERE username = ?`, [username]);
+    return userResult;
+  }
+  return undefined;
 }
 
-exports.getUserFromID = (id, action) => {
-  var queryString = "'" + id + "');";
-  databaseManager.queryDatabase("SELECT EXISTS(SELECT * FROM users WHERE id = " + queryString, (existsResult) => {
-    if (Object.values(existsResult[0])[0] == 1) {
-      queryString = "'" + id + "';";
-      databaseManager.queryDatabase("SELECT * FROM users WHERE id = " + queryString, (userResult) => {
-        action(userResult);
-      });
-    }
-    else {
-      action(undefined);
-    }
-  });
+exports.getUserFromEmail = async (email) => {
+  const count = await databaseManager.queryDatabase(`SELECT EXISTS(SELECT * FROM accounts WHERE email = ?);`, [email]);
+  if(count[0]['COUNT(*)'] > 0) {
+    const userResult = await databaseManager.queryDatabase(`SELECT * FROM accounts WHERE email = ?;`, [email]);
+    return userResult;
+  }
+  return undefined;
 }
 
-exports.updateUserPassword = (username, password) => {
-	var usernameQueryString = "'" + username + "';";
-	var passwordQueryString = "'" + password + "'";
-	databaseManager.queryDatabase("UPDATE users SET password = " + passwordQueryString + " WHERE username = " + usernameQueryString, (result) => {});
+exports.getUserFromID = async (id) => {
+  const count = await databaseManager.queryDatabase(`SELECT COUNT(*) FROM accounts WHERE acc_id = ?;`, [id]);
+  if(count[0]['COUNT(*)'] > 0) {
+    const userResult = await databaseManager.queryDatabase(`SELECT * FROM accounts WHERE acc_id = ?;`, [id]);
+    return userResult;
+  }
+  return undefined;
+}
+
+exports.updateUserPassword = async (username, password) => {
+	await databaseManager.queryDatabase(`UPDATE accounts SET password = ? WHERE username = ?`, [password, username]);
+}
+
+exports.checkUserBanned = async (user) => {
+  const user_acc_id = user[0]['acc_id'];
+  const reg = await this.getRegIDFromUser(user_acc_id);
+
+  if(reg != undefined) {
+    const reg_id = reg[0]['reg_id'];
+    const count = await databaseManager.queryDatabase(`SELECT COUNT(*) FROM \`banned users\` 
+    WHERE reg_id = ? AND ban_active = 1`, [reg_id]);
+  
+    if(count[0]['COUNT(*)'] != 0) { return reg; }
+  }
+  
+  return undefined;
+}
+
+exports.getRegIDFromUser = async (acc_id) => {
+  const count = await databaseManager.queryDatabase(`SELECT COUNT(*) FROM \`registered users\` WHERE acc_id = ?;`, [acc_id]);
+  if(count[0]['COUNT(*)'] != 0) {
+    const result = await databaseManager.queryDatabase(`SELECT reg_id FROM \`registered users\` WHERE acc_id = ?;`, [acc_id]);
+    return result;
+  } else { return undefined; }
 }

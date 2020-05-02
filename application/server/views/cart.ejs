@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Shopping Cart</title>
+    <link rel='stylesheet', href='/stylesheets/style.css'>
+  </head>
+  <body>
+    <h1>Shopping Cart</h1>
+    <table width="100%">
+      <tr>
+        <th>Author</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>Preview Image</th>
+        <th>Price</th>
+        <th>Controls</th>
+      </tr>
+<% results.forEach(function(obj){ %>
+      <tr>
+        <td style="text-align:center"><%=obj.author_username%></td>
+        <td style="text-align:center"><%=obj.title%></td>
+        <td style="text-align:center"><%=obj.description%></td>
+        <td style="text-align:center"><%=obj.category%></td>
+        <td style="text-align:center">
+           <img src="./<%=obj.preview_path.substr(obj.preview_path.indexOf('preview/') + 8);%>" style="width: 100px; height: 100px;"> 
+        </td>
+        <td style="text-align:center">$<%=obj.price%></td>
+        <td style="text-align:center">
+          <form action="/cart?_method=DELETE" method="post" style="display: inline-block;">
+            <button type="submit" name="m_id" value="<%=obj.m_id%>" style="background-color: #f44336;">Delete From Cart</button>
+          </form>
+        </td>
+      </tr>
+      <%})%>
+    </table>
+    <form action="/checkout" method='post'>
+      <button type="submit">Checkout</button>
+    </form>
+  </body>
+</html>

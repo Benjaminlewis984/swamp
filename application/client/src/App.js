@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import { Switch, Route, Link, BrowserRouter } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css'
+import { Switch, Route, Redirect } from "react-router-dom";
+import Cookies from 'js-cookie';
 
+<<<<<<< HEAD
 import Home from './pages/Home';
 import Team from './pages/Team';
 import Dang from './pages/Dang';
@@ -15,12 +18,29 @@ import UserLogin from './pages/UserLogin';
 import {useSelector, useDispatch} from 'react-redux';
 import counterReducer from './reducers/counter';
 import {increment, decrement} from './actions';
+=======
+import Navbar from './components/Navbar';
+import ProductList from './components/ProductList';
+import Details from './components/Details';
+import Cart from './components/Cart';
+import Default from './components/Default';
+import Model from './components/Model';
+import Login from './components/Login';
+import Signup from './components/Signup';
+import Dashboard from './components/Dashboard';
+import Upload from './components/Upload';
+import Home from './components/Home';
+>>>>>>> 0c90c426bc5e22ed0bd72350ddbf526b9468e037
 
-const App = () => {
-  const reduxCounter = useSelector(state => state.counter);
-  const isLogged = useSelector(state => state.isLogged);
-  const dispatch = useDispatch();
+import Team from './components/Team';
+import Dang from './components/About/Dang';
+import William from './components/About/William';
+import Joe from './components/About/Joe';
+import Kevin from './components/About/Kevin';
+import Ben from './components/About/Ben';
+import Onu from './components/About/Onu';
 
+<<<<<<< HEAD
   return (
     <div className="App">
       <BrowserRouter>
@@ -42,17 +62,39 @@ const App = () => {
           <Route path="/login" component={Login} />
           <Route path="/" component={UserLogin} />
         </Switch>
+=======
+class App extends Component {
+  
+  render() {
+    return (
+        <React.Fragment>
+          <Navbar />
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route path="/result" component={ProductList} />
+            <Route path="/details" component={Details} />
+            <Route path="/cart" component={Cart} />
+            <Route path="/login" component={Login} />
+            <Route path="/signup" component={Signup} />
+            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/upload" component={Upload} />
+>>>>>>> 0c90c426bc5e22ed0bd72350ddbf526b9468e037
 
-        <div className="counter">
-        <h1>Redux Counter : {reduxCounter}</h1>
-        <button onClick={() => dispatch(increment())}>Increment</button>
-        <button onClick={() => dispatch(decrement())}>Decrement</button>
-        {isLogged ? <h2>This is something only logged in people can see</h2> : ''}
-        </div>
+            <Route path="/about" component={Team} />
+            <Route path="/dang" component={Dang} />
+            <Route path="/will" component={William} />
+            <Route path="/joe" component={Joe} />
+            <Route path="/kevin" component={Kevin} />
+            <Route path="/ben" component={Ben} />
+            <Route path="/onu" component={Onu} />
 
-      </BrowserRouter>
-    </div>
-  );
+            <Route component={Default} />
+          </Switch>
+          <Model />
+        </React.Fragment>
+    );
+  }
+  
 }
 
 export default App;

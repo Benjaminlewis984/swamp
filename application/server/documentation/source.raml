@@ -48,10 +48,15 @@ title: Swamp backend
   post:
     description: Approve media on the database
     queryParameters:
-      id:
-        displayName: id
+      m_id:
+        displayName: m_id
         type: int
         description: media primary key
+        required: true
+      admin_id:
+        displayName: admin_id
+        type: int
+        description: id of the admin who approved the listing
         required: true
     responses:
       200:
@@ -67,10 +72,15 @@ title: Swamp backend
   post:
     description: Reject media on the database
     queryParameters:
-      id:
-        displayName: id
+      m_id:
+        displayName: m_id
         type: int
         description: media primary key
+        required: true
+      admin_id:
+        displayName: admin_id
+        type: int
+        desciption: id of the admin who rejected the listing
         required: true
     responses:
       200:
@@ -251,4 +261,173 @@ title: Swamp backend
               {
                 "success": true,
                 "user": USER_INFORMATION
+              }
+
+/cart:
+  get:
+    description: Renders media items in your shopping cart
+  post:
+    description: Adds item to your shopping cart
+    queryParameters:
+      m_id:
+        displayName: m_id
+        type: int
+        description: media primary key
+        required: true
+      acc_id:
+        displayName: acc_id
+        type: int
+        description: id of the logged in user
+        required: true
+    responses:
+      200:
+        description: Media successfully added to cart
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
+              }
+
+/listings:
+  get:
+    description: Renders the listings page
+  post:
+    description: Get the first 25 media posted from the current user
+    queryParameters:
+    responses:
+      200:
+        description: Media successfully fetched
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
+                "results": 
+                [
+                  {
+                    "id":31,
+                    "author_id":25,
+                    "title":"My Music File",
+                    "description":"This is an audio file from my class",
+                    "preview_path":"default/audio.png",
+                    "raw_path":"raw/2020-03-07:3.cu",
+                    "category":"audio",
+                    "status":"approved",
+                    "author_username":"william"
+                  },
+                  {
+                    "id":33,
+                    "author_id":25,
+                    "title":"Test File",
+                    "description":"Test Description",
+                    "preview_path":"preview/2020-03-10:1.jpg",
+                    "raw_path":"raw/2020-03-10:1.jpg",
+                    "category":"audio",
+                    "status":"approved",
+                    "author_username":"kevin"
+                  }
+                ]
+              }
+
+/purchases:
+  get:
+    description: Renders the purchases page
+  post:
+    description: Get the first 25 media purchased from the current user
+    queryParameters:
+    responses:
+      200:
+        description: Media successfully fetched
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
+                "results": 
+                [
+                  {
+                    "id":31,
+                    "author_id":25,
+                    "title":"My Music File",
+                    "description":"This is an audio file from my class",
+                    "preview_path":"default/audio.png",
+                    "raw_path":"raw/2020-03-07:3.cu",
+                    "category":"audio",
+                    "status":"approved",
+                    "author_username":"william"
+                  },
+                  {
+                    "id":33,
+                    "author_id":25,
+                    "title":"Test File",
+                    "description":"Test Description",
+                    "preview_path":"preview/2020-03-10:1.jpg",
+                    "raw_path":"raw/2020-03-10:1.jpg",
+                    "category":"audio",
+                    "status":"approved",
+                    "author_username":"kevin"
+                  }
+                ]
+              }
+
+/message:
+  get:
+    description: Renders the message page with textbox form
+  post:
+    description: Sends message to seller of media listing
+    queryParameters:
+      sender_id:
+        displayName: sender_id
+        type: number
+        required: true
+      receiver_id:
+        displayName: receiver_id
+        type: number
+        required: true
+      message:
+        displayName: Message
+        type: string
+        required: true
+    responses:
+      200:
+        description: Message successfully sent
+        body:
+          application/json:
+            example: |
+              {
+                "success": "true"
+              }
+      400:
+        description: User isn't logged in
+        body:
+          application/json:
+            example: |
+              {
+                "success": "false"
+              }
+
+/messagebox:
+  get:
+    description: Displays all messages sent to you
+    queryParameters:
+    reponses:
+      200:
+        description: Successfully retrieved messages send to you
+        body:
+          application/json:
+            example: |
+              {
+                "success": true,
+                "results": 
+                [
+                  {
+                    "sender_id":5,
+                    "acc_id":3,
+                    "message":"hello world",
+                    "date":"2020-04-28",
+                    "time":"01:43:55",
+                    "read":0
+                  }
+                ]
               }
