@@ -15,7 +15,7 @@ const Upload = () => {
 
     const fileSelectedHandler = (event) => {
         // console.log(event.target.files[0])
-        selectedFile = event.target.files;
+        selectedFile = event.target.files[0];
     }
 
     const getFileType = () => {
@@ -32,19 +32,19 @@ const Upload = () => {
         console.log('Submitting Upload');
         const axios = require('axios');
         console.log(selectedFile);
-
-        axios.post(`http://localhost:3001/upload`, {
-            "body": {
-                "file": selectedFile,
-                "preview": null,
-                "title": "testingSubmit",
-                "description": "description",
-                "category": "document",
-                "price": 10,
-                "academic": 0,
-                "type": "digital",
-                // "acc_id": 3,
-                withCredentials: true
+        var formData = new FormData();
+        formData.append('file', selectedFile);
+        formData.append('preview', null);
+        formData.append('title', 'testingonsdvfd')
+        formData.append('description', 'igivup')
+        formData.append('category', 'document')
+        formData.append('price', 500);
+        formData.append('academic', 0);
+        formData.append('type', 'digital');
+        formData.append('acc_id', 3);
+        axios.post(`http://18.191.184.143:3001/upload`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
             }
         })
             .then((res) => {
