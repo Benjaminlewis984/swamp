@@ -14,10 +14,14 @@ router.get('/upload', passport_config.checkAuth, passport_config.checkUser, (req
 });
 
 router.post('/upload', async (req, res) => {
-  // if(!req.isAuthenticated()) {
-  //   res.redirect('/register')
-  // }
-  
+  //if(!req.isAuthenticated()) {
+  //  res.redirect('/register')
+  //}
+
+  console.log(req.files);
+
+  const acc_id = req.body.acc_id;
+
   const file = req.files.file;
   const preview = req.files.preview;
   const price = req.body.price;
@@ -57,12 +61,12 @@ router.post('/upload', async (req, res) => {
     file.mv('./media/' + rawPath, (err) => {
       if (previewPath.substr(0, 16) != "preview/default/") {
         preview.mv('./media/' + previewPath, (err) => {
-          mediaManager.addMedia(title, description, previewPath, rawPath, category, price, 3, academic, type);
+          mediaManager.addMedia(title, description, previewPath, rawPath, category, price, acc_id, academic, type);
           return res.status(200).send({success: "true"});
         });
       }
       else {
-        mediaManager.addMedia(title, description, previewPath, rawPath, category, price, 3, academic, type);
+        mediaManager.addMedia(title, description, previewPath, rawPath, category, price, acc_id, academic, type);
         return res.status(200).send({success: "true"});
       }
     });
@@ -70,3 +74,4 @@ router.post('/upload', async (req, res) => {
 });
 
 module.exports = router;
+

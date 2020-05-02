@@ -18,9 +18,15 @@ const Upload = () => {
         selectedFile = event.target.files;
     }
 
-    const getFileType = () => {
-        var type = document.getElementById("type-upload");
-        console.log(type);
+    const getFileType1 = () => {
+        // var type = document.getElementsByTagName("type-upload");
+        var type = document.getElementsByClassName("type-upload1");
+        console.log(type[0].value);
+    }
+    const getFileType2 = () => {
+        // var type = document.getElementsByTagName("type-upload");
+        var type = document.getElementsByClassName("type-upload2");
+        console.log(type[0].value);
     }
 
     const fileDescriptionHandler = (event) => {
@@ -32,9 +38,12 @@ const Upload = () => {
         console.log('Submitting Upload');
         const axios = require('axios');
         console.log(selectedFile);
-
-        axios.post(`http://localhost:3001/upload`, {
-            "body": {
+        var formData = new FormData();
+        var file = document.querySelector('#file');
+        formData.append('image', file.files[0]);
+        
+        axios.post(`http://18.191.184.143:3001/upload`, {    
+        "body": {
                 "file": selectedFile,
                 "preview": null,
                 "title": "testingSubmit",
@@ -43,7 +52,7 @@ const Upload = () => {
                 "price": 10,
                 "academic": 0,
                 "type": "digital",
-                // "acc_id": 3,
+                "acc_id": 3,
                 withCredentials: true
             }
         })
@@ -97,14 +106,13 @@ const Upload = () => {
                                 </input>
                             </div>
                             <div class="form-group has-success" >
-                                <div class="form-check" onClick={getFileType}>
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="type-upload" value="digital" checked></input>
+                                <div class="form-check" onClick={getFileType1}>
+                                    <input class="form-check-input type-upload1" type="radio" value="digital" checked></input>
                                     <label class="form-check-label" for="exampleRadios1">
                                         Digital  </label>
                                 </div>
-                                <div class="form-check"
-                                onClick={getFileType}>
-                                    <input class="form-check-input" type="radio" name="exampleRadios" id="type-upload" value="physical"></input>
+                                <div class="form-check" onClick={getFileType2}>
+                                    <input class="form-check-input type-upload2" type="radio" value="physical"></input>
                                     <label class="form-check-label" for="exampleRadios2">
                                         Physical
   </label>
