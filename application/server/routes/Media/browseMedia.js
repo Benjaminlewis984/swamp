@@ -14,8 +14,6 @@ axios.defaults.withCredentials = true;
  * @return: All the approved media content
  */
 router.get('/browse', (req, res, next) => {
-  console.log(req.user);
-  
   let category = req.body.category;
   if (category === undefined) {
     category = 'all';

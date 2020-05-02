@@ -3,6 +3,16 @@
   <head>
     <title>Browse</title>
     <link rel='stylesheet', href='/stylesheets/style.css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+      $.post("/browse", {
+        category: "document",
+        search: ""
+      },
+      (data, status) => {
+        console.log(data);
+      });
+    </script>
   </head>
   <body>
     <h1>Browse</h1>
