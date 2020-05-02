@@ -41,6 +41,7 @@ const Upload = () => {
     const submit = () => {
         console.log('Submitting Upload');
         const axios = require('axios');
+        axios.defaults.withCredentials = true;
         // console.log(selectedFile);
 
         var formData = new FormData();
