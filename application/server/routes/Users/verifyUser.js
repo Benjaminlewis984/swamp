@@ -5,16 +5,19 @@ const passport = require('passport');
 const passport_config = require('../../modules/passport-config');
 passport_config.pp_config(passport);
 
-const request = require('request');
+const axios = require('axios');
+axios.defaults.withCredentials = true;
 
 /**
  * Renders the login page for the backend dashboard
  */
 router.get('/login', passport_config.alreadyAuth, (req, res, next) => {
   if (req.query.username != undefined) {
-    request.post('http://0.0.0.0:3001/login', {json: req.query}, (error, response, body) => {
-      res.send({success: "true", user: body.user})
-      // res.render('index', { title: 'Database Dashboard', user: body.user });
+    axios.post('http://0.0.0.0:3001/login',
+      req.query
+    )
+    .then((response) => {
+      res.send({success: "true", user: response.data.user})
     });
   }
   else {

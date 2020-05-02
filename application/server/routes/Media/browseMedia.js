@@ -4,7 +4,8 @@ const mediaManager = require('../../database/media-manager.js');
 const userManager = require('../../database/user-manager.js');
 const express = require('express');
 const router = express.Router();
-const request = require('request');
+const axios = require('axios');
+axios.defaults.withCredentials = true;
 
 /**
  * Renders the results page and also sends, in JSON, all the approved media content
@@ -13,24 +14,19 @@ const request = require('request');
  * @return: All the approved media content
  */
 router.get('/browse', (req, res, next) => {
+  console.log(req.user);
+  
   let category = req.body.category;
   if (category === undefined) {
     category = 'all';
   }
 
-  request({
-    url: 'http://0.0.0.0:3001/browse',
-    method: 'POST',
-    headers: {
-      'Cookie': req.cookies['connect.sid']
-    }
-  }, (error, response, body) => {
-    const json = JSON.parse(body)
-    res.render('browse', { results: json.results });
-  })
-  // request.post('http://0.0.0.0:3001/browse', {json: {query: req.query, user: req.user}}, (error, response, body) => {
-  //   res.render('browse', {results: body.results});
-  // });
+  axios.post('http://0.0.0.0:3001/browse',
+    req.query
+  )
+  .then((response) => {
+    res.render('browse', { results: response.data.results });
+  });
 });
 /**
  * Extracts necessary information from the body. The information sent 
@@ -43,12 +39,12 @@ router.get('/browse', (req, res, next) => {
  * @return: Returns the 
  */
 router.post('/browse', async (req, res, next) => {
-  let category = req.query.category;  
-  let search = req.query.search;
+  let category = req.body.category;  
+  let search = req.body.search;
   let search_array
 
-  let page = req.query.page;
-  if (req.query.page == undefined || req.query.page <= 0) {
+  let page = req.body.page;
+  if (req.body.page == undefined || req.body.page <= 0) {
     page = 1;
   }
 

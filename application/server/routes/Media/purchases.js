@@ -2,14 +2,18 @@ const mediaManager = require('../../database/media-manager.js');
 const userManager = require('../../database/user-manager.js');
 const express = require('express');
 const router = express.Router();
-const request = require('request');
+const axios = require('axios');
+axios.defaults.withCredentials = true;
 
 /**
  * Renders the listings page with all of the user's bought media content
  */
 router.get('/purchases', async (req, res, next) => {
-  request.post('http://0.0.0.0:3001/purchases', {json: {query: req.query, user: req.user}}, (error, response, body) => {
-    res.render('purchases', {results: body.results});
+  axios.post('http://0.0.0.0:3001/purchases',
+    req.query
+  )
+  .then((response) => {
+    res.render('purchases', {results: response.data.results});
   });
 });
 
@@ -20,7 +24,7 @@ router.get('/purchases', async (req, res, next) => {
  * @return: All media content that was bought by the user.
  */
 router.post('/purchases', async (req, res, next) => {
-  let accountID = req.body.user.acc_id;
+  let accountID = req.user.acc_id;
   const results = await mediaManager.getPurchases(25, 0, accountID);
   
   if (results.length == 0) {
