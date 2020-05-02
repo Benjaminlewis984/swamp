@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Cookies from "js-cookie";
+
 import { detailProduct } from './data';
 const ProductContext = React.createContext();
 
@@ -42,10 +44,6 @@ class ProductProvider extends Component {
             return {detailProduct: product}
         })
     };
-
-    // handleError = () => {
-    //     return <Redirect component={Default} />
-    // }
 
     addToCart = m_id => {
         let tempProducts = [...this.state.products];

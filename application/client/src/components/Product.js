@@ -69,7 +69,8 @@ Product.propTypes = {
 
 const ProductWrapper = styled.div`
 .card {
-    border-color: transparent;
+    border-color: var(--mainBlue);
+    border-width: medium;
     transition: all 0.3s linear;
 }
 
@@ -81,7 +82,7 @@ const ProductWrapper = styled.div`
 
 &: hover {
     .card {
-        border: 0.04rem solid rgba(0, 0, 0, 0.2);
+        border: 0.4rem solid rgba(153, 50, 204, 10.2);
         box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.2);
     }
 

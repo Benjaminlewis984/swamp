@@ -1,4 +1,4 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { Component, ReactPropTypes, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import styled from "styled-components";
 import { ButtonContainer } from "./Button";
@@ -6,8 +6,7 @@ import logo from "../imgs/gator.png";
 import Cookies from "js-cookie";
 import axios from "axios";
 import { ProductConsumer } from "../context";
-import { useHistory } from "react-router-dom";
-import { Input } from "reactstrap";
+import { useHistory, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 
 const authenticate = () => {
@@ -22,49 +21,54 @@ const logout = () => {
     console.log(res);
     console.log(res.data.success);
   });
-
-  window.location.reload(false);
-  return <Redirect to="/"></Redirect>;
+  
+  return <Link to="/"></Link>;
 };
 
 const Navbar = () => {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
+  const [navSearch, setNavSearch] = useState(true);
   let history = useHistory();
+  let location = useLocation();
+
+  // Function for conditional display of the search bar
+  const showBar = () => {
+    console.log("PATHNAME: " + location.pathname)
+    if(location.pathname === "/") { setNavSearch(true); }
+  }
 
   return (
     <NavWrapper
       className="navbar navbar-expand-sm 
-            navbar-dark px-sm-5"
-    >
+            navbar-dark px-sm-5">
       <Link to="/">
         <img src={logo} alt="store" className="navbar-brand" />
       </Link>
-      <ul className="navbar-nav align-items-center">
+      <ul className="navbar-nav align-items-center mr-auto">
         <li className="nav-item ml-5">
           <Link to="/result" className="nav-link">
             Browse
           </Link>
         </li>
-        <li className="nav-item">
+        <li className="nav-item ml-2">
           <Link to="/about" className="nav-link">
             About
           </Link>
         </li>
       </ul>
 
-      <ProductConsumer className="flex-shrink-1 align-content-center">
+      {/* Search bar */}
+        { navSearch ? 
+        <ProductConsumer className="flex-shrink-1 align-content-center">
         {(value) => (
           <SearchBar className="container justify-content-center">
             <div className="input-group mb-2">
               {/* <DropDown className="input-group-prepend"> */}
               <select
                 id="category"
-                onChange={(e) => setCategory(e.target.value)}
-              >
-                <option value="all" selected>
-                  All
-                </option>
+                onChange={(e) => setCategory(e.target.value)}>
+                <option value="all" selected>All</option>
                 <option value="document">Documents</option>
                 <option value="image">Images</option>
                 <option value="audio">Audio</option>
@@ -95,6 +99,9 @@ const Navbar = () => {
           </SearchBar>
         )}
       </ProductConsumer>
+        : null }
+      {/* Search bar end */}
+      
       <Link to="/cart" className="ml-auto">
         <ButtonContainer>
           <span className="mr-2">
@@ -167,10 +174,5 @@ const NavWrapper = styled.nav`
 `;
 
 const SearchBar = styled.nav`
-  padding-left: 12rem;
-  width: 40rem;
-`;
-
-const DropDown = styled.nav`
-  width: 7rem;
+width: 40rem;
 `;

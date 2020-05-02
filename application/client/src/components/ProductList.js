@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Product from './Product.js'
+import Disclaimer from "./Disclaimer";
 import Title from './Title'
 import { ProductConsumer } from '../context';
 
@@ -31,6 +32,7 @@ export default class ProductList extends Component {
                             </ProductConsumer>
                         </div>
                     </div>
+                    <Disclaimer />
                 </div>
             </React.Fragment>
         )
