@@ -5,27 +5,30 @@
     <link rel='stylesheet', href='/stylesheets/style.css'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript">
-      $.post("/browse", {
-        category: "document",
-        search: ""
-      },
-      (data, status) => {
-        console.log(data);
-      });
+      function browse() {
+        $.post("/browse", {
+          search: document.getElementById('search').value,
+          category: document.getElementById('category').value,
+          page: document.getElementById('page').value
+        },
+        (data, status) => {
+          console.log(data);
+        });
+      }
     </script>
   </head>
   <body>
     <h1>Browse</h1>
-    <form method='GET' action='/browse'>
-        <input type='text' placeholder='Search' name='search'><br>
-        <select name="category">
+    <form name="form" action="" onsubmit="browse();return false">
+        <input id='search' type='text' placeholder='Search' name='search'><br>
+        <select id='category' name='category'>
           <option value="all">All</option>
           <option value="document">Document</option>
           <option value="image">Image</option>
           <option value="video">Video</option>
           <option value="audio">Audio</option>
         </select><br>
-        Page: <input type='number' name='page' placeholder='1' maxlength="3" size="3"><br>
+        Page: <input id='page' type='number' name='page' placeholder='1' maxlength="3" size="3"><br>
         <input type='submit' value='Submit'><br>
     </form>
     <table width="100%">
