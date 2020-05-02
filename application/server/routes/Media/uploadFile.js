@@ -31,10 +31,10 @@ router.get('/upload', passport_config.checkAuth, passport_config.checkUser, (req
  * @return: "true" or "false" depending on whether the content is successfully uploaded
  */
 router.post('/upload', async (req, res) => {
-  // if(!req.isAuthenticated()) {
-  //   res.redirect('/register')
-  // }
-  const acc_id = req.body.acc_id;
+  if(!req.isAuthenticated()) {
+    res.redirect('/register')
+  }
+  
   const file = req.files.file;
   const preview = req.files.preview;
   const price = req.body.price;
@@ -79,7 +79,7 @@ router.post('/upload', async (req, res) => {
         });
       }
       else {
-        mediaManager.addMedia(title, description, previewPath, rawPath, category, price, acc_id, academic, type);
+        mediaManager.addMedia(title, description, previewPath, rawPath, category, price, req.user.acc_id, academic, type);
         return res.status(200).send({success: "true"});
       }
     });

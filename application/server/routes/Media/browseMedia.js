@@ -43,7 +43,6 @@ router.get('/browse', (req, res, next) => {
  * @return: Returns the 
  */
 router.post('/browse', async (req, res, next) => {
-  console.log(req.headers.cookie)
   let category = req.query.category;  
   let search = req.query.search;
   let search_array
