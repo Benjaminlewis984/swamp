@@ -4,8 +4,6 @@ const mediaManager = require('../../database/media-manager.js');
 const userManager = require('../../database/user-manager.js');
 const express = require('express');
 const router = express.Router();
-const axios = require('axios');
-axios.defaults.withCredentials = true;
 
 /**
  * Renders the results page and also sends, in JSON, all the approved media content
@@ -14,17 +12,7 @@ axios.defaults.withCredentials = true;
  * @return: All the approved media content
  */
 router.get('/browse', (req, res, next) => {
-  let category = req.body.category;
-  if (category === undefined) {
-    category = 'all';
-  }
-
-  axios.post('http://0.0.0.0:3001/browse',
-    req.query
-  )
-  .then((response) => {
-    res.render('browse', { results: response.data.results });
-  });
+  res.render('browse');
 });
 /**
  * Extracts necessary information from the body. The information sent 

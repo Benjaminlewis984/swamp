@@ -105,7 +105,7 @@
       }
     </script>
   </head>
-  <body>
+  <body onload="browse()">
     <h1>Browse</h1>
     <form name="form" action="" onsubmit="browse();return false">
         <input id='search' type='text' placeholder='Search' name='search'><br>
@@ -129,37 +129,6 @@
         <th>Price</th>
         <th>Controls</th>
       </tr>
-      <% results.forEach(function(obj){ %>
-      <tr>
-        <td style="text-align:center">
-          <img src="./<%=obj.author_profile_path%>" style="width: 50px; height: 50px;"> 
-          <a><%=obj.author_username%></a>
-        </td>
-        <td style="text-align:center"><%=obj.title%></td>
-        <td style="text-align:center"><%=obj.description%></td>
-        <td style="text-align:center"><%=obj.category%></td>
-        <td style="text-align:center">
-           <img src="./<%=obj.preview_path%>" style="width: 100px; height: 100px;"> 
-        </td>
-        <td style="text-align:center">$<%=obj.price%></td>
-        <% if(obj.bought == 'false') { %>
-        <td style="text-align:center">
-          <form action="/cart" method="post" style="display: inline-block;">
-            <button type="submit" name="m_id" value="<%=obj.m_id%>" style="background-color: #4CAF50;">Add to Cart</button>
-          </form>
-          <form action="/message" method="get" style="display: inline-block;">
-            <button type="submit" name="acc_id" value="<%=obj.acc_id%>" style="background-color: #4CAF50;">Message</button>
-          </form>
-        </td>
-        <% } else { %>
-        <td style="text-align:center">
-          <form action="/download" method="post" style="display: inline-block;">
-            <button type="submit" name="path" value="<%=obj.raw_path%>">Download</button>
-          </form>
-        </td>
-        <% } %>
-      </tr>
-      <%})%>
     </table>
   </body>
 </html>
