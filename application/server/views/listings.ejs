@@ -3,10 +3,73 @@
   <head>
     <title>Listings</title>
     <link rel='stylesheet', href='/stylesheets/style.css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script type="text/javascript">
+      function listings() {
+        $.post("/listings", {
+        },
+        (data, status) => {
+          var table = document.getElementById("table");
+          table.getElementsByTagName("tbody")[0].innerHTML = table.rows[0].innerHTML;
+
+          data.results.forEach((result) => {
+            var row = table.insertRow(table.rows.length);
+
+            var titleCell = row.insertCell(row.cells.length);
+            titleCell.style = "text-align:center";
+            titleCell.innerHTML = result.title;
+
+            var descriptionCell = row.insertCell(row.cells.length);
+            descriptionCell.style = "text-align:center";
+            descriptionCell.innerHTML = result.description;
+
+            var categoryCell = row.insertCell(row.cells.length);
+            categoryCell.style = "text-align:center";
+            categoryCell.innerHTML = result.category;
+
+            var previewImageCell = row.insertCell(row.cells.length);
+            previewImageCell.style = "text-align:center";
+
+            var previewPicture = document.createElement('img');
+            previewPicture.src = result.preview_path;
+            previewPicture.style="width: 100px; height: 100px;";
+            previewImageCell.appendChild(previewPicture);
+
+            var priceCell = row.insertCell(row.cells.length);
+            priceCell.style = "text-align:center";
+            priceCell.innerHTML = "$" + result.price;
+
+            var statusCell = row.insertCell(row.cells.length);
+            statusCell.style = "text-align:center";
+            statusCell.innerHTML = result.status;
+
+            var purchaseCountCell = row.insertCell(row.cells.length);
+            purchaseCountCell.style = "text-align:center";
+            purchaseCountCell.innerHTML = result.purchase_count;
+
+            var controlsCell = row.insertCell(row.cells.length);
+            controlsCell.style = "text-align:center";
+
+            var downloadForm = document.createElement("form");
+            downloadForm.setAttribute("action", "/download");
+            downloadForm.setAttribute("method", "post");
+            downloadForm.setAttribute("style", "display: inline-block;");
+            controlsCell.appendChild(downloadForm);
+
+            var downloadSubmitButton = document.createElement("button");
+            downloadSubmitButton.setAttribute("type", "submit");
+            downloadSubmitButton.setAttribute("name", "path");
+            downloadSubmitButton.setAttribute("value", result.raw_path);
+            downloadSubmitButton.innerHTML = "Download";
+            downloadForm.appendChild(downloadSubmitButton);
+          });
+        });
+      }
+    </script>
   </head>
-  <body>
+  <body onload="listings()">
     <h1>Listings</h1>
-    <table width="100%">
+    <table id='table' width="100%">
       <tr>
         <th>Title</th>
         <th>Description</th>
@@ -17,24 +80,6 @@
         <th>Purchase Count</th>
         <th>Controls</th>
       </tr>
-      <% results.forEach(function(obj){ %>
-      <tr>
-        <td style="text-align:center"><%=obj.title%></td>
-        <td style="text-align:center"><%=obj.description%></td>
-        <td style="text-align:center"><%=obj.category%></td>
-        <td style="text-align:center">
-           <img src="./<%=obj.preview_path%>" style="width: 100px; height: 100px;"> 
-        </td>
-        <td style="text-align:center">$<%=obj.price%></td>
-        <td style="text-align:center"><%=obj.status%></td>
-        <td style="text-align:center"><%=obj.purchase_count%></td>
-        <td style="text-align:center">
-          <form action="/download" method="post" style="display: inline-block;">
-            <button type="submit" name="path" value="<%=obj.raw_path%>">Download</button>
-          </form>
-        </td>
-      </tr>
-      <%})%>
     </table>
   </body>
 </html>

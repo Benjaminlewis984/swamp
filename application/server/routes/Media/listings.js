@@ -9,12 +9,7 @@ axios.defaults.withCredentials = true;
  * Renders the listings page with all of the user's uploaded media content
  */
 router.get('/listings', async (req, res, next) => {
-  axios.post('http://0.0.0.0:3001/listings',
-    req.query
-  )
-  .then((response) => {
-    res.render('listings', {results: response.data.results});
-  });
+  res.render('listings');
 });
 
 /**
@@ -24,9 +19,9 @@ router.get('/listings', async (req, res, next) => {
  * @return: User's uploaded media content along with their purchase count
  */
 router.post('/listings', async (req, res, next) => {
-  let accountID = req.body.user.acc_id;
-  const results = await mediaManager.getListings(25, 0, accountID);
+  let accountID = req.user.acc_id;
 
+  const results = await mediaManager.getListings(25, 0, accountID);
   if (results.length == 0) {
     return res.status(200).send({success: true, results: results});
   }
