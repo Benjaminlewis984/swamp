@@ -14,14 +14,10 @@ router.get('/upload', passport_config.checkAuth, passport_config.checkUser, (req
 });
 
 router.post('/upload', async (req, res) => {
-  //if(!req.isAuthenticated()) {
-  //  res.redirect('/register')
-  //}
-
-  console.log(req.files);
-
+  // if(!req.isAuthenticated()) {
+  //   res.redirect('/register')
+  // }
   const acc_id = req.body.acc_id;
-
   const file = req.files.file;
   const preview = req.files.preview;
   const price = req.body.price;
