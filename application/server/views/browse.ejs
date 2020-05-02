@@ -53,6 +53,53 @@
             var priceCell = row.insertCell(row.cells.length);
             priceCell.style = "text-align:center";
             priceCell.innerHTML = "$" + result.price;
+
+            var controlsCell = row.insertCell(row.cells.length);
+            controlsCell.style = "text-align:center";
+
+            if(result.bought == 'false') {
+              var cartForm = document.createElement("form");
+              cartForm.setAttribute("action", "/cart");
+              cartForm.setAttribute("method", "post");
+              cartForm.setAttribute("style", "display: inline-block;");
+              controlsCell.appendChild(cartForm);
+
+              var cartSubmitButton = document.createElement("button");
+              cartSubmitButton.setAttribute("type", "submit");
+              cartSubmitButton.setAttribute("name", "m_id");
+              cartSubmitButton.setAttribute("value", result.m_id);
+              cartSubmitButton.setAttribute("style", "background-color: #4CAF50;");
+              cartSubmitButton.innerHTML = "Add to Cart";
+              cartForm.appendChild(cartSubmitButton);
+
+              var messageForm = document.createElement("form");
+              messageForm.setAttribute("action", "/message");
+              messageForm.setAttribute("method", "get");
+              messageForm.setAttribute("style", "display: inline-block;");
+              controlsCell.appendChild(messageForm);
+
+              var messageSubmitButton = document.createElement("button");
+              messageSubmitButton.setAttribute("type", "submit");
+              messageSubmitButton.setAttribute("name", "acc_id");
+              messageSubmitButton.setAttribute("value", result.acc_id);
+              messageSubmitButton.setAttribute("style", "background-color: #4CAF50;");
+              messageSubmitButton.innerHTML = "Message";
+              messageForm.appendChild(messageSubmitButton);
+            }
+            else {
+              var downloadForm = document.createElement("form");
+              downloadForm.setAttribute("action", "/download");
+              downloadForm.setAttribute("method", "post");
+              downloadForm.setAttribute("style", "display: inline-block;");
+              controlsCell.appendChild(downloadForm);
+
+              var downloadSubmitButton = document.createElement("button");
+              downloadSubmitButton.setAttribute("type", "submit");
+              downloadSubmitButton.setAttribute("name", "path");
+              downloadSubmitButton.setAttribute("value", result.raw_path);
+              downloadSubmitButton.innerHTML = "Download";
+              downloadForm.appendChild(downloadSubmitButton);
+            }
           });
         });
       }
