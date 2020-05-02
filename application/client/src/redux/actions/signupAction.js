@@ -45,7 +45,7 @@ export const signup = () => (dispatchEvent, getState) => {
             lastname: `${lastname}`,
         };
         
-        axios.post(`http://18.191.184.143:3001/register`,body, {validateStatus:false}) 
+        axios.post(`http://localhost:3001/register`,body, {validateStatus:false}) 
             .then((response) =>{
                 console.log("second url", response);
                 if(response.data.success==='true'){

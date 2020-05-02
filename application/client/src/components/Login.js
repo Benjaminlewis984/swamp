@@ -38,7 +38,7 @@ const Login = ({
     Cookies.set('username',username);
 
     if(username.length > 0 && password.length > 0){
-        axios.post(`http://18.191.184.143:3001/login?username=${username}&password=${password}`, {validateStatus:false})
+        axios.post(`http://localhost:3001/login?username=${username}&password=${password}`, {validateStatus:false})
         .then((response) => {
             console.log('Login data :::',response);
             if(response.data.success==='true'){
@@ -51,7 +51,8 @@ const Login = ({
 
                 Cookies.set('isLoggedIn', true);
                 Cookies.set('user', JSON.stringify(response.data.user));
-                window.location.reload(false)
+                // window.location.reload(false)
+                console.log(response);
             }
            
         })
