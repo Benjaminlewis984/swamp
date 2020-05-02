@@ -2,8 +2,6 @@ const mediaManager = require('../../database/media-manager.js');
 const userManager = require('../../database/user-manager.js');
 const express = require('express');
 const router = express.Router();
-const axios = require('axios');
-axios.defaults.withCredentials = true;
 
 /**
  * Renders the listings page with all of the user's uploaded media content

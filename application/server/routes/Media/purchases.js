@@ -2,19 +2,12 @@ const mediaManager = require('../../database/media-manager.js');
 const userManager = require('../../database/user-manager.js');
 const express = require('express');
 const router = express.Router();
-const axios = require('axios');
-axios.defaults.withCredentials = true;
 
 /**
  * Renders the listings page with all of the user's bought media content
  */
 router.get('/purchases', async (req, res, next) => {
-  axios.post('http://0.0.0.0:3001/purchases',
-    req.query
-  )
-  .then((response) => {
-    res.render('purchases', {results: response.data.results});
-  });
+  res.render('purchases');
 });
 
 /**
