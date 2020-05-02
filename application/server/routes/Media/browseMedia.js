@@ -17,9 +17,20 @@ router.get('/browse', (req, res, next) => {
   if (category === undefined) {
     category = 'all';
   }
-  request.post('http://0.0.0.0:3001/browse', {json: {query: req.query, user: req.user}}, (error, response, body) => {
-    res.render('browse', {results: body.results});
-  });
+
+  request({
+    url: 'http://0.0.0.0:3001/browse',
+    method: 'POST',
+    headers: {
+      'Cookie': req.cookies['connect.sid']
+    }
+  }, (error, response, body) => {
+    const json = JSON.parse(body)
+    res.render('browse', { results: json.results });
+  })
+  // request.post('http://0.0.0.0:3001/browse', {json: {query: req.query, user: req.user}}, (error, response, body) => {
+  //   res.render('browse', {results: body.results});
+  // });
 });
 /**
  * Extracts necessary information from the body. The information sent 
@@ -32,12 +43,13 @@ router.get('/browse', (req, res, next) => {
  * @return: Returns the 
  */
 router.post('/browse', async (req, res, next) => {
-  let category = req.body.query.category;  
-  let search = req.body.query.search;
+  console.log(req.headers.cookie)
+  let category = req.query.category;  
+  let search = req.query.search;
   let search_array
 
-  let page = req.body.query.page;
-  if (req.body.query.page == undefined || req.body.query.page <= 0) {
+  let page = req.query.page;
+  if (req.query.page == undefined || req.query.page <= 0) {
     page = 1;
   }
 
@@ -54,7 +66,6 @@ router.post('/browse', async (req, res, next) => {
   filter = { status: 'approved', category: category, search: search };
   
   const results = await mediaManager.getMediaFilter(25, 25 * (page - 1), filter);
-
   if (results.length == 0) {
     return res.status(200).send({success: true, filter: filter, results: results});
   } else {
@@ -64,8 +75,8 @@ router.post('/browse', async (req, res, next) => {
       result.author_profile_path = userResult[0].profile_path;
       result.bought = 'false';
       
-      if(req.body.user != undefined) {
-        const bought = await checkoutManager.checkMediaInCheckout(req.body.user.acc_id, result['m_id']);
+      if(req.user != undefined) {
+        const bought = await checkoutManager.checkMediaInCheckout(req.user.acc_id, result['m_id']);
         if(bought != undefined) { result.bought = 'true'; }
         if(idx == results.length - 1) { return res.status(200).send({success: true, filter: filter, results: results}); }
       }

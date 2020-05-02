@@ -12,7 +12,7 @@ const session = require('express-session');
 const fileUpload = require('express-fileupload');
 
 const app = express();
-app.use(cors());
+app.use(cors({ credentials: true, origin: true }));
 app.use(methodOverride('_method'));
 
 const indexRouter = require('./routes/index');
@@ -36,17 +36,21 @@ const profileRouter = require('./routes/Users/userProfile.js');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
+app.use(express.static(path.join(__dirname, 'media/public')));
 app.use(session({
   secret: 'very hyper super duper long random string',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: {
+    secure: false,
+    maxAge: 1000 * 60 * 60 * 5
+  }
 }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'media/public')));
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(fileUpload());
