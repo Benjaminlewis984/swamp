@@ -14,6 +14,7 @@ const router = express.Router();
 router.get('/browse', (req, res, next) => {
   res.render('browse');
 });
+
 /**
  * Extracts necessary information from the body. The information sent 
  * is then used to filter out the database results to find
@@ -25,6 +26,17 @@ router.get('/browse', (req, res, next) => {
  * @return: Returns the 
  */
 router.post('/browse', async (req, res, next) => {
+  /**
+   * Assume that, for category:
+   * 'all' = 0
+   * 'document' = 1
+   * 'image' = 2
+   * 'video' = 3
+   * 'audio' = 4
+   * This is to be used when we transition the category into a foreign key
+   * with each category_id corresponding to any category.
+   * If category = 'all', or 0, let category = undefined
+   */
   let category = req.body.category;  
   let search = req.body.search;
   let search_array
