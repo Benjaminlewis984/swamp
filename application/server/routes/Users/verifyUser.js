@@ -25,6 +25,15 @@ router.get('/login', passport_config.alreadyAuth, (req, res, next) => {
   }
 });
 
+router.get('/auth', async (req, res, next) => {
+  if (req.user == undefined) {
+    return res.status(401).send({success: "false"});
+  }
+  else {
+    return res.status(200).send({success: "true"});
+  }
+});
+
 /**
  * Calls the passport authentication middleware, which is configured to
  * query the database for user information to determine the login information's credentials.
