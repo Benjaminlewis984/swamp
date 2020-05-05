@@ -21,7 +21,7 @@ class ProductProvider extends Component {
         let tempProducts;
         let tempCategory = category;
 
-        axios.post('http://localhost:3001/browse', {
+        axios.post('http://18.191.184.143:3001/browse', {
             "query": {
                 "category": tempCategory,
                 "search": query

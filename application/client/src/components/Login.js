@@ -53,7 +53,7 @@ const Login = ({
 
                 Cookies.set('isLoggedIn', true);
                 Cookies.set('user', JSON.stringify(response.data.user));
-                // window.location.reload(false)
+                window.location.reload(false)
                 console.log(response);
             }
            

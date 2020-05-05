@@ -74,7 +74,7 @@ export default class Details extends Component {
                                                     .then((response) => {
                                                         console.log(response);
                                                         // const content = response.headers[`${}`];
-                                                        download(response.data)
+                                                        download("http://18.191.184.143:3001/download" + raw_path);
                                                     })
 
                                                 //  } else {
