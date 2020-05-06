@@ -6,8 +6,8 @@ const router = express.Router();
 /**
  * Renders the listings page with all of the user's uploaded media content
  */
-router.get('/listings', async (req, res, next) => {
-  res.render('listings');
+router.get('/listings', async (req, res) => {
+  res.render('listings', {username: req.user.username})
 });
 
 /**
@@ -16,10 +16,10 @@ router.get('/listings', async (req, res, next) => {
  * @param req.body.user.acc_id: User's acc_id
  * @return: User's uploaded media content along with their purchase count
  */
-router.post('/listings', async (req, res, next) => {
-  let accountID = req.user.acc_id;
+router.post('/listings', async (req, res) => {
+  let username = req.body.username;
 
-  const results = await mediaManager.getListings(25, 0, accountID);
+  const results = await mediaManager.getListings(25, 0, username);
   if (results.length == 0) {
     return res.status(200).send({success: true, results: results});
   }

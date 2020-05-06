@@ -6,7 +6,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script type="text/javascript">
       function listings() {
+        const username = document.getElementById("username").value;
         $.post("/listings", {
+          "username": username
         },
         (data, status) => {
           var table = document.getElementById("table");
@@ -69,6 +71,7 @@
   </head>
   <body onload="listings()">
     <h1>Listings</h1>
+    <input type="hidden" id="username" value="<%=username%>">
     <table id='table' width="100%">
       <tr>
         <th>Title</th>
