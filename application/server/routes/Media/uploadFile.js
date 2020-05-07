@@ -43,8 +43,28 @@ router.post('/upload', async (req, res) => {
   const academic = 0;
   const title = req.body.title;
   const description = req.body.description;
-  const category = req.body.category;
   const type = req.body.type;
+
+  let category = ''
+  switch(req.body.category) {
+    case 'all':
+      category = undefined
+      break;
+    case 'document':
+      category = 1;
+      break;
+    case 'image':
+      category = 2;
+      break;
+    case 'video':
+      category = 3;
+      break;
+    case 'audio':
+      category = 4;
+      break;
+    default:
+      category = undefined;
+  }
 
   fs.readdir(mediaRawDirectory, (err, files) => {
     let fileStringList = [];
