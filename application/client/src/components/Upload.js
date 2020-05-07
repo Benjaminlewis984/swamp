@@ -54,7 +54,7 @@ const Upload = () => {
         formData.append("type", type);
         // formData.append("academic", 0);
         formData.append("acc_id", 3);
-        axios.post(`http://localhost:3001/upload`, 
+        axios.post(`http://18.191.184.143/:3001/upload`,
         formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'
