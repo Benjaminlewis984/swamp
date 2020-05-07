@@ -21,15 +21,23 @@ router.post('/listings', async (req, res) => {
 
   const results = await mediaManager.getListings(25, 0, username);
   if (results.length == 0) {
-    return res.status(200).send({success: true, results: results});
+    return res.status(200).send({success: "true", results: results});
   }
   else {
     results.forEach(async (result, idx) => {
       result.purchase_count = await mediaManager.getPurchaseCount(result.m_id);
 
-      if(idx == results.length - 1) { return res.status(200).send({success: true, results: results}); }
+      if(idx == results.length - 1) { return res.status(200).send({success: "true", results: results}); }
     });
   }
+});
+
+router.delete('/listings', async (req, res) => {
+  const media = req.body.m_id;
+  const deleted = await mediaManager.deleteMedia(media);
+  if(deleted != undefined) {
+    return res.status(200).send({success: "true"});
+  } else { return res.status(404).send({success: "false"}); }
 });
 
 module.exports = router;

@@ -52,6 +52,9 @@
             var controlsCell = row.insertCell(row.cells.length);
             controlsCell.style = "text-align:center";
 
+            var deleteCell = row.insertCell(row.cells.length);
+            deleteCell.style = "text-align:center";
+
             var downloadForm = document.createElement("form");
             downloadForm.setAttribute("action", "/download");
             downloadForm.setAttribute("method", "post");
@@ -64,6 +67,19 @@
             downloadSubmitButton.setAttribute("value", result.raw_path);
             downloadSubmitButton.innerHTML = "Download";
             downloadForm.appendChild(downloadSubmitButton);
+
+            var deleteForm = document.createElement("form");
+            deleteForm.setAttribute("action", "/listings?_method=DELETE");
+            deleteForm.setAttribute("method", "post");
+            deleteForm.setAttribute("style", "display: inline-block;");
+            deleteCell.appendChild(deleteForm);
+
+            var deleteSubmitButton = document.createElement("button");
+            deleteSubmitButton.setAttribute("type", "submit");
+            deleteSubmitButton.setAttribute("name", "m_id");
+            deleteSubmitButton.setAttribute("value", result.m_id);
+            deleteSubmitButton.innerHTML = "Delete";
+            deleteForm.appendChild(deleteSubmitButton);
           });
         });
       }
@@ -82,6 +98,7 @@
         <th>Status</th>
         <th>Purchase Count</th>
         <th>Controls</th>
+        <th>Delete</th>
       </tr>
     </table>
   </body>

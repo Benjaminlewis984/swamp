@@ -14,8 +14,13 @@ exports.addMedia = async (title, description, preview_path, raw_path, category, 
   else { await databaseManager.queryDatabase(`INSERT INTO \`physical media\`(m_id) VALUES (?);`, [m_id]);}
 }
 
-exports.deleteMedia = async (title) => {
-  await databaseManager.queryDatabase(`DELETE FROM media WHERE title = ?;`, [title]);
+exports.deleteMedia = async (m_id) => {
+  const count = await databaseManager.queryDatabase(`SELECT COUNT(*) FROM \`media content\` WHERE m_id = ?;`, [m_id]);
+  if(count[0]['COUNT(*)'] == 0) {
+    return undefined;
+  }
+  await databaseManager.queryDatabase(`DELETE FROM \`media content\` WHERE m_id = ?;`, [m_id]);
+  return '';
 }
 
 exports.approveMedia = async (m_id, admin_id) => {
