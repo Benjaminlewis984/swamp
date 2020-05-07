@@ -93,16 +93,17 @@ exports.getPurchases = async (count, offset, acc_id) => {
   let approvedIDString = '';
   await result.forEach((result, idx) => {
     approvedIDString += result.approved_id;
-    if (idx != result.length - 1) {
-      approvedIDString += ", ";
-    }
+    approvedIDString += ", ";
   });
 
   if (result.length == 0) {
     return [];
   }
 
+  approvedIDString = approvedIDString.substring(0, approvedIDString.length - 2);
+
   let approvedMediaQuery = `SELECT DISTINCT * FROM \`approved media\` WHERE approved_id IN (${approvedIDString}) LIMIT ${count} OFFSET ${offset};`;
+  console.log(approvedMediaQuery);
   const secondResult = await databaseManager.queryDatabase(approvedMediaQuery, []);
   let mediaIDString = '';
   secondResult.forEach(async (result, idx) => {
