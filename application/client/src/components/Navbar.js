@@ -19,6 +19,7 @@ const checkAuth = async () => {
 };
 
 const logout = () => {
+  axios.defaults.withCredentials = true;
   console.log("Removing Cookies");
   Cookies.remove("isLoggedIn");
   Cookies.remove("user");
