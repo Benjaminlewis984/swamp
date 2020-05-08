@@ -8,6 +8,15 @@ import axios from "axios";
 import { ProductConsumer } from "../context";
 import { useHistory, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
+import {
+  setUserName,
+  setPassword,
+  setEmail,
+  setFirstName,
+  setLastName,
+  setIsLoggedIn
+} from '../redux/actions/loginAction';
+
 
 const authenticate = () => {
   return Cookies.get("isLoggedIn");
@@ -18,25 +27,43 @@ const checkAuth = async () => {
   return data;
 };
 
-const logout = () => {
-  axios.defaults.withCredentials = true;
-  console.log("Removing Cookies");
-  Cookies.remove("isLoggedIn");
-  Cookies.remove("user");
-  axios.get(`http://18.191.184.143:3001/logout`).then((res) => {
-    console.log(res);
-    console.log(res.data.success);
-  });
-  
-  return <Link to="/"></Link>;
-};
 
-const Navbar = () => {
+const Navbar = ({ 
+  username,
+  password,
+  firstName,
+  lastName,
+  email,
+  isLoggedIn,
+  loginLoadingState,
+  dispatch,
+  //authenticated,
+}) => {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [navSearch, setNavSearch] = useState(true);
   let history = useHistory();
   let location = useLocation();
+
+  const logout = () => {
+    axios.defaults.withCredentials = true;
+    console.log("Removing Cookies");
+    Cookies.remove("isLoggedIn");
+    Cookies.remove("user");
+    axios.get(`http://18.191.184.143:3001/logout`).then((res) => {
+      console.log(res);
+      console.log(res.data.success);
+      dispatch(setIsLoggedIn(false));
+      dispatch(setUserName(""));
+      dispatch(setEmail(""));
+      dispatch(setPassword(""));
+      dispatch(setFirstName(""));
+      dispatch(setLastName(""));
+      
+    });
+    
+    return <Link to="/"></Link>;
+  };
 
   // Function for conditional display of the search bar
   const showBar = () => {
@@ -44,10 +71,10 @@ const Navbar = () => {
     if(location.pathname === "/") { setNavSearch(true); }
   }
 
-  checkAuth()
-  .then((response) => {
-    console.log(response);
-  });
+  // checkAuth()
+  // .then((response) => {
+  //   console.log(response);
+  // });
 
   var staticElements = (
     <NavWrapper
@@ -172,7 +199,14 @@ const Navbar = () => {
 
 const mapStateToProps = (state) => {
   return {
-    searchResults: state.searchReducer.searchResults,
+    username: state.loginReducer.username,
+    password: state.loginReducer.password,
+    email: state.loginReducer.email,
+    firstName: state.loginReducer.firstName,
+    lastName: state.loginReducer.lastName,
+    isLoggedIn: state.loginReducer.isLoggedIn,
+    loginLoadingState: state.loginReducer.loginLoadingState,
+    authenticated: state.loginReducer.authenticated,
   };
 };
 

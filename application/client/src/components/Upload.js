@@ -41,11 +41,28 @@ const Upload = () => {
         console.log(type);
     }
 
+    const getListings = () => {
+        console.log('Retrieving listings');
+        const axios = require('axios');
+        axios.defaults.withCredentials = true;
+        
+    
+    
+            axios.post(`http://18.191.184.143:3001/listings`, {"username": "onu"}
+    
+            )
+                .then((res) => {
+                    console.log(res);
+
+    
+                }).catch(err => console.log("Did not upload"));
+        
+    }
+
 
     const submit = () => {
         console.log('Submitting Upload');
         const axios = require('axios');
-        axios.defaults.withCredentials = true;
         // console.log(selectedFile);
         axios.defaults.withCredentials = true;
 
@@ -168,6 +185,10 @@ const Upload = () => {
                                         <i class="fas fa-paper-plane"></i> Submit
                 </label>
                                 </div>
+                            </div>
+
+                            <div>
+                                <button onClick={getListings}>Random button</button>
                             </div>
                         </fieldset>
                     </div>
