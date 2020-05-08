@@ -13,6 +13,11 @@ const authenticate = () => {
   return Cookies.get("isLoggedIn");
 };
 
+const checkAuth = async () => {
+  const data = await axios.get(`http://0.0.0.0:3001/auth`);
+  return data;
+};
+
 const logout = () => {
   console.log("Removing Cookies");
   Cookies.remove("isLoggedIn");
@@ -38,7 +43,12 @@ const Navbar = () => {
     if(location.pathname === "/") { setNavSearch(true); }
   }
 
-  return (
+  checkAuth()
+  .then((response) => {
+    console.log(response);
+  });
+
+  var staticElements = (
     <NavWrapper
       className="navbar navbar-expand-sm 
             navbar-dark px-sm-5">
@@ -152,6 +162,10 @@ const Navbar = () => {
         </Link>
       )}
     </NavWrapper>
+  )
+
+  return (
+    staticElements
   );
 };
 

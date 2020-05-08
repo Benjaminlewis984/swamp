@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Change Profile Picture</title>
+    <link rel='stylesheet', href='/stylesheets/style.css'>
+  </head>
+  <body>
+    <h1>Change Profile Picture</h1>
+    <img src="./<%=path%>" style="width: 100px; height: 100px;">
+    <form method='POST' action='/profile' encType="multipart/form-data">
+      <label for='name'> Picture: </label><br>
+      <input type='file' name='file' required><br>
+      <input type='submit' value='Submit'><br>
+    </form>
+  </body>
+</html>

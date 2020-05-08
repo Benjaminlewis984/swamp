@@ -29,6 +29,8 @@ const Login = ({
   const login = () => (dispatchEvent, getState) => {
     console.log('Log In Function !!!');
     const axios = require("axios");
+    axios.defaults.withCredentials = true;
+
     const Cookies = require("js-cookie");
     const React = require("react");
 

@@ -5,7 +5,10 @@ const passport = require('passport');
 const passport_config = require('../../modules/passport-config');
 passport_config.pp_config(passport);
 
-// Only accounts logged in can log out.
+/**
+ * Destroys the cookie in req.session, therefore logging the user out
+ * @return: "true"
+ */
 router.get('/logout', passport_config.checkAuth, (req, res, next) => {
   req.session.destroy((err) => {
     req.logout();

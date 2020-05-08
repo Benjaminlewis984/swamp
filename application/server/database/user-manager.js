@@ -76,3 +76,8 @@ exports.getRegIDFromUser = async (acc_id) => {
     return result;
   } else { return undefined; }
 }
+
+exports.updateUserProfilePicture = async (profilePath, acc_id) => {
+  await databaseManager.queryDatabase(`UPDATE \`accounts\` SET profile_path = ? WHERE acc_id = ?;`, [profilePath, acc_id]);
+  return true;
+}

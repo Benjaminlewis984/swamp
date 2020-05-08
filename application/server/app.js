@@ -12,7 +12,7 @@ const session = require('express-session');
 const fileUpload = require('express-fileupload');
 
 const app = express();
-app.use(cors());
+app.use(cors({ credentials: true, origin: true }));
 app.use(methodOverride('_method'));
 
 const indexRouter = require('./routes/index');
@@ -31,21 +31,26 @@ const purchasesRouter = require('./routes/Media/purchases');
 const listingsRouter = require('./routes/Media/listings');
 const messageRouter = require('./routes/Message/messageUser');
 const messageBoxRouter = require('./routes/Message/myMessages');
+const profileRouter = require('./routes/Users/userProfile.js');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
+app.use(express.static(path.join(__dirname, 'media/public')));
 app.use(session({
   secret: 'very hyper super duper long random string',
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
+  cookie: {
+    secure: false,
+    maxAge: 1000 * 60 * 60 * 5
+  }
 }));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'media/preview')));
+
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(fileUpload());
@@ -66,6 +71,7 @@ app.use(purchasesRouter);
 app.use(listingsRouter);
 app.use(messageRouter);
 app.use(messageBoxRouter);
+app.use(profileRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
