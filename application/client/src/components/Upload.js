@@ -7,7 +7,7 @@ const Upload = () => {
     const [price, setPrice] = useState("");
     const [description, setDescription] = useState("");
     const [type, setType] = useState("");
-    // const [category, setCategory] = useState("invalid");
+    const [category, setCategory] = useState("invalid");
 
     var selectedFile;
     var previewFile = null;
@@ -46,6 +46,7 @@ const Upload = () => {
         console.log('Submitting Upload');
         const axios = require('axios');
         // console.log(selectedFile);
+        axios.defaults.withCredentials = true;
 
         var formData = new FormData();
         formData.append("file", selectedFile);
@@ -53,11 +54,11 @@ const Upload = () => {
         formData.append("title", title);
         formData.append("description", description);
         formData.append("price", price);
-        // formData.append("category", category);
+        formData.append("category", category);
         formData.append("type", type);
         // formData.append("academic", 0);
         // formData.append("acc_id", 3);
-        axios.defaults.withCredentials = true;
+        
         axios.post(`http://18.191.184.143:3001/upload`,
             formData, {
             headers: {
@@ -127,7 +128,7 @@ const Upload = () => {
                             </form>
 
                             <label>Category</label>
-                            {/* <div class="input-group mb-2">
+                            <div class="input-group mb-2">
                                 <select id="category"
                                     onChange={e => setCategory(e.target.value)}>
                                         <option value="invalid" selected disabled>Choose Category</option>
@@ -136,7 +137,7 @@ const Upload = () => {
                                     <option value="audio">Audio</option>
                                     <option value="video">Video</option>
                                 </select>
-                            </div> */}
+                            </div>
 
 
                             <div class="form-group has-success">
