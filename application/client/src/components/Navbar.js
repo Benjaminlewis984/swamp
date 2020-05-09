@@ -1,9 +1,8 @@
-import React, { Component, ReactPropTypes, useState } from "react";
+import React, { ReactPropTypes, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import styled from "styled-components";
 import { ButtonContainer } from "./Button";
 import logo from "../imgs/gator.png";
-import Cookies from "js-cookie";
 import axios from "axios";
 import { ProductConsumer } from "../context";
 import { useHistory, useLocation } from "react-router-dom";
@@ -18,15 +17,25 @@ import {
 } from '../redux/actions/loginAction';
 
 
-const authenticate = () => {
-  return Cookies.get("isLoggedIn");
+const checkAuth = (action) => {
+  axios.defaults.withCredentials = true;
+  axios.get(`http://18.191.184.143:3001/auth`).then((res) => {
+    if (res.data.success == "true") {
+      action(true);
+    }
+    else {
+      action(false);
+    }
+  });
 };
 
-const checkAuth = async () => {
-  const data = await axios.get(`http://0.0.0.0:3001/auth`);
-  return data;
-};
 
+const logout = () => {
+  axios.defaults.withCredentials = true;
+  axios.get(`http://18.191.184.143:3001/logout`);
+  
+  return <Link to="/"></Link>;
+};
 
 const Navbar = ({ 
   username,
@@ -42,6 +51,8 @@ const Navbar = ({
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [navSearch, setNavSearch] = useState(true);
+  const [isAuth, setIsAuth] = useState(false);
+
   let history = useHistory();
   let location = useLocation();
 
@@ -71,10 +82,9 @@ const Navbar = ({
     if(location.pathname === "/") { setNavSearch(true); }
   }
 
-  // checkAuth()
-  // .then((response) => {
-  //   console.log(response);
-  // });
+  checkAuth((value) => {
+    setIsAuth(value);
+  })
 
   var staticElements = (
     <NavWrapper
@@ -139,7 +149,7 @@ const Navbar = ({
       </ProductConsumer>
         : null }
       {/* Search bar end */}
-      
+
       <Link to="/cart" className="ml-auto">
         <ButtonContainer>
           <span className="mr-2">
@@ -149,7 +159,7 @@ const Navbar = ({
         </ButtonContainer>
       </Link>
 
-      {!authenticate() && (
+      {!isAuth && (
         <Link to="/login">
           <ButtonContainer>
             <span className="mr-2">
@@ -159,7 +169,7 @@ const Navbar = ({
           </ButtonContainer>
         </Link>
       )}
-      {!authenticate() && (
+      {!isAuth && (
         <Link to="/signup">
           <ButtonContainer>
             <span className="mr-2">
@@ -169,7 +179,7 @@ const Navbar = ({
           </ButtonContainer>
         </Link>
       )}
-      {authenticate() && (
+      {isAuth && (
         <Link to="/dashboard">
           <ButtonContainer>
             <span className="mr-2">
@@ -179,7 +189,7 @@ const Navbar = ({
           </ButtonContainer>
         </Link>
       )}
-      {authenticate() && (
+      {isAuth && (
         <Link to="/">
           <ButtonContainer onClick={logout}>
             <span className="mr-2">

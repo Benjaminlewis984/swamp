@@ -1,5 +1,3 @@
-import Cookies from 'js-cookie';
-
 export const setUserName = username => ({
     type: 'USER_SET_USERNAME',
     username,
