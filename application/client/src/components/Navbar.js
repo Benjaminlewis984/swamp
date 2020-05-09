@@ -9,22 +9,24 @@ import { ProductConsumer } from "../context";
 import { useHistory, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 
-const authenticate = () => {
-  return Cookies.get("isLoggedIn");
-};
-
-const checkAuth = async (action) => {
+const checkAuth = (action) => {
   axios.defaults.withCredentials = true;
-  const data = await axios.get(`http://18.191.184.143:3001/auth`);
-  if (data.data.success == "true") {
-    action();
-  }
+  axios.get(`http://18.191.184.143:3001/auth`).then((res) => {
+    if (res.data.success == "true") {
+      action(true);
+    }
+    else {
+      action(false);
+    }
+  });
 };
 
 const logout = () => {
   console.log("Removing Cookies");
   Cookies.remove("isLoggedIn");
   Cookies.remove("user");
+
+  axios.defaults.withCredentials = true;
   axios.get(`http://18.191.184.143:3001/logout`).then((res) => {
     console.log(res);
     console.log(res.data.success);
@@ -48,8 +50,8 @@ const Navbar = () => {
     if(location.pathname === "/") { setNavSearch(true); }
   }
 
-  checkAuth(() => {
-    setIsAuth(true);
+  checkAuth((value) => {
+    setIsAuth(value);
   })
 
   var staticElements = (
@@ -115,7 +117,7 @@ const Navbar = () => {
       </ProductConsumer>
         : null }
       {/* Search bar end */}
-      
+
       <Link to="/cart" className="ml-auto">
         <ButtonContainer>
           <span className="mr-2">
