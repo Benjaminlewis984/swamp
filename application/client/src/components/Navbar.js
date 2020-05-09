@@ -22,15 +22,11 @@ const checkAuth = (action) => {
 };
 
 const logout = () => {
-  console.log("Removing Cookies");
   Cookies.remove("isLoggedIn");
   Cookies.remove("user");
 
   axios.defaults.withCredentials = true;
-  axios.get(`http://18.191.184.143:3001/logout`).then((res) => {
-    console.log(res);
-    console.log(res.data.success);
-  });
+  axios.get(`http://18.191.184.143:3001/logout`);
   
   return <Link to="/"></Link>;
 };
