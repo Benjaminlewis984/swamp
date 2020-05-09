@@ -17,7 +17,7 @@ router.get('/login', passport_config.alreadyAuth, (req, res, next) => {
       req.query
     )
     .then((response) => {
-      res.send({success: "true", user: response.data.user})
+      res.send({success: "true"})
     });
   }
   else {
@@ -45,7 +45,7 @@ router.get('/auth', async (req, res, next) => {
  * @return: "true" if user is successfully logged in
  */
 router.post('/login', passport.authenticate('local'), passport_config.checkForAdminStatus, (req, res, next) => {
-  return res.status(200).send({success: "true", user: req.user});
+  return res.status(200).send({success: "true"});
 });
 
 module.exports = router;
