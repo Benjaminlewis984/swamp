@@ -51,7 +51,7 @@ const Navbar = ({
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [navSearch, setNavSearch] = useState(true);
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState("unchecked");
 
   let history = useHistory();
   let location = useLocation();
@@ -146,7 +146,7 @@ const Navbar = ({
         </ButtonContainer>
       </Link>
 
-      {!isAuth && (
+      {isAuth != "unchecked" && !isAuth && (
         <Link to="/login">
           <ButtonContainer>
             <span className="mr-2">
@@ -156,7 +156,7 @@ const Navbar = ({
           </ButtonContainer>
         </Link>
       )}
-      {!isAuth && (
+      {isAuth != "unchecked" && !isAuth && (
         <Link to="/signup">
           <ButtonContainer>
             <span className="mr-2">
@@ -166,7 +166,7 @@ const Navbar = ({
           </ButtonContainer>
         </Link>
       )}
-      {isAuth && (
+      {isAuth != "unchecked" && isAuth && (
         <Link to="/dashboard">
           <ButtonContainer>
             <span className="mr-2">
@@ -176,7 +176,7 @@ const Navbar = ({
           </ButtonContainer>
         </Link>
       )}
-      {isAuth && (
+      {isAuth != "unchecked" && isAuth && (
         <Link to="/">
           <ButtonContainer onClick={logout}>
             <span className="mr-2">
