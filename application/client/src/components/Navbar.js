@@ -13,9 +13,12 @@ const authenticate = () => {
   return Cookies.get("isLoggedIn");
 };
 
-const checkAuth = async () => {
-  const data = await axios.get(`http://0.0.0.0:3001/auth`);
-  return data;
+const checkAuth = async (action) => {
+  axios.defaults.withCredentials = true;
+  const data = await axios.get(`http://18.191.184.143:3001/auth`);
+  if (data.data.success == "true") {
+    action();
+  }
 };
 
 const logout = () => {
@@ -34,6 +37,8 @@ const Navbar = () => {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [navSearch, setNavSearch] = useState(true);
+  const [isAuth, setIsAuth] = useState(false);
+
   let history = useHistory();
   let location = useLocation();
 
@@ -43,10 +48,9 @@ const Navbar = () => {
     if(location.pathname === "/") { setNavSearch(true); }
   }
 
-  checkAuth()
-  .then((response) => {
-    console.log(response);
-  });
+  checkAuth(() => {
+    setIsAuth(true);
+  })
 
   var staticElements = (
     <NavWrapper
@@ -121,7 +125,7 @@ const Navbar = () => {
         </ButtonContainer>
       </Link>
 
-      {!authenticate() && (
+      {!isAuth && (
         <Link to="/login">
           <ButtonContainer>
             <span className="mr-2">
@@ -131,7 +135,7 @@ const Navbar = () => {
           </ButtonContainer>
         </Link>
       )}
-      {!authenticate() && (
+      {!isAuth && (
         <Link to="/signup">
           <ButtonContainer>
             <span className="mr-2">
@@ -141,7 +145,7 @@ const Navbar = () => {
           </ButtonContainer>
         </Link>
       )}
-      {authenticate() && (
+      {isAuth && (
         <Link to="/dashboard">
           <ButtonContainer>
             <span className="mr-2">
@@ -151,7 +155,7 @@ const Navbar = () => {
           </ButtonContainer>
         </Link>
       )}
-      {authenticate() && (
+      {isAuth && (
         <Link to="/">
           <ButtonContainer onClick={logout}>
             <span className="mr-2">
