@@ -58,20 +58,7 @@ const Navbar = ({
 
   const logout = () => {
     axios.defaults.withCredentials = true;
-    console.log("Removing Cookies");
-    Cookies.remove("isLoggedIn");
-    Cookies.remove("user");
-    axios.get(`http://18.191.184.143:3001/logout`).then((res) => {
-      console.log(res);
-      console.log(res.data.success);
-      dispatch(setIsLoggedIn(false));
-      dispatch(setUserName(""));
-      dispatch(setEmail(""));
-      dispatch(setPassword(""));
-      dispatch(setFirstName(""));
-      dispatch(setLastName(""));
-      
-    });
+    axios.get(`http://18.191.184.143:3001/logout`);
     
     return <Link to="/"></Link>;
   };

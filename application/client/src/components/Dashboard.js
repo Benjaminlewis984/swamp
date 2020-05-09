@@ -6,7 +6,7 @@ import { ButtonContainer } from './Button';
 import { connect } from 'react-redux';
 import axios from "axios";
 
-const checkAuth = (action) => {
+const getInfo = (action) => {
   axios.defaults.withCredentials = true;
   axios.get(`http://18.191.184.143:3001/info`).then((res) => {
     if (res.data.success == "true") {
@@ -14,6 +14,17 @@ const checkAuth = (action) => {
     }
   });
 };
+
+const getListings = (username, action) => {
+  axios.defaults.withCredentials = true;
+  axios.post(`http://18.191.184.143:3001/listings`, {
+    username: username
+  }).then((res) => {
+    if (res.data.success == "true") {
+      action(res.data.results);
+    }
+  });
+}
 
 const Dashboard = ({ 
   	username,
@@ -27,10 +38,14 @@ const Dashboard = ({
   	//authenticated,
   }) => {
     const [userInfo, setUserInfo] = useState(false);
+    const [userListings, setUserListings] = useState(false);
 
     if (userInfo == false) {
-      checkAuth((info) => {
+      getInfo((info) => {
         setUserInfo(info);
+        getListings(info.username, (listings) => {
+          setUserListings(listings);
+        });
       });
     }
 
