@@ -12,7 +12,7 @@ const router = express.Router();
  * @return: All the approved media content
  */
 router.get('/browse', (req, res, next) => {
-  res.render('browse');
+  res.render('browse', {user: req.user});
 });
 
 /**

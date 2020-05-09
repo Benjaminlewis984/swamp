@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Browse</title>
-    <link rel='stylesheet', href='/stylesheets/style.css'>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script type="text/javascript">
-      function browse() {
-        $.post("/browse", {
-          search: document.getElementById('search').value,
-          category: document.getElementById('category').value,
-          page: document.getElementById('page').value
-        },
+
+<head>
+  <title>Browse</title>
+  <link rel='stylesheet' , href='/stylesheets/style.css'>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    function browse() {
+      $.post("/browse", {
+        search: document.getElementById('search').value,
+        category: document.getElementById('category').value,
+        page: document.getElementById('page').value
+      },
         (data, status) => {
           var table = document.getElementById("table");
+          var privilege = document.getElementById("user").value;
           table.getElementsByTagName("tbody")[0].innerHTML = table.rows[0].innerHTML;
 
           data.results.forEach((result) => {
@@ -23,7 +25,7 @@
 
             var profilePicture = document.createElement('img');
             profilePicture.src = result.author_profile_path;
-            profilePicture.style="width: 50px; height: 50px;";
+            profilePicture.style = "width: 50px; height: 50px;";
             authorCell.appendChild(profilePicture);
 
             var authorUsername = document.createElement('a');
@@ -47,7 +49,7 @@
 
             var previewPicture = document.createElement('img');
             previewPicture.src = result.preview_path;
-            previewPicture.style="width: 100px; height: 100px;";
+            previewPicture.style = "width: 100px; height: 100px;";
             previewImageCell.appendChild(previewPicture);
 
             var priceCell = row.insertCell(row.cells.length);
@@ -57,36 +59,8 @@
             var controlsCell = row.insertCell(row.cells.length);
             controlsCell.style = "text-align:center";
 
-            if(result.bought == 'false') {
-              var cartForm = document.createElement("form");
-              cartForm.setAttribute("action", "/cart");
-              cartForm.setAttribute("method", "post");
-              cartForm.setAttribute("style", "display: inline-block;");
-              controlsCell.appendChild(cartForm);
-
-              var cartSubmitButton = document.createElement("button");
-              cartSubmitButton.setAttribute("type", "submit");
-              cartSubmitButton.setAttribute("name", "m_id");
-              cartSubmitButton.setAttribute("value", result.m_id);
-              cartSubmitButton.setAttribute("style", "background-color: #4CAF50;");
-              cartSubmitButton.innerHTML = "Add to Cart";
-              cartForm.appendChild(cartSubmitButton);
-
-              var messageForm = document.createElement("form");
-              messageForm.setAttribute("action", "/message");
-              messageForm.setAttribute("method", "get");
-              messageForm.setAttribute("style", "display: inline-block;");
-              controlsCell.appendChild(messageForm);
-
-              var messageSubmitButton = document.createElement("button");
-              messageSubmitButton.setAttribute("type", "submit");
-              messageSubmitButton.setAttribute("name", "acc_id");
-              messageSubmitButton.setAttribute("value", result.acc_id);
-              messageSubmitButton.setAttribute("style", "background-color: #4CAF50;");
-              messageSubmitButton.innerHTML = "Message";
-              messageForm.appendChild(messageSubmitButton);
-            }
-            else {
+            if (privilege == 'admin') {
+              
               var downloadForm = document.createElement("form");
               downloadForm.setAttribute("action", "/download");
               downloadForm.setAttribute("method", "post");
@@ -99,36 +73,99 @@
               downloadSubmitButton.setAttribute("value", result.raw_path);
               downloadSubmitButton.innerHTML = "Download";
               downloadForm.appendChild(downloadSubmitButton);
+
+              var deleteForm = document.createElement("form");
+              deleteForm.setAttribute("action", "/listings?_method=DELETE");
+              deleteForm.setAttribute("method", "post");
+              deleteForm.setAttribute("style", "display: inline-block;");
+              controlsCell.appendChild(deleteForm);
+
+              var deleteSubmitButton = document.createElement("button");
+              deleteSubmitButton.setAttribute("type", "submit");
+              deleteSubmitButton.setAttribute("name", "m_id");
+              deleteSubmitButton.setAttribute("value", result.m_id);
+              deleteSubmitButton.innerHTML = "Delete";
+              deleteForm.appendChild(deleteSubmitButton);
+            } else {
+              if (result.bought == 'false') {
+                var cartForm = document.createElement("form");
+                cartForm.setAttribute("action", "/cart");
+                cartForm.setAttribute("method", "post");
+                cartForm.setAttribute("style", "display: inline-block;");
+                controlsCell.appendChild(cartForm);
+
+                var cartSubmitButton = document.createElement("button");
+                cartSubmitButton.setAttribute("type", "submit");
+                cartSubmitButton.setAttribute("name", "m_id");
+                cartSubmitButton.setAttribute("value", result.m_id);
+                cartSubmitButton.setAttribute("style", "background-color: #4CAF50;");
+                cartSubmitButton.innerHTML = "Add to Cart";
+                cartForm.appendChild(cartSubmitButton);
+
+                var messageForm = document.createElement("form");
+                messageForm.setAttribute("action", "/message");
+                messageForm.setAttribute("method", "get");
+                messageForm.setAttribute("style", "display: inline-block;");
+                controlsCell.appendChild(messageForm);
+
+                var messageSubmitButton = document.createElement("button");
+                messageSubmitButton.setAttribute("type", "submit");
+                messageSubmitButton.setAttribute("name", "acc_id");
+                messageSubmitButton.setAttribute("value", result.acc_id);
+                messageSubmitButton.setAttribute("style", "background-color: #4CAF50;");
+                messageSubmitButton.innerHTML = "Message";
+                messageForm.appendChild(messageSubmitButton);
+              } else {
+                var downloadForm = document.createElement("form");
+                downloadForm.setAttribute("action", "/download");
+                downloadForm.setAttribute("method", "post");
+                downloadForm.setAttribute("style", "display: inline-block;");
+                controlsCell.appendChild(downloadForm);
+
+                var downloadSubmitButton = document.createElement("button");
+                downloadSubmitButton.setAttribute("type", "submit");
+                downloadSubmitButton.setAttribute("name", "path");
+                downloadSubmitButton.setAttribute("value", result.raw_path);
+                downloadSubmitButton.innerHTML = "Download";
+                downloadForm.appendChild(downloadSubmitButton);
+              }
             }
           });
         });
-      }
-    </script>
-  </head>
-  <body onload="browse()">
-    <h1>Browse</h1>
-    <form name="form" action="" onsubmit="browse();return false">
-        <input id='search' type='text' placeholder='Search' name='search'><br>
-        <select id='category' name='category'>
-          <option value="all">All</option>
-          <option value="document">Document</option>
-          <option value="image">Image</option>
-          <option value="video">Video</option>
-          <option value="audio">Audio</option>
-        </select><br>
-        Page: <input id='page' type='number' name='page' placeholder='1' maxlength="3" size="3"><br>
-        <input type='submit' value='Submit'><br>
-    </form>
-    <table id='table' width="100%">
-      <tr>
-        <th>Author</th>
-        <th>Title</th>
-        <th>Description</th>
-        <th>Category</th>
-        <th>Preview Image</th>
-        <th>Price</th>
-        <th>Controls</th>
-      </tr>
-    </table>
-  </body>
+    }
+  </script>
+</head>
+
+<body onload="browse()">
+  <h1>Browse</h1>
+  <% if (user != undefined) { %>
+    <input type="hidden" id="user" value="<%=user.privilege%>">
+  <% } else { %>
+    <input type="hidden" id="user" value="undefined">
+  <% } %>
+  <form name="form" action="" onsubmit="browse();return false">
+    <input id='search' type='text' placeholder='Search' name='search'><br>
+    <select id='category' name='category'>
+      <option value="all">All</option>
+      <option value="document">Document</option>
+      <option value="image">Image</option>
+      <option value="video">Video</option>
+      <option value="audio">Audio</option>
+    </select><br>
+    Page: <input id='page' type='number' name='page' placeholder='1' maxlength="3" size="3"><br>
+    <input type='submit' value='Submit'><br>
+  </form>
+  <table id='table' width="100%">
+    <tr>
+      <th>Author</th>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Category</th>
+      <th>Preview Image</th>
+      <th>Price</th>
+      <th>Controls</th>
+    </tr>
+  </table>
+</body>
+
 </html>
