@@ -84,7 +84,7 @@ router.post('/upload', async (req, res) => {
 
     let previewPath = "";
     if (preview === undefined) {
-      previewPath = "preview/default/" + category + ".png";
+      previewPath = "preview/default/" + req.body.category + ".png";
     }
     else {
       let previewExtension = preview.name.substr(preview.name.indexOf('.'));

@@ -1,12 +1,12 @@
 import React, { Component, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Redirect, useHistory } from 'react-router-dom';
 import logo from '../imgs/gator.png';
 import '../styles/Dashboard.css';
 import { ButtonContainer } from './Button';
 import { connect } from 'react-redux';
 import axios from "axios";
 
-const checkAuth = (action) => {
+const getInfo = (action) => {
   axios.defaults.withCredentials = true;
   axios.get(`http://18.191.184.143:3001/info`).then((res) => {
     if (res.data.success == "true") {
@@ -14,6 +14,17 @@ const checkAuth = (action) => {
     }
   });
 };
+
+const getListings = (username, action) => {
+  axios.defaults.withCredentials = true;
+  axios.post(`http://18.191.184.143:3001/listings`, {
+    username: username
+  }).then((res) => {
+    if (res.data.success == "true") {
+      action(res.data.results);
+    }
+  });
+}
 
 const Dashboard = ({ 
   	username,
@@ -27,10 +38,14 @@ const Dashboard = ({
   	//authenticated,
   }) => {
     const [userInfo, setUserInfo] = useState(false);
+    const [userListings, setUserListings] = useState(false);
 
     if (userInfo == false) {
-      checkAuth((info) => {
+      getInfo((info) => {
         setUserInfo(info);
+        getListings(info.username, (listings) => {
+          setUserListings(listings);
+        });
       });
     }
 
@@ -58,7 +73,14 @@ const Dashboard = ({
 								<ul class="nav nav-tabs" id="myTab" role="tablist">
 									<li class="nav-item">
 										<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Posts</a>
-									</li>
+                    {
+                      userListings && userListings.map((listing) => {
+                        return (
+                          <p>{listing.title}</p>
+                        )
+                      })
+                    }
+                  </li>
 								</ul>
 							</div>
 						</div>
@@ -104,6 +126,6 @@ const mapStateToProps = state => {
 	  loginLoadingState: state.loginReducer.loginLoadingState,
 	  authenticated: state.loginReducer.authenticated,
 	};
-  };
+};
   
-  export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps)(Dashboard);

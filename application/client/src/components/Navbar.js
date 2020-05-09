@@ -7,6 +7,15 @@ import axios from "axios";
 import { ProductConsumer } from "../context";
 import { useHistory, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
+import {
+  setUserName,
+  setPassword,
+  setEmail,
+  setFirstName,
+  setLastName,
+  setIsLoggedIn
+} from '../redux/actions/loginAction';
+
 
 const checkAuth = (action) => {
   axios.defaults.withCredentials = true;
@@ -20,6 +29,7 @@ const checkAuth = (action) => {
   });
 };
 
+
 const logout = () => {
   axios.defaults.withCredentials = true;
   axios.get(`http://18.191.184.143:3001/logout`);
@@ -27,14 +37,31 @@ const logout = () => {
   return <Link to="/"></Link>;
 };
 
-const Navbar = () => {
+const Navbar = ({ 
+  username,
+  password,
+  firstName,
+  lastName,
+  email,
+  isLoggedIn,
+  loginLoadingState,
+  dispatch,
+  //authenticated,
+}) => {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [navSearch, setNavSearch] = useState(true);
-  const [isAuth, setIsAuth] = useState(false);
+  const [isAuth, setIsAuth] = useState("unchecked");
 
   let history = useHistory();
   let location = useLocation();
+
+  const logout = () => {
+    axios.defaults.withCredentials = true;
+    axios.get(`http://18.191.184.143:3001/logout`);
+    
+    return <Link to="/"></Link>;
+  };
 
   // Function for conditional display of the search bar
   const showBar = () => {
@@ -119,7 +146,7 @@ const Navbar = () => {
         </ButtonContainer>
       </Link>
 
-      {!isAuth && (
+      {isAuth != "unchecked" && !isAuth && (
         <Link to="/login">
           <ButtonContainer>
             <span className="mr-2">
@@ -129,7 +156,7 @@ const Navbar = () => {
           </ButtonContainer>
         </Link>
       )}
-      {!isAuth && (
+      {isAuth != "unchecked" && !isAuth && (
         <Link to="/signup">
           <ButtonContainer>
             <span className="mr-2">
@@ -139,7 +166,7 @@ const Navbar = () => {
           </ButtonContainer>
         </Link>
       )}
-      {isAuth && (
+      {isAuth != "unchecked" && isAuth && (
         <Link to="/dashboard">
           <ButtonContainer>
             <span className="mr-2">
@@ -149,7 +176,7 @@ const Navbar = () => {
           </ButtonContainer>
         </Link>
       )}
-      {isAuth && (
+      {isAuth != "unchecked" && isAuth && (
         <Link to="/">
           <ButtonContainer onClick={logout}>
             <span className="mr-2">
@@ -169,7 +196,14 @@ const Navbar = () => {
 
 const mapStateToProps = (state) => {
   return {
-    searchResults: state.searchReducer.searchResults,
+    username: state.loginReducer.username,
+    password: state.loginReducer.password,
+    email: state.loginReducer.email,
+    firstName: state.loginReducer.firstName,
+    lastName: state.loginReducer.lastName,
+    isLoggedIn: state.loginReducer.isLoggedIn,
+    loginLoadingState: state.loginReducer.loginLoadingState,
+    authenticated: state.loginReducer.authenticated,
   };
 };
 
