@@ -16,11 +16,17 @@ exports.banUser = async (user, admin_id, reason, ban_length) => {
   const unban_date = current_date.toJSON().slice(0,10);
 
   const user_acc_id = user[0]['acc_id'];
-  const reg = await this.getRegIDFromUser(user_acc_id)
-    const reg_id = reg[0]['reg_id'];
-    await databaseManager.queryDatabase(`INSERT INTO \`banned users\`
-      (reg_id, banned_by, reason, ban_date, unban_date, ban_active)
-      VALUES (?, ?, ?, ?, ?, ?);`, [reg_id, admin_id, reason, date, unban_date, 1])
+  const reg = await this.getRegIDFromUser(user_acc_id);
+  const reg_id = reg[0]['reg_id'];
+  await databaseManager.queryDatabase(`INSERT INTO \`banned users\`
+    (reg_id, banned_by, reason, ban_date, unban_date, ban_active)
+    VALUES (?, ?, ?, ?, ?, ?);`, [reg_id, admin_id, reason, date, unban_date, 1]);
+}
+
+exports.unbanUser = async (user) => {
+  const reg = await this.getRegIDFromUser(user[0]['acc_id']);
+  const reg_id = reg[0]['reg_id'];
+  await databaseManager.queryDatabase(`UPDATE \`banned users\` SET ban_active = 0 WHERE reg_id = ?;`, [reg_id]);
 }
 
 exports.getUserFromUsername = async (username) => {
