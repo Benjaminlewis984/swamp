@@ -55,7 +55,14 @@ router.post('/profile', (req, res) => {
 
 router.get('/info', (req, res) => {
   if (req.user != undefined) {
-    res.status(200).send({success: "true", user: req.user});
+    user = {
+      username: req.user.username,
+      email: req.user.email,
+      first_name: req.user.first_name,
+      last_name: req.user.last_name,
+      profile_path: req.user.profile_path
+    }
+    res.status(200).send({success: "true", user: user});
   }
 });
 
