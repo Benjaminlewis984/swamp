@@ -11,7 +11,6 @@ import {
 import { Redirect } from "react-router-dom";
 import { ButtonContainer } from "./Button";
 import { Dashboard } from './Dashboard';
-import Cookies from 'js-cookie';
 
 const Login = ({ 
   username,
@@ -31,13 +30,11 @@ const Login = ({
     const axios = require("axios");
     axios.defaults.withCredentials = true;
 
-    const Cookies = require("js-cookie");
     const React = require("react");
 
     const username = getState().loginReducer.username;
     const password = getState().loginReducer.password;
 
-    Cookies.set('username',username);
 
     if(username.length > 0 && password.length > 0){
         axios.post(`http://18.191.184.143:3001/login?username=${username}&password=${password}`, {validateStatus:false})
@@ -51,8 +48,6 @@ const Login = ({
                 dispatchEvent(setFirstName(response.data.user.first_name));
                 dispatchEvent(setLastName(response.data.user.last_name));
 
-                Cookies.set('isLoggedIn', true);
-                Cookies.set('user', JSON.stringify(response.data.user));
                 window.location.reload(false)
                 console.log(response);
             }
@@ -63,16 +58,6 @@ const Login = ({
         })
 };
 };
-
-
-  const readCookie = () => {    
-    if(Cookies.get(username)){
-      setAuth(true);
-    }
-  }
-  React.useEffect(() => {
-    readCookie();
-  },[])
 
   if (isLoggedIn) {
     console.log("Test ::: I'm here ");

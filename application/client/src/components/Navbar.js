@@ -1,4 +1,4 @@
-import React, { Component, ReactPropTypes, useState } from "react";
+import React, { ReactPropTypes, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
 import styled from "styled-components";
 import { ButtonContainer } from "./Button";

@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Switch, Route, Redirect } from "react-router-dom";
-import Cookies from 'js-cookie';
 
 import Navbar from './components/Navbar';
 import ProductList from './components/ProductList';

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import logo from '../imgs/gator.png';
-import Cookies from 'js-cookie';
 import '../styles/Dashboard.css';
 import { ButtonContainer } from './Button';
 import { connect } from 'react-redux';
