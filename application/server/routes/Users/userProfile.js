@@ -64,6 +64,9 @@ router.get('/info', (req, res) => {
     }
     res.status(200).send({success: "true", user: user});
   }
+  else {
+    res.status(200).send({success: "false"});
+  }
 });
 
 module.exports = router;
