@@ -3,7 +3,6 @@ import { Link, Redirect } from "react-router-dom";
 import styled from "styled-components";
 import { ButtonContainer } from "./Button";
 import logo from "../imgs/gator.png";
-import Cookies from "js-cookie";
 import axios from "axios";
 import { ProductConsumer } from "../context";
 import { useHistory, useLocation } from "react-router-dom";
@@ -22,9 +21,6 @@ const checkAuth = (action) => {
 };
 
 const logout = () => {
-  Cookies.remove("isLoggedIn");
-  Cookies.remove("user");
-
   axios.defaults.withCredentials = true;
   axios.get(`http://18.191.184.143:3001/logout`);
   
