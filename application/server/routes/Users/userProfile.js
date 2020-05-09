@@ -53,4 +53,10 @@ router.post('/profile', (req, res) => {
   });
 });
 
+router.get('/info', (req, res) => {
+  if (req.user != undefined) {
+    res.status(200).send({success: "true", user: req.user});
+  }
+});
+
 module.exports = router;
