@@ -1,4 +1,4 @@
-import React, { Component, useEffect } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import {
   setUserName,
@@ -10,7 +10,6 @@ import {
 } from '../redux/actions/loginAction';
 import { Redirect } from "react-router-dom";
 import { ButtonContainer } from "./Button";
-import { Dashboard } from './Dashboard';
 
 const Login = ({ 
   username,

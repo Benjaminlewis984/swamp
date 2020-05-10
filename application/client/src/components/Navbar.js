@@ -1,5 +1,5 @@
-import React, { ReactPropTypes, useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ButtonContainer } from "./Button";
 import logo from "../imgs/gator.png";
@@ -29,13 +29,6 @@ const checkAuth = (action) => {
   });
 };
 
-
-const logout = () => {
-  axios.defaults.withCredentials = true;
-  axios.get(`http://18.191.184.143:3001/logout`);
-  
-  return <Link to="/"></Link>;
-};
 
 const Navbar = ({ 
   username,
