@@ -23,8 +23,8 @@ Database Port: 3306
 7. Database name: swamp
   - Instructions (<strong>requires mysql-client</strong>): 
     - Use the following command: 
-        - mysql -h swamp-database-instance.c7yirp5jbhfm.us-east-2.rds.amazonaws.com -P 3306 -u admin -p
-    - When prompted, enter "1vFhxpUjr0vof3KErgPi" as the password
+        - mysql -h swamp.c7yirp5jbhfm.us-east-2.rds.amazonaws.com -P 3306 -u admin -p
+    - When prompted, enter "74DQSgJAXD4bPgAqJ1mv" as the password
 
 # Most important things to Remember
 ## These values need to kept update to date throughout the semester. <br>
