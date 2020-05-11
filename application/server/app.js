@@ -31,6 +31,7 @@ const checkoutRouter = require('./routes/ShoppingCart/checkout');
 const purchasesRouter = require('./routes/Media/purchases');
 const listingsRouter = require('./routes/Media/listings');
 const messageRouter = require('./routes/Message/messageUser');
+const messageRequestRouter = require('./routes/Message/messageRequest');
 const messageBoxRouter = require('./routes/Message/myMessages');
 const profileRouter = require('./routes/Users/userProfile.js');
 
@@ -72,6 +73,7 @@ app.use(checkoutRouter);
 app.use(purchasesRouter);
 app.use(listingsRouter);
 app.use(messageRouter);
+app.use(messageRequestRouter);
 app.use(messageBoxRouter);
 app.use(profileRouter);
 
