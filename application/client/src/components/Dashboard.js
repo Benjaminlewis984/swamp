@@ -116,6 +116,10 @@ const Dashboard = () => {
 		history.push("upload");
 	}
 
+	const editProfile = () => {
+		history.push("editProfile")
+	}
+
 	if (userInfo == false) {
 		getInfo((info) => {
 			setUserInfo(info);
@@ -126,7 +130,7 @@ const Dashboard = () => {
 	}
 
 	return (
-		<div class="container user-profile">
+		<div class="container user-profile mx-auto">
 			<form method="post">
 				<div class="row">
 					<div class="col-md-4">
@@ -160,10 +164,15 @@ const Dashboard = () => {
 				<div class="row">
 					<div class="col-md-4">
 						<div class="profile-info">
-							<p>username: {userInfo.username} </p>
-							<p>Full Name: {userInfo.first_name} {userInfo.last_name}</p>
-							<p>Email: {userInfo.email} </p>
-							<ButtonContainer>Edit Profile</ButtonContainer>
+							<h5>username: {userInfo.username} </h5>
+							<h5>Full Name: {userInfo.first_name} {userInfo.last_name}</h5>
+							<h5>Email: {userInfo.email} </h5>
+							<div class="">
+								<a href="#" class="btn btn-danger text-white text-center mx-auto">
+									<i className="fas fa-edit fa-2x"></i>
+									Edit
+								</a>
+							</div>
 						</div>
 					</div>
 					<div class="col-md-8">
@@ -175,14 +184,16 @@ const Dashboard = () => {
 										userListings && userListings.map((listing) => {
 											return (
 
-												<div class="card col-4 "  >
-													<img src={"http://18.191.184.143:3001/" + listing.preview_path} class="img-thumbnail card-img-top embed-responsive-item"  width="100%" />
-													
+												<div class="card col-4 " >
+													<img src={"http://18.191.184.143:3001/" + listing.preview_path} class="img-thumbnail card-img-top" />
+
 													<div class="card-body">
-														<h5>{listing.title}</h5>
-														<p>${listing.price}</p>
+														<h5>Title: {listing.title}
+														</h5>
+															<h5>Price: ${listing.price}</h5>
+
 													</div>
-													<div class="card-footer">
+													<div class="card-footer text-center">
 														<a href="#" class="btn btn-danger">Delete</a>
 													</div>
 												</div>
