@@ -1,5 +1,3 @@
-const cartManager = require('../../database/cart-manager.js');
-const checkoutManager = require('../../database/checkout-manager.js');
 const mediaManager = require('../../database/media-manager.js');
 const userManager = require('../../database/user-manager.js');
 const express = require('express');
@@ -76,11 +74,11 @@ router.post('/browse', async (req, res, next) => {
       result.author_profile_path = userResult[0].profile_path;
       result.bought = 'false';
       
-      if(req.user != undefined) {
-        const bought = await checkoutManager.checkMediaInCheckout(req.user.acc_id, result['m_id']);
-        if(bought != undefined) { result.bought = 'true'; }
-        if(idx == results.length - 1) { return res.status(200).send({success: true, filter: filter, results: results}); }
-      }
+      // if(req.user != undefined) {
+      //   const bought = await checkoutManager.checkMediaInCheckout(req.user.acc_id, result['m_id']);
+      //   if(bought != undefined) { result.bought = 'true'; }
+      //   if(idx == results.length - 1) { return res.status(200).send({success: true, filter: filter, results: results}); }
+      // }
 
       if(idx == results.length - 1) { return res.status(200).send({success: true, filter: filter, results: results}); }
     });
