@@ -88,20 +88,6 @@
               deleteForm.appendChild(deleteSubmitButton);
             } else {
               if (result.bought == 'false') {
-                var cartForm = document.createElement("form");
-                cartForm.setAttribute("action", "/cart");
-                cartForm.setAttribute("method", "post");
-                cartForm.setAttribute("style", "display: inline-block;");
-                controlsCell.appendChild(cartForm);
-
-                var cartSubmitButton = document.createElement("button");
-                cartSubmitButton.setAttribute("type", "submit");
-                cartSubmitButton.setAttribute("name", "m_id");
-                cartSubmitButton.setAttribute("value", result.m_id);
-                cartSubmitButton.setAttribute("style", "background-color: #4CAF50;");
-                cartSubmitButton.innerHTML = "Add to Cart";
-                cartForm.appendChild(cartSubmitButton);
-
                 var messageForm = document.createElement("form");
                 messageForm.setAttribute("action", "/message");
                 messageForm.setAttribute("method", "get");
@@ -125,7 +111,7 @@
                 messageSubmitButton.setAttribute("name", "acc_id");
                 messageSubmitButton.setAttribute("value", result.acc_id);
                 messageSubmitButton.setAttribute("style", "background-color: #4CAF50;");
-                messageSubmitButton.innerHTML = "Message";
+                messageSubmitButton.innerHTML = "Request Purchase";
                 messageForm.appendChild(messageSubmitButton);
               } else {
                 var downloadForm = document.createElement("form");
