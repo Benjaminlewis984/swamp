@@ -108,6 +108,18 @@
                 messageForm.setAttribute("style", "display: inline-block;");
                 controlsCell.appendChild(messageForm);
 
+                var messageRequest = document.createElement("input");
+                messageRequest.setAttribute("type", "hidden");
+                messageRequest.setAttribute("name", "buy_request");
+                messageRequest.setAttribute("value", 1);
+                messageForm.appendChild(messageRequest);
+
+                var mediaRequest = document.createElement("input");
+                mediaRequest.setAttribute("type", "hidden");
+                mediaRequest.setAttribute("name", "m_id");
+                mediaRequest.setAttribute("value", result.m_id);
+                messageForm.appendChild(mediaRequest);
+
                 var messageSubmitButton = document.createElement("button");
                 messageSubmitButton.setAttribute("type", "submit");
                 messageSubmitButton.setAttribute("name", "acc_id");
