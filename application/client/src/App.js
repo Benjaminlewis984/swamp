@@ -14,6 +14,7 @@ import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
 import Upload from './components/Upload';
 import Home from './components/Home';
+import Navbarcollapse from './components/navbar-collapse'
 
 import Team from './components/Team';
 import Dang from './components/About/Dang';
@@ -38,6 +39,7 @@ class App extends Component {
             <Route path="/signup" component={Signup} />
             <Route path="/dashboard" component={Dashboard} />
             <Route path="/upload" component={Upload} />
+            <Route path="/navbar" component={Navbarcollapse} />
 
             <Route path="/about" component={Team} />
             <Route path="/dang" component={Dang} />
