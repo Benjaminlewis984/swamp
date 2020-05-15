@@ -10,6 +10,7 @@ import{
 } from '../redux/actions/signupAction';
 // import { Redirect } from 'react-router-dom';
 import { ButtonContainer } from "./Button";
+import { Redirect } from "react-router-dom";
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import { Form } from "reactstrap";
 
@@ -44,7 +45,8 @@ const Signup = ({
 
     if(isSignedUpLoadingState === 'good'){
         return  <div> 
-                    Welcome {username}. You are Logged in
+                    Welcome {username}. You have been registered
+                    <Redirect path='/login'></Redirect>
                 </div>
     }
     return(
@@ -116,7 +118,10 @@ const Signup = ({
                             <div class="row">
                                 <div>                     
                                     <ButtonContainer onClick={() => clearFields()}>Cancel</ButtonContainer>
-                                    <ButtonContainer id="signup" onClick={()=> dispatch(signup())}>Submit</ButtonContainer>
+                                    <ButtonContainer id="signup" 
+                                    onClick={()=> dispatch(signup())
+                                    }
+                                    >Submit</ButtonContainer>
                                 </div>
                             </div>
                         </fieldset>

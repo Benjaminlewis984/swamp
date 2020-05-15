@@ -204,9 +204,9 @@ export default connect(mapStateToProps)(Navbar);
 
 // CSS Classes
 const NavWrapper = styled.nav`
-  background: var(--mainBlue);
+  background: var(--mainYellow);
   .nav-link {
-    color: var(--mainWhite) !important;
+    color: var(--mainPurple) !important;
     font-size: 1.3rem;
     text-transform: capitalize;
   }

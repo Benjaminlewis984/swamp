@@ -10,7 +10,7 @@ const Details = () => {
     return (
         <ProductConsumer>
             {(value) => {
-                const { m_id, author_username, preview_path, description, price, title, inCart, raw_path, acc_id }
+                const { m_id, author_username, preview_path, description, price, title, inCart, raw_path, acc_id}
                     = value.detailProduct;
                 console.log(value.detailProduct);
                 console.log(value.detailProduct.raw_path)
