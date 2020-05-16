@@ -6,7 +6,7 @@ import {
     setEmail,
     setFirstName,
     setLastName,
-    signup,
+    signUp,
 } from '../redux/actions/signupAction';
 // import { Redirect } from 'react-router-dom';
 import { ButtonContainer } from "./Button";
