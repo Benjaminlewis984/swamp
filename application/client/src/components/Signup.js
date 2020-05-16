@@ -6,7 +6,7 @@ import{
     setEmail,
     setFirstName,
     setLastName,
-    signup,
+    signUp,
 } from '../redux/actions/signupAction';
 // import { Redirect } from 'react-router-dom';
 import { ButtonContainer } from "./Button";
@@ -116,7 +116,7 @@ const Signup = ({
                             <div class="row">
                                 <div>                     
                                     <ButtonContainer onClick={() => clearFields()}>Cancel</ButtonContainer>
-                                    <ButtonContainer id="signup" onClick={()=> dispatch(signup())}>Submit</ButtonContainer>
+                                    <ButtonContainer id="signup" onClick={()=> dispatch(signUp())}>Submit</ButtonContainer>
                                 </div>
                             </div>
                         </fieldset>
