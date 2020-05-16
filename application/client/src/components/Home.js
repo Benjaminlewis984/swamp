@@ -16,24 +16,24 @@ const Home = () => {
 
   return (
     <div>
-    <ProductConsumer>
-      {(value) => (
-        <HomeWrapper className="container">
-          <div class="mx-auto rounded text-center pt-0">
+      <ProductConsumer>
+        {(value) => (
+          <HomeWrapper className="container">
+            <div class="mx-auto rounded text-center pt-0">
 
-          <img src={logo} alt="store" className="navbar-brand row col-10 mx-auto justify-content-center"/>
-          </div>
-          <div className="row col-10 mx-auto my-2 justify-content-center">
-            <h3>A media marketplace for gators, by gators.</h3>
-          </div>
+              <img src={logo} alt="store" className="navbar-brand row col-10 mx-auto justify-content-center" />
+            </div>
+            <div className="row col-10 mx-auto my-2 justify-content-center">
+              <h3>A media marketplace for gators, by gators.</h3>
+            </div>
 
-          
-        </HomeWrapper>
-      )}
-    </ProductConsumer>
-    <Disclaimer />
+
+          </HomeWrapper>
+        )}
+      </ProductConsumer>
+      <Disclaimer />
     </div>
-    
+
   );
 };
 

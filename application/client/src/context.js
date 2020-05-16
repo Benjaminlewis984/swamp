@@ -24,10 +24,10 @@ class ProductProvider extends Component {
             "query": {
                 "category": tempCategory,
                 "search": query
-            }  
+            }
         }).then((res) => {
             tempProducts = res.data.results;
-            this.setState(() => { return {products: tempProducts} })
+            this.setState(() => { return { products: tempProducts } })
         })
 
     }
@@ -40,7 +40,7 @@ class ProductProvider extends Component {
     handleDetail = (m_id) => {
         const product = this.getItem(m_id);
         this.setState(() => {
-            return {detailProduct: product}
+            return { detailProduct: product }
         })
     };
 
@@ -55,20 +55,20 @@ class ProductProvider extends Component {
         product.total = price;
 
         this.setState(() => {
-            return {products: tempProducts, cart: [...this.state.cart, product]}
+            return { products: tempProducts, cart: [...this.state.cart, product] }
         }, () => { this.addTotals(); });
     };
 
     openModel = m_id => {
         const product = this.getItem(m_id)
         this.setState(() => {
-            return {modelProduct: product, modelOpen: true}
+            return { modelProduct: product, modelOpen: true }
         })
     }
 
     closeModel = () => {
         this.setState(() => {
-            return {modelOpen: false}
+            return { modelOpen: false }
         })
     }
 
