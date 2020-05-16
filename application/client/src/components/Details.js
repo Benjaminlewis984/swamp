@@ -4,13 +4,41 @@ import { Link } from 'react-router-dom';
 import { ButtonContainer } from './Button';
 import Axios from 'axios';
 import download from 'downloadjs';
+import {
+    setBuyer,
+    setSeller,
+    setSoldAmount,
+    setStatus,
+    setTransactionId,
+    setM_id,
+} from '../redux/actions/purchaseAction';
+import { connect } from 'react-redux';
 
-const Details = () => {
-    
+const Details = ({
+    buyer,
+    seller,
+    status,
+    soldAmount,
+    m_id,
+    transactionId,
+    dispatch
+}) => {
+
+    const sendForApproval = () => {
+        dispatch(setBuyer());
+        dispatch(setSeller());
+        dispatch(setStatus(false));
+        dispatch(setTransactionId());
+        dispatch(setM_id(m_id));
+        dispatch(setSoldAmount);
+
+        document.getElementById('signup-form').value = '';
+    }
+
     return (
         <ProductConsumer>
             {(value) => {
-                const { m_id, author_username, preview_path, description, price, title, inCart, raw_path, acc_id }
+                const { m_id, author_username, preview_path, description, price, title, inCart, raw_path, approved }
                     = value.detailProduct;
                 console.log(value.detailProduct);
                 console.log(value.detailProduct.raw_path)
@@ -58,14 +86,21 @@ const Details = () => {
                                     <ButtonContainer
                                         disabled={false}
                                         onClick={() => {
-                                            console.log('Here is raw - path ' +raw_path);
+                                            console.log('Here is raw - path ' + raw_path);
                                             Axios.post(`http://18.191.184.143:3001/download`, {
                                                 "path": raw_path
                                             })
                                                 .then((response) => {
                                                     console.log(response);
-                                                    // acc_id;
-                                                    download(response.data);
+                                                    if(price === 0){
+                                                        approved = true;
+                                                        download(response.data);
+                                                        approved = false;
+                                                    } else {
+                                                        // Logic for contacting seller
+                                                        dispatch(setBuyer(author_username));
+                                                        sendForApproval();
+                                                    }
                                                 })
                                         }
                                         }
@@ -82,4 +117,16 @@ const Details = () => {
     )
 
 }
-export default Details;
+
+const mapStateToProps = state => {
+    return {
+        buyer: state.purchaseReducer.buyer,
+        seller: state.purchaseReducer.seller,
+        status: state.purchaseReducer.status,
+        transactionId: state.purchaseReducer.transactionId,
+        soldAmount: state.purchaseReducer.soldAmount,
+        m_id: state.purchaseReducer.m_id,
+    };
+};
+
+export default connect(mapStateToProps) (Details);
