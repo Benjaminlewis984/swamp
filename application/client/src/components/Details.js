@@ -21,23 +21,26 @@ const Details = ({
     soldAmount,
     m_id,
     transactionId,
-    dispatch
+    dispatch,
+    username
 }) => {
 
     const sendForApproval = () => {
-        dispatch(setBuyer());
-        dispatch(setSeller());
+        dispatch(setBuyer(username)); 
+        // dispatch(setSeller()); //Already done on button click
         dispatch(setStatus(false));
-        dispatch(setTransactionId());
+        // dispatch(setTransactionId());
         dispatch(setM_id(m_id));
-        dispatch(setSoldAmount);
-
-        document.getElementById('signup-form').value = '';
+        // dispatch(setSoldAmount);
+        console.log(buyer);
+        console.log(status);
+        console.log(m_id);
     }
 
     return (
         <ProductConsumer>
             {(value) => {
+                // Item information. From seller
                 const { m_id, author_username, preview_path, description, price, title, inCart, raw_path, approved }
                     = value.detailProduct;
                 console.log(value.detailProduct);
@@ -98,7 +101,7 @@ const Details = ({
                                                         approved = false;
                                                     } else {
                                                         // Logic for contacting seller
-                                                        dispatch(setBuyer(author_username));
+                                                        dispatch(setSeller(author_username));
                                                         sendForApproval();
                                                     }
                                                 })
@@ -126,6 +129,7 @@ const mapStateToProps = state => {
         transactionId: state.purchaseReducer.transactionId,
         soldAmount: state.purchaseReducer.soldAmount,
         m_id: state.purchaseReducer.m_id,
+        username: state.signupReducer.username,
     };
 };
 
