@@ -21,10 +21,11 @@ const Details = ({
     soldAmount,
     m_id,
     transactionId,
+    dispatch
 }) => {
 
     const sendForApproval = () => {
-        dispatch(setBuyer(author_username));
+        dispatch(setBuyer());
         dispatch(setSeller());
         dispatch(setStatus(false));
         dispatch(setTransactionId());
@@ -97,7 +98,8 @@ const Details = ({
                                                         approved = false;
                                                     } else {
                                                         // Logic for contacting seller
-                                                        
+                                                        dispatch(setBuyer(author_username));
+                                                        sendForApproval();
                                                     }
                                                 })
                                         }
