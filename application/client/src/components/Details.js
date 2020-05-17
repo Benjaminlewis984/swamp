@@ -11,7 +11,9 @@ import {
     setStatus,
     setTransactionId,
     setM_id,
+    sendingApproval,
 } from '../redux/actions/purchaseAction';
+
 import { connect } from 'react-redux';
 
 const Details = ({
@@ -22,7 +24,7 @@ const Details = ({
     m_id,
     transactionId,
     dispatch,
-    username
+    username,
 }) => {
 
     const sendForApproval = () => {
@@ -33,8 +35,9 @@ const Details = ({
         dispatch(setM_id(m_id));
         // dispatch(setSoldAmount);
         console.log(buyer);
-        console.log(status);
-        console.log(m_id);
+        // console.log(status);
+        // console.log(m_id);
+        dispatch(sendingApproval());
     }
 
     return (
@@ -129,7 +132,7 @@ const mapStateToProps = state => {
         transactionId: state.purchaseReducer.transactionId,
         soldAmount: state.purchaseReducer.soldAmount,
         m_id: state.purchaseReducer.m_id,
-        username: state.signupReducer.username,
+        username: state.loginReducer.username,
     };
 };
 

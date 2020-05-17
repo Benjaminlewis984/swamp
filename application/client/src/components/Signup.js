@@ -118,7 +118,7 @@ const Signup = ({
                                 <div>
                                     <ButtonContainer onClick={() => clearFields()}>Cancel</ButtonContainer>
                                     <ButtonContainer id="signup"
-                                        onClick={() => dispatch(signup())
+                                        onClick={() => dispatch(signUp())
                                         }
                                     >Submit</ButtonContainer>
                                 </div>
