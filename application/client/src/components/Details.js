@@ -25,6 +25,7 @@ const Details = ({
     transactionId,
     dispatch,
     username,
+    isLoggedIn
 }) => {
 
     const sendForApproval = () => {
@@ -98,16 +99,17 @@ const Details = ({
                                             })
                                                 .then((response) => {
                                                     console.log(response);
-                                                    if(price === 0){
-                                                        approved = true;
-                                                        download(response.data);
-                                                        approved = false;
-                                                    } else {
-                                                        // Logic for contacting seller
-                                                        dispatch(setSeller(author_username));
-                                                        sendForApproval();
-                                                    }
-                                                })
+                                                    console.log(isLoggedIn);
+                                                        if(price === 0){
+                                                            // approved = true;
+                                                            download(response.data);
+                                                            // approved = false;
+                                                        } else {
+                                                            // Logic for contacting seller
+                                                            dispatch(setSeller(author_username));
+                                                            sendForApproval();
+                                                        }
+                                                }).catch(err => alert("You need to register before you can download"));
                                         }
                                         }
                                     >
