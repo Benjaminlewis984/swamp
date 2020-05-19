@@ -4,13 +4,48 @@ import { Link } from 'react-router-dom';
 import { ButtonContainer } from './Button';
 import Axios from 'axios';
 import download from 'downloadjs';
+import {
+    setBuyer,
+    setSeller,
+    setSoldAmount,
+    setStatus,
+    setTransactionId,
+    setM_id,
+    sendingApproval,
+} from '../redux/actions/purchaseAction';
 
-const Details = () => {
-    
+import { connect } from 'react-redux';
+
+const Details = ({
+    buyer,
+    seller,
+    status,
+    soldAmount,
+    m_id,
+    transactionId,
+    dispatch,
+    username,
+    isLoggedIn
+}) => {
+
+    const sendForApproval = () => {
+        dispatch(setBuyer(username)); 
+        // dispatch(setSeller()); //Already done on button click
+        dispatch(setStatus(false));
+        // dispatch(setTransactionId());
+        dispatch(setM_id(m_id));
+        // dispatch(setSoldAmount);
+        console.log(buyer);
+        // console.log(status);
+        // console.log(m_id);
+        dispatch(sendingApproval());
+    }
+
     return (
         <ProductConsumer>
             {(value) => {
-                const { m_id, author_username, preview_path, description, price, title, inCart, raw_path }
+                // Item information. From seller
+                const { m_id, author_username, preview_path, description, price, title, inCart, raw_path, approved }
                     = value.detailProduct;
                 console.log(value.detailProduct);
                 console.log(value.detailProduct.raw_path)
@@ -58,24 +93,23 @@ const Details = () => {
                                     <ButtonContainer
                                         disabled={false}
                                         onClick={() => {
-                                            console.log('Here is raw - path ' +raw_path);
+                                            console.log('Here is raw - path ' + raw_path);
                                             Axios.post(`http://18.191.184.143:3001/download`, {
-                                                // "path": "raw/2020-05-01:0.jpg"
-                                                // "path": "raw/2020-05-02:5.txt"
                                                 "path": raw_path
                                             })
                                                 .then((response) => {
                                                     console.log(response);
-                                                    download(response.data);
-                                                    // response.data;
-                                                    // const content = response.headers[`${}`];
-                                                    // download("http://18.191.184.143:3001/download/" + raw_path);
-                                                    //download(`http://18.191.184.143:3001/download/${raw_path}`);
-                                                })
-
-                                            //  } else {
-                                            //      alert('Not downloadable');
-                                            //  }
+                                                    console.log(isLoggedIn);
+                                                        if(price === 0){
+                                                            // approved = true;
+                                                            download(response.data);
+                                                            // approved = false;
+                                                        } else {
+                                                            // Logic for contacting seller
+                                                            dispatch(setSeller(author_username));
+                                                            sendForApproval();
+                                                        }
+                                                }).catch(err => alert("You need to register before you can download"));
                                         }
                                         }
                                     >
@@ -91,4 +125,17 @@ const Details = () => {
     )
 
 }
-export default Details;
+
+const mapStateToProps = state => {
+    return {
+        buyer: state.purchaseReducer.buyer,
+        seller: state.purchaseReducer.seller,
+        status: state.purchaseReducer.status,
+        transactionId: state.purchaseReducer.transactionId,
+        soldAmount: state.purchaseReducer.soldAmount,
+        m_id: state.purchaseReducer.m_id,
+        username: state.loginReducer.username,
+    };
+};
+
+export default connect(mapStateToProps) (Details);

@@ -14,6 +14,7 @@ import Signup from './components/Signup';
 import Dashboard from './components/Dashboard';
 import Upload from './components/Upload';
 import Home from './components/Home';
+import Navbarcollapse from './components/navbar-collapse'
 
 import Team from './components/Team';
 import Dang from './components/About/Dang';
@@ -24,36 +25,37 @@ import Ben from './components/About/Ben';
 import Onu from './components/About/Onu';
 
 class App extends Component {
-  
+
   render() {
     return (
-        <React.Fragment>
-          <Navbar />
-          <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/result" component={ProductList} />
-            <Route path="/details" component={Details} />
-            <Route path="/cart" component={Cart} />
-            <Route path="/login" component={Login} />
-            <Route path="/signup" component={Signup} />
-            <Route path="/dashboard" component={Dashboard} />
-            <Route path="/upload" component={Upload} />
+      <React.Fragment>
+        <Navbar />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/result" component={ProductList} />
+          <Route path="/details" component={Details} />
+          <Route path="/cart" component={Cart} />
+          <Route path="/login" component={Login} />
+          <Route path="/signup" component={Signup} />
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/upload" component={Upload} />
+          <Route path="/navbar" component={Navbarcollapse} />
 
-            <Route path="/about" component={Team} />
-            <Route path="/dang" component={Dang} />
-            <Route path="/will" component={William} />
-            <Route path="/joe" component={Joe} />
-            <Route path="/kevin" component={Kevin} />
-            <Route path="/ben" component={Ben} />
-            <Route path="/onu" component={Onu} />
+          <Route path="/about" component={Team} />
+          <Route path="/dang" component={Dang} />
+          <Route path="/will" component={William} />
+          <Route path="/joe" component={Joe} />
+          <Route path="/kevin" component={Kevin} />
+          <Route path="/ben" component={Ben} />
+          <Route path="/onu" component={Onu} />
 
-            <Route component={Default} />
-          </Switch>
-          <Model />
-        </React.Fragment>
+          <Route component={Default} />
+        </Switch>
+        <Model />
+      </React.Fragment>
     );
   }
-  
+
 }
 
 export default App;
