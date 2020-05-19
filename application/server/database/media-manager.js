@@ -14,8 +14,13 @@ exports.addMedia = async (title, description, preview_path, raw_path, category, 
   else { await databaseManager.queryDatabase(`INSERT INTO \`physical media\`(m_id) VALUES (?);`, [m_id]);}
 }
 
-exports.deleteMedia = async (title) => {
-  await databaseManager.queryDatabase(`DELETE FROM media WHERE title = ?;`, [title]);
+exports.deleteMedia = async (m_id) => {
+  const count = await databaseManager.queryDatabase(`SELECT COUNT(*) FROM \`media content\` WHERE m_id = ?;`, [m_id]);
+  if(count[0]['COUNT(*)'] == 0) {
+    return undefined;
+  }
+  await databaseManager.queryDatabase(`DELETE FROM \`media content\` WHERE m_id = ?;`, [m_id]);
+  return '';
 }
 
 exports.approveMedia = async (m_id, admin_id) => {
@@ -84,44 +89,41 @@ exports.getMediaFilter = async (count, offset, filter) => {
 }
 
 exports.getPurchases = async (count, offset, acc_id) => {
-  let registeredUserQuery = "SELECT DISTINCT * FROM `registered users` WHERE `acc_id` = " + acc_id + ";";
-  const firstResult = await databaseManager.queryDatabase(registeredUserQuery);
-  const registeredID = firstResult[0].reg_id;
-
-  let checkoutQuery = "SELECT DISTINCT * FROM `checkout` WHERE `reg_id` = " + registeredID + ";";
-  const secondResult = await databaseManager.queryDatabase(checkoutQuery);
-  let approvedIDString = "";
-  secondResult.forEach(async (result, idx) => {
+  const result = await databaseManager.queryDatabase(`SELECT DISTINCT * FROM checkout co INNER JOIN \`registered users\` ru ON co.reg_id = ru.reg_id WHERE ru.acc_id = ?;`, [acc_id]);
+  let approvedIDString = '';
+  await result.forEach((result, idx) => {
     approvedIDString += result.approved_id;
-    if (idx != secondResult.length - 1) {
-      approvedIDString += ", ";
-    }
+    approvedIDString += ", ";
   });
 
-  let approvedMediaQuery = "SELECT DISTINCT * FROM `approved media` WHERE `approved_id` IN (" + approvedIDString + ") LIMIT " + count + " OFFSET " + offset + ";";
-  const thirdResult = await databaseManager.queryDatabase(approvedMediaQuery);
-  let mediaIDString = "";
-  thirdResult.forEach(async (result, idx) => {
+  if (result.length == 0) {
+    return [];
+  }
+
+  approvedIDString = approvedIDString.substring(0, approvedIDString.length - 2);
+
+  let approvedMediaQuery = `SELECT DISTINCT * FROM \`approved media\` WHERE approved_id IN (${approvedIDString}) LIMIT ${count} OFFSET ${offset};`;
+  console.log(approvedMediaQuery);
+  const secondResult = await databaseManager.queryDatabase(approvedMediaQuery, []);
+  let mediaIDString = '';
+  secondResult.forEach(async (result, idx) => {
     mediaIDString += result.m_id;
-    if (idx != thirdResult.length - 1) {
+    if (idx != secondResult.length - 1) {
       mediaIDString += ", ";
     }
   });
 
-  let mediaContentQuery = "SELECT DISTINCT * FROM `media content` WHERE `m_id` IN (" + approvedIDString + ");";
-  const fourthResult = await databaseManager.queryDatabase(mediaContentQuery);
-  return fourthResult;
+  let mediaContentQuery = `SELECT DISTINCT * FROM \`media content\` WHERE m_id IN (${mediaIDString});`;
+  const thirdResult = await databaseManager.queryDatabase(mediaContentQuery, []);
+  return thirdResult;
 }
 
-exports.getListings = async (count, offset, acc_id) => {
-  let mediaContentQuery = "SELECT DISTINCT * FROM `media content` WHERE `acc_id` = " + acc_id + " LIMIT " + count + " OFFSET " + offset + ";";
-  const firstResult = await databaseManager.queryDatabase(mediaContentQuery);
-  return firstResult;
+exports.getListings = async (count, offset, username) => {
+  const result = await databaseManager.queryDatabase(`SELECT * FROM \`media content\` mc INNER JOIN accounts acc ON acc.acc_id = mc.acc_id WHERE acc.username = ? LIMIT ? OFFSET ?;`, [username, count, offset]);
+  return result;
 }
 
 exports.getPurchaseCount = async (m_id) => {
-  let digitalMediaQuery = "SELECT DISTINCT * FROM `digital media` WHERE `m_id` = " + m_id + ";";
-  const firstResult = await databaseManager.queryDatabase(digitalMediaQuery);
-
-  return firstResult[0].sold;
+  const result = await databaseManager.queryDatabase(`SELECT DISTINCT * FROM \`digital media\` WHERE m_id = ?;`, [m_id]);
+  return result[0].sold;
 }

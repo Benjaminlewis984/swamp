@@ -1,15 +1,16 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import{
+import {
     setUserName,
     setPassword,
     setEmail,
     setFirstName,
     setLastName,
-    signup,
+    signUp,
 } from '../redux/actions/signupAction';
 // import { Redirect } from 'react-router-dom';
 import { ButtonContainer } from "./Button";
+import { Redirect } from "react-router-dom";
 // import "bootstrap/dist/css/bootstrap.min.css";
 // import { Form } from "reactstrap";
 
@@ -22,10 +23,10 @@ const Signup = ({
     //isSignedUp,
     isSignedUpLoadingState,
     dispatch,
-    }) => {
+}) => {
 
     const verify = (confirmPassword) => {
-        if(password === confirmPassword) {
+        if (password === confirmPassword) {
             console.log("Valid");
         } else {
             console.log("DOESN'T MATCH");
@@ -42,12 +43,12 @@ const Signup = ({
         document.getElementById('signup-form').value = '';
     }
 
-    if(isSignedUpLoadingState === 'good'){
-        return  <div> 
-                    Welcome {username}. You are Logged in
+    if (isSignedUpLoadingState === 'good') {
+        return <div>
+            Welcome {username}. You have been registered
                 </div>
     }
-    return(
+    return (
         <div class="container-fluid bg-light py-3">
             <div class="row">
                 <div class="col-md-6 mx-auto">
@@ -55,68 +56,71 @@ const Signup = ({
                         <h3 class="text-center mb-4">Sign-Up</h3>
                         <fieldset id="signup-form">
                             <div class="form-group has-success">
-                                <input class="form-control input-lg" 
-                                placeholder="Username" 
-                                name="username" 
-                                type="text" 
-                                value={username}
-                                onChange={e => dispatch(setUserName(e.target.value))}>
+                                <input class="form-control input-lg"
+                                    placeholder="Username"
+                                    name="username"
+                                    type="text"
+                                    value={username}
+                                    onChange={e => dispatch(setUserName(e.target.value))}>
                                 </input>
                             </div>
                             <div class="form-group has-success">
-                                <input class="form-control input-lg" 
-                                placeholder="Password" 
-                                name="password" 
-                                type="password"
-                                value={password}
-                                onChange={e => dispatch(setPassword(e.target.value))}>
+                                <input class="form-control input-lg"
+                                    placeholder="Password"
+                                    name="password"
+                                    type="password"
+                                    value={password}
+                                    onChange={e => dispatch(setPassword(e.target.value))}>
                                 </input>
                             </div>
                             <div class="form-group has-success">
-                                <input class="form-control input-lg" 
-                                placeholder="Confirm Password" 
-                                name="password" type="password"
-                                onChange={e => verify(e.target.value)}>
+                                <input class="form-control input-lg"
+                                    placeholder="Confirm Password"
+                                    name="password" type="password"
+                                    onChange={e => verify(e.target.value)}>
                                 </input>
                             </div>
                             <div class="form-group has-success">
-                                <input class="form-control input-lg" 
-                                placeholder="SFSU e-mail address" 
-                                name="email" 
-                                type="text"
-                                value={email}
-                                onChange={e => dispatch(setEmail(e.target.value))}>
+                                <input class="form-control input-lg"
+                                    placeholder="SFSU e-mail address"
+                                    name="email"
+                                    type="text"
+                                    value={email}
+                                    onChange={e => dispatch(setEmail(e.target.value))}>
                                 </input>
                             </div>
                             <div class="form-group has-success">
-                                <input class="form-control input-lg" 
-                                placeholder="First Name" 
-                                name="firstname" 
-                                type="text"
-                                value={firstname}
-                                onChange={e => dispatch(setFirstName(e.target.value))}>
+                                <input class="form-control input-lg"
+                                    placeholder="First Name"
+                                    name="firstname"
+                                    type="text"
+                                    value={firstname}
+                                    onChange={e => dispatch(setFirstName(e.target.value))}>
                                 </input>
                             </div>
                             <div class="form-group has-success">
-                                <input class="form-control input-lg" 
-                                placeholder="Last Name" 
-                                name="lasttname" 
-                                type="text"
-                                value={lastname}
-                                onChange={e => dispatch(setLastName(e.target.value))}>
+                                <input class="form-control input-lg"
+                                    placeholder="Last Name"
+                                    name="lasttname"
+                                    type="text"
+                                    value={lastname}
+                                    onChange={e => dispatch(setLastName(e.target.value))}>
                                 </input>
                             </div>
-                            
+
                             <div>
                                 <a href="#">
                                     <input type="checkbox" required /> Terms and Condition
                                 </a>
-                            </div> 
+                            </div>
 
                             <div class="row">
-                                <div>                     
+                                <div>
                                     <ButtonContainer onClick={() => clearFields()}>Cancel</ButtonContainer>
-                                    <ButtonContainer id="signup" onClick={()=> dispatch(signup())}>Submit</ButtonContainer>
+                                    <ButtonContainer id="signup"
+                                        onClick={() => dispatch(signUp())
+                                        }
+                                    >Submit</ButtonContainer>
                                 </div>
                             </div>
                         </fieldset>
@@ -129,7 +133,7 @@ const Signup = ({
 };
 
 const mapStateToProps = state => {
-    return{
+    return {
         username: state.signupReducer.username,
         password: state.signupReducer.password,
         email: state.signupReducer.email,

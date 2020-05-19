@@ -1,36 +1,60 @@
-import React, { Component, ReactPropTypes, useState } from "react";
-import { Link, Redirect } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { ButtonContainer } from "./Button";
 import logo from "../imgs/gator.png";
-import Cookies from "js-cookie";
 import axios from "axios";
 import { ProductConsumer } from "../context";
 import { useHistory, useLocation } from "react-router-dom";
 import { connect } from "react-redux";
+import {
+  setUserName,
+  setPassword,
+  setEmail,
+  setFirstName,
+  setLastName,
+  setIsLoggedIn
+} from '../redux/actions/loginAction';
 
-const authenticate = () => {
-  return Cookies.get("isLoggedIn");
-};
 
-const logout = () => {
-  console.log("Removing Cookies");
-  Cookies.remove("isLoggedIn");
-  Cookies.remove("user");
-  axios.get(`http://18.191.184.143:3001/logout`).then((res) => {
-    console.log(res);
-    console.log(res.data.success);
+const checkAuth = (action) => {
+  axios.defaults.withCredentials = true;
+  axios.get(`http://18.191.184.143:3001/auth`).then((res) => {
+    if (res.data.success == "true") {
+      action(true);
+    }
+    else {
+      action(false);
+    }
   });
-  
-  return <Link to="/"></Link>;
 };
 
-const Navbar = () => {
+
+const Navbar = ({ 
+  username,
+  password,
+  firstName,
+  lastName,
+  email,
+  isLoggedIn,
+  loginLoadingState,
+  dispatch,
+  //authenticated,
+}) => {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   const [navSearch, setNavSearch] = useState(true);
+  const [isAuth, setIsAuth] = useState("unchecked");
+
   let history = useHistory();
   let location = useLocation();
+
+  const logout = () => {
+    axios.defaults.withCredentials = true;
+    axios.get(`http://18.191.184.143:3001/logout`);
+    
+    return <Link to="/"></Link>;
+  };
 
   // Function for conditional display of the search bar
   const showBar = () => {
@@ -38,7 +62,11 @@ const Navbar = () => {
     if(location.pathname === "/") { setNavSearch(true); }
   }
 
-  return (
+  checkAuth((value) => {
+    setIsAuth(value);
+  })
+
+  var staticElements = (
     <NavWrapper
       className="navbar navbar-expand-sm 
             navbar-dark px-sm-5">
@@ -101,7 +129,7 @@ const Navbar = () => {
       </ProductConsumer>
         : null }
       {/* Search bar end */}
-      
+
       <Link to="/cart" className="ml-auto">
         <ButtonContainer>
           <span className="mr-2">
@@ -111,7 +139,7 @@ const Navbar = () => {
         </ButtonContainer>
       </Link>
 
-      {!authenticate() && (
+      {isAuth != "unchecked" && !isAuth && (
         <Link to="/login">
           <ButtonContainer>
             <span className="mr-2">
@@ -121,7 +149,7 @@ const Navbar = () => {
           </ButtonContainer>
         </Link>
       )}
-      {!authenticate() && (
+      {isAuth != "unchecked" && !isAuth && (
         <Link to="/signup">
           <ButtonContainer>
             <span className="mr-2">
@@ -131,7 +159,7 @@ const Navbar = () => {
           </ButtonContainer>
         </Link>
       )}
-      {authenticate() && (
+      {isAuth != "unchecked" && isAuth && (
         <Link to="/dashboard">
           <ButtonContainer>
             <span className="mr-2">
@@ -141,7 +169,7 @@ const Navbar = () => {
           </ButtonContainer>
         </Link>
       )}
-      {authenticate() && (
+      {isAuth != "unchecked" && isAuth && (
         <Link to="/">
           <ButtonContainer onClick={logout}>
             <span className="mr-2">
@@ -152,12 +180,23 @@ const Navbar = () => {
         </Link>
       )}
     </NavWrapper>
+  )
+
+  return (
+    staticElements
   );
 };
 
 const mapStateToProps = (state) => {
   return {
-    searchResults: state.searchReducer.searchResults,
+    username: state.loginReducer.username,
+    password: state.loginReducer.password,
+    email: state.loginReducer.email,
+    firstName: state.loginReducer.firstName,
+    lastName: state.loginReducer.lastName,
+    isLoggedIn: state.loginReducer.isLoggedIn,
+    loginLoadingState: state.loginReducer.loginLoadingState,
+    authenticated: state.loginReducer.authenticated,
   };
 };
 
@@ -165,9 +204,9 @@ export default connect(mapStateToProps)(Navbar);
 
 // CSS Classes
 const NavWrapper = styled.nav`
-  background: var(--mainBlue);
+  background: var(--mainYellow);
   .nav-link {
-    color: var(--mainWhite) !important;
+    color: var(--mainPurple) !important;
     font-size: 1.3rem;
     text-transform: capitalize;
   }

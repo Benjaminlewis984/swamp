@@ -1,9 +1,9 @@
 const mysql = require('mysql');
 
 const connectionInformation = {
-	host: 'swamp-database-instance.c7yirp5jbhfm.us-east-2.rds.amazonaws.com',
+	host: 'swamp.c7yirp5jbhfm.us-east-2.rds.amazonaws.com',
 	user: 'admin',
-	password: '1vFhxpUjr0vof3KErgPi',
+	password: '74DQSgJAXD4bPgAqJ1mv',
 	database: 'mydb'
 };
 

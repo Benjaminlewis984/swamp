@@ -12,6 +12,7 @@
         <th>Message</th>
         <th>Date</th>
         <th>Time</th>
+        <th>Controls</th>
       </tr>
       <% results.forEach(function(obj){ %>
       <tr>
@@ -19,6 +20,22 @@
         <td style="text-align:center"><%=obj.message%></td>
         <td style="text-align:center"><%=obj.date%></td>
         <td style="text-align:center"><%=obj.time%></td>
+        <td style="text-align:center">
+        <% if (obj.buy_request == 1) { %>
+          <form action="/approve_request" method="post" style="display: inline-block;">
+            <input type='hidden' name='message_id' value='<%=obj.message_id%>'>
+            <button type="submit" name="m_id" value="<%=obj.m_id%>" style="background-color: #4CAF50;">Accept</button>
+          </form>
+          <form action="/reject_request" method="post" style="display: inline-block;">
+            <input type='hidden' name='message_id' value='<%=obj.message_id%>'>
+            <button type="submit" name="m_id" value="<%=obj.m_id%>" style="background-color: #f44336;">Reject</button>
+          </form>
+        <% } else { %>
+          <form action="/delete_request" method="post" style="display: inline-block;">
+            <button type="submit" name="m_id" value="<%=obj.m_id%>" style="background-color: #f44336;">Delete</button>
+          </form>
+        <% } %>
+        </td>
       </tr>
       <%})%>
     </table>

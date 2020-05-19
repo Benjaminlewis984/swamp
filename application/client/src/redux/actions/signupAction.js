@@ -1,3 +1,5 @@
+import { login } from './loginAction'
+
 export const setUserName = (username) => ({
     type: 'USER_SET_USERNAME',
     username,
@@ -27,7 +29,7 @@ export const setSignedUpLoadingState = (isSignedUpLoadingState) => ({
     isSignedUpLoadingState,
 });
 
-export const signup = () => (dispatchEvent, getState) => {
+export const signUp = () => (dispatchEvent, getState) => {
     console.log('Sign up Function !!!');
     const username = getState().signupReducer.username;
     const password = getState().signupReducer.password;
@@ -49,9 +51,10 @@ export const signup = () => (dispatchEvent, getState) => {
             .then((response) =>{
                 console.log("second url", response);
                 if(response.data.success==='true'){
-                    console.log("I'm here in if = true", response);
+                    // console.log("I'm here in if = true", response);
                     // dispatchEvent(setIsSignedUp(true));
                     dispatchEvent(setSignedUpLoadingState('good'));
+                    dispatchEvent(login());
                 }
                 else{
                     console.log("I'm here in else/ ", response)

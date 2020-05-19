@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Cookies from "js-cookie";
 
 import { detailProduct } from './data';
 const ProductContext = React.createContext();
@@ -22,13 +21,11 @@ class ProductProvider extends Component {
         let tempCategory = category;
 
         axios.post('http://18.191.184.143:3001/browse', {
-            "query": {
-                "category": tempCategory,
-                "search": query
-            }  
+            "category": tempCategory,
+            "search": query
         }).then((res) => {
             tempProducts = res.data.results;
-            this.setState(() => { return {products: tempProducts} })
+            this.setState(() => { return { products: tempProducts } })
         })
 
     }
@@ -41,7 +38,7 @@ class ProductProvider extends Component {
     handleDetail = (m_id) => {
         const product = this.getItem(m_id);
         this.setState(() => {
-            return {detailProduct: product}
+            return { detailProduct: product }
         })
     };
 
@@ -56,20 +53,20 @@ class ProductProvider extends Component {
         product.total = price;
 
         this.setState(() => {
-            return {products: tempProducts, cart: [...this.state.cart, product]}
+            return { products: tempProducts, cart: [...this.state.cart, product] }
         }, () => { this.addTotals(); });
     };
 
     openModel = m_id => {
         const product = this.getItem(m_id)
         this.setState(() => {
-            return {modelProduct: product, modelOpen: true}
+            return { modelProduct: product, modelOpen: true }
         })
     }
 
     closeModel = () => {
         this.setState(() => {
-            return {modelOpen: false}
+            return { modelOpen: false }
         })
     }
 
