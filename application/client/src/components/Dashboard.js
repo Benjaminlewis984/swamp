@@ -4,12 +4,6 @@ import '../styles/Dashboard.css';
 import { ButtonContainer } from './Button';
 import { connect } from 'react-redux';
 import axios from "axios";
-import airplane from "../imgs/airplane_forest.jpeg";
-import orange from "../imgs/blue_orange.jpeg";
-import coffee from "../imgs/coffee.jpeg";
-import hallway from "../imgs/hallway.jpeg";
-import lego from "../imgs/lego.jpeg";
-import lightbulb from "../imgs/lightbulb.jpeg";
 
 
 
@@ -22,83 +16,29 @@ const getInfo = (action) => {
 	});
 };
 
+const deletePost = (m_id) => {
+	axios.defaults.withCredentials = true;
+	console.log(m_id);
+
+	var body = {
+		"m_id": m_id,
+	}
+	axios.delete("http://18.191.184.143:3001/listings", {"data": body})
+	.then(res => {
+		console.log(res);
+		if(res.data.success ==="true") {
+			console.log("Post successfully deleted");
+		}
+	}).catch(err => {
+		console.log("Post not deleted");
+	})
+
+}
+
 const Dashboard = () => {
 	const [userInfo, setUserInfo] = useState(false);
 	const [userListings, setUserListings] = useState(false);
 	const history = useHistory();
-	const tempListings = {
-		"success": true,
-		"results":
-			[
-				{
-					"id": 1,
-					"author_id": 1,
-					"title": "Lightbulb",
-					"description": "This is a light bulb.",
-					"preview_path": { lightbulb },
-					"raw_path": null,
-					"category": "image",
-					"status": "approved",
-					"author_username": "onu",
-					"price": 6
-				},
-				{
-					"id": 2,
-					"author_id": 1,
-					"title": "Coffee",
-					"description": "Starbucks is not very good.",
-					"preview_path": { coffee },
-					"raw_path": null,
-					"category": "image",
-					"status": "approved",
-					"author_username": "onu"
-				},
-				{
-					"id": 3,
-					"author_id": 1,
-					"title": "Lego Heads",
-					"description": "Dont step on this.",
-					"preview_path": { lego },
-					"raw_path": null,
-					"category": "image",
-					"status": "approved",
-					"author_username": "onu"
-				},
-				{
-					"id": 4,
-					"author_id": 1,
-					"title": "Airplane",
-					"description": "Starbucks is not very good.",
-					"preview_path": { airplane },
-					"raw_path": null,
-					"category": "image",
-					"status": "approved",
-					"author_username": "onu"
-				},
-				{
-					"id": 5,
-					"author_id": 1,
-					"title": "Hallway",
-					"description": "Trippy.",
-					"preview_path": { hallway },
-					"raw_path": null,
-					"category": "image",
-					"status": "approved",
-					"author_username": "onu"
-				},
-				{
-					"id": 6,
-					"author_id": 1,
-					"title": "Orange",
-					"description": "Get that vitamin C",
-					"preview_path": { orange },
-					"raw_path": null,
-					"category": "image",
-					"status": "approved",
-					"author_username": "onu"
-				}
-			]
-	}
 
 	const getListings = (username, action) => {
 		axios.defaults.withCredentials = true;
@@ -191,10 +131,11 @@ const Dashboard = () => {
 														<h5>Title: {listing.title}
 														</h5>
 															<h5>Price: ${listing.price}</h5>
+															<h5>m_id: {listing.m_id}</h5>
 
 													</div>
-													<div class="card-footer text-center">
-														<a href="#" class="btn btn-danger">Delete</a>
+													<div class="card-footer text-center" id={listing.m_id}>
+														<div class="btn btn-danger" onClick={() => deletePost(listing.m_id)}>Delete</div>
 													</div>
 												</div>
 
