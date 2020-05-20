@@ -41,6 +41,26 @@ const Details = ({
         dispatch(sendingApproval());
     }
 
+    const download = (raw_path) => {
+        const formData = new FormData();
+        formData.append('path', raw_path);
+        fetch("http://18.191.184.143:3001/download", {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.blob())
+        .then(blob => {
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            console.log(url)
+            a.href = url;
+            a.download = raw_path.substr(4);
+            document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+            a.click();    
+            a.remove();  //afterwards we remove the element again         
+        }).catch(err => console.log(err))
+    }
+
     return (
         <ProductConsumer>
             {(value) => {
@@ -92,26 +112,7 @@ const Details = ({
                                     </ButtonContainer>
                                     <ButtonContainer
                                         disabled={false}
-                                        onClick={() => {
-                                            const formData = new FormData();
-                                            formData.append('path', raw_path);
-                                            fetch("http://18.191.184.143:3001/download", {
-                                                method: 'POST',
-                                                body: formData,
-                                            })
-                                            .then(response => response.blob())
-                                            .then(blob => {
-                                                var url = window.URL.createObjectURL(blob);
-                                                var a = document.createElement('a');
-                                                console.log(url)
-                                                a.href = url;
-                                                a.download = raw_path.substr(4);
-                                                document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
-                                                a.click();    
-                                                a.remove();  //afterwards we remove the element again         
-                                            }).catch(err => console.log(err))
-                                        }
-                                        }
+                                        onClick={() => download(raw_path)}
                                     >
                                         {price === 0 ? "Download" : "Contact seller"}
                                     </ButtonContainer>
@@ -125,6 +126,7 @@ const Details = ({
     )
 
 }
+
 
 const mapStateToProps = state => {
     return {
