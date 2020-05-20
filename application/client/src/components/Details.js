@@ -93,23 +93,23 @@ const Details = ({
                                     <ButtonContainer
                                         disabled={false}
                                         onClick={() => {
-                                            console.log('Here is raw - path ' + raw_path);
-                                            Axios.post(`http://18.191.184.143:3001/download`, {
-                                                "path": raw_path
+                                            const formData = new FormData();
+                                            formData.append('path', raw_path);
+                                            fetch("http://18.191.184.143:3001/download", {
+                                                method: 'POST',
+                                                body: formData,
                                             })
-                                                .then((response) => {
-                                                    console.log(response);
-                                                    console.log(isLoggedIn);
-                                                        if(price === 0){
-                                                            // approved = true;
-                                                            download(response.data);
-                                                            // approved = false;
-                                                        } else {
-                                                            // Logic for contacting seller
-                                                            dispatch(setSeller(author_username));
-                                                            sendForApproval();
-                                                        }
-                                                }).catch(err => alert("You need to register before you can download"));
+                                            .then(response => response.blob())
+                                            .then(blob => {
+                                                var url = window.URL.createObjectURL(blob);
+                                                var a = document.createElement('a');
+                                                console.log(url)
+                                                a.href = url;
+                                                a.download = raw_path.substr(4);
+                                                document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+                                                a.click();    
+                                                a.remove();  //afterwards we remove the element again         
+                                            }).catch(err => console.log(err))
                                         }
                                         }
                                     >
