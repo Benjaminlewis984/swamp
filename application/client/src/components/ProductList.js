@@ -3,10 +3,12 @@ import Product from './Product.js'
 import Disclaimer from "./Disclaimer";
 import Title from './Title'
 import { ProductConsumer } from '../context';
-
+import ReactGA from 'react-ga';
 export default class ProductList extends Component {
 
     render() {
+        ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
+        ReactGA.pageview(window.location.pathname + window.location.search);
         return (
             <React.Fragment>
                 {/* <div className="container">

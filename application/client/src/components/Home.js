@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from 'styled-components';
 import "../styles/Home.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -8,11 +8,17 @@ import { useHistory } from "react-router-dom";
 import Title from "./Title";
 import Disclaimer from './Disclaimer';
 import logo from "../imgs/SWAMP.png";
+import ReactGA from 'react-ga';
 
 const Home = () => {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("all");
   let history = useHistory();
+
+  useEffect(() => {
+    ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
+    ReactGA.pageview(window.location.pathname + window.location.search);
+  })
 
   return (
     <div>

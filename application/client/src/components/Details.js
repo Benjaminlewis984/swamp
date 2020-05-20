@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { ButtonContainer } from './Button';
 import Axios from 'axios';
 import download from 'downloadjs';
+import ReactGA from 'react-ga';
 import {
     setBuyer,
     setSeller,
@@ -27,6 +28,9 @@ const Details = ({
     username,
     isLoggedIn
 }) => {
+
+    ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
+    ReactGA.pageview(window.location.pathname + window.location.search);
 
     const sendForApproval = () => {
         dispatch(setBuyer(username)); 

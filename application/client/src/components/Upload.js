@@ -1,8 +1,13 @@
 import React, { Component, useState, setState } from 'react'
 import '../styles/Upload.css'
 import logo from '../imgs/gator.png';
+import ReactGA from 'react-ga';
 
 const Upload = () => {
+
+    ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
+    ReactGA.pageview(window.location.pathname + window.location.search);
+
     const [title, setTitle] = useState("");
     const [price, setPrice] = useState("");
     const [description, setDescription] = useState("");

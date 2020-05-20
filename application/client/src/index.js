@@ -9,7 +9,7 @@ import * as serviceWorker from './serviceWorker';
 import rootReducer from './redux/reducers/rootReducer';
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-
+require('dotenv').config()
 const store = createStore(rootReducer,applyMiddleware(thunk));
 
 ReactDOM.render(

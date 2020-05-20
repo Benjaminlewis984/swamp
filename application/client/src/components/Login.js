@@ -11,6 +11,7 @@ import {
 } from "../redux/actions/loginAction";
 import { Redirect } from "react-router-dom";
 import { ButtonContainer } from "./Button";
+import ReactGA from 'react-ga';
 
 const Login = ({
   username,
@@ -23,6 +24,9 @@ const Login = ({
   dispatch,
   //authenticated,
 }) => {
+
+  ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
+  ReactGA.pageview(window.location.pathname + window.location.search);
 
   if (isLoggedIn) {
     console.log("Test ::: I'm here ");

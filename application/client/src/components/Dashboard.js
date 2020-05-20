@@ -4,6 +4,7 @@ import '../styles/Dashboard.css';
 import { ButtonContainer } from './Button';
 import { connect } from 'react-redux';
 import axios from "axios";
+import ReactGA from 'react-ga';
 
 
 
@@ -36,6 +37,10 @@ const deletePost = (m_id) => {
 }
 
 const Dashboard = () => {
+
+	ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
+	ReactGA.pageview(window.location.pathname + window.location.search);
+
 	const [userInfo, setUserInfo] = useState(false);
 	const [userListings, setUserListings] = useState(false);
 	const history = useHistory();
