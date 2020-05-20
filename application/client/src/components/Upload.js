@@ -9,18 +9,16 @@ const Upload = () => {
     const [type, setType] = useState("");
     const [category, setCategory] = useState("invalid");
 
-    var selectedFile;
-    var previewFile = null;
+    let selectedFile;
+    let previewFile;
 
 
     const fileSelectedHandler = (event) => {
         selectedFile = event.target.files[0];
-        console.log(selectedFile);
     }
 
     const previewSelectedHandler = (event) => {
         previewFile = event.target.files[0];
-        console.log(previewFile);
     }
 
     const getType = (e) => {
@@ -63,7 +61,6 @@ const Upload = () => {
     const submit = () => {
         console.log('Submitting Upload');
         const axios = require('axios');
-        // console.log(selectedFile);
         axios.defaults.withCredentials = true;
 
         var formData = new FormData();
@@ -171,10 +168,10 @@ const Upload = () => {
                             <div class="form-group has-success">
                                 <label for="upload">Preview file</label>
                                 <div class="col-lg-5 mx-auto">
-                                    <label for="fileUpload"
+                                    <label for="fileUpload1"
                                         class="file-upload btn btn-block rounded-pill shadow">
                                         <i class="fa fa-upload mr-2"></i>Browse Preview
-                                                    <input id="fileUpload" type="file" onChange={previewSelectedHandler}></input>
+                                                    <input id="fileUpload1" type="file" onChange={previewSelectedHandler}></input>
                                     </label>
                                 </div>
                             </div>
