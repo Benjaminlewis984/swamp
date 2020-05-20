@@ -11,7 +11,7 @@ const router = express.Router();
  * @return: "true" or "false" depending on whether the entire shopping cart is checked out
  */
 router.post('/checkout', async (req, res) => {
-  const checkout = await checkoutManager.checkoutItems(req.user.acc_id);
+  const checkout = await checkoutManager.buyAllInCart(req.user.acc_id);
   if(checkout != undefined) { res.status(200).send({success: "true"}); }
   else { res.status(404).send({success: "false"}); }
 });

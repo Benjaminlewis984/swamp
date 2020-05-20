@@ -77,7 +77,7 @@ router.post('/browse', async (req, res, next) => {
       result.bought = 'false';
       
       if(req.user != undefined) {
-        const bought = await checkoutManager.checkMediaInCheckout(req.user.acc_id, result['m_id']);
+        const bought = await checkoutManager.checkMediaInApprovedRequests(req.user.acc_id, result['m_id']);
         if(bought != undefined) { result.bought = 'true'; }
         if(idx == results.length - 1) { return res.status(200).send({success: true, filter: filter, results: results}); }
       }
