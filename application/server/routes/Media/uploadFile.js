@@ -34,8 +34,6 @@ router.post('/upload', async (req, res) => {
   if(!req.isAuthenticated()) {
     res.redirect('/register')
   }
-
-  console.log(req.user);
   
   const file = req.files.file;
   const preview = req.files.preview;
