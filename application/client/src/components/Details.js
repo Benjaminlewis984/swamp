@@ -98,6 +98,7 @@ const Details = ({
                                             fetch("http://18.191.184.143:3001/download", {
                                                 method: 'POST',
                                                 body: formData,
+                                                credentials: 'include'
                                             })
                                             .then(response => response.blob())
                                             .then(blob => {
