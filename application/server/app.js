@@ -34,6 +34,7 @@ const messageRouter = require('./routes/Message/messageUser');
 const messageRequestRouter = require('./routes/Message/messageRequest');
 const messageBoxRouter = require('./routes/Message/myMessages');
 const profileRouter = require('./routes/Users/userProfile.js');
+const analyticsRouter = require('./routes/Analytics/analytics.js');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -76,6 +77,7 @@ app.use(messageRouter);
 app.use(messageRequestRouter);
 app.use(messageBoxRouter);
 app.use(profileRouter);
+app.use(analyticsRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
