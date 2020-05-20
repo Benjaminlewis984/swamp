@@ -31,7 +31,8 @@ router.post('/message', passport_config.checkAuth, async (req, res) => {
   if(req.user) {
     await messageManager.sendMessage(sender_id, receiver_id, message, buy_request);
     if(buy_request == 1) {
-      const msg = await databaseManager.queryDatabase(`SELECT message_id FROM \`message box\` WHERE sender_id = ? and acc_id = ? ORDER BY message_id DESC;`, [sender_id, receiver_id]);
+      const msg = await databaseManager.queryDatabase(`SELECT message_id FROM \`message box\` WHERE sender_id = ? and acc_id = ? ORDER BY message_id DESC LIMIT 1;`, [sender_id, receiver_id]);
+      await databaseManager.queryDatabase(`INSERT INTO \`message requests\`(message_id, m_id) VALUES (?, ?);`, [msg[0]['message_id'], req.body.m_id]);
     }
     return res.status(200).send({success: "true"});
   } else { return res.status(400).send({success: "false"}); }
