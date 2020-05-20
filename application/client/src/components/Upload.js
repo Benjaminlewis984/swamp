@@ -183,10 +183,6 @@ const Upload = () => {
                 </label>
                                 </div>
                             </div>
-
-                            <div>
-                                <button onClick={getListings}>Random button</button>
-                            </div>
                         </fieldset>
                     </div>
                 </div>
