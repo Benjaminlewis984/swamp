@@ -66,10 +66,18 @@ exports.checkUserBanned = async (user) => {
 
   if(reg != undefined) {
     const reg_id = reg[0]['reg_id'];
-    const count = await databaseManager.queryDatabase(`SELECT COUNT(*) FROM \`banned users\` 
-    WHERE reg_id = ? AND ban_active = 1`, [reg_id]);
-  
-    if(count[0]['COUNT(*)'] != 0) { return reg; }
+    const count = await databaseManager.queryDatabase(`SELECT COUNT(*), \`banned users\`.unban_date FROM \`banned users\` 
+    WHERE reg_id = ? AND ban_active = 1;`, [reg_id]);
+    
+    if(count[0]['COUNT(*)'] != 0) {
+      const unban_date = new Date(count[0]['unban_date'])
+      const current_date = new Date()
+      if(unban_date < current_date) {
+        this.unbanUser(user);
+        return undefined;
+      }
+      return reg;
+    }
   }
   
   return undefined;
