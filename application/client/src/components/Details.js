@@ -1,29 +1,13 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { ProductConsumer } from '../context';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { ButtonContainerAlt } from './ButtonAlt';
 import ReactGA from 'react-ga';
-import {
-    setBuyer,
-    setSeller,
-    setSoldAmount,
-    setStatus,
-    setTransactionId,
-    setM_id,
-    sendingApproval
-} from '../redux/actions/purchaseAction';
+
 
 import { connect } from 'react-redux';
 
 const Details = ({
-    buyer,
-    seller,
-    status,
-    soldAmount,
-    m_id,
-    transactionId,
-    dispatch,
-    username,
     isLoggedIn
 }) => {
 
@@ -57,19 +41,8 @@ const Details = ({
             })
         })
 
-
-
-
     }
 
-    const getAccID = () => {
-        const axios = require("axios");
-        axios.defaults.withCredentials = true;
-
-        axios.get("/get_acc_id", )
-
-
-    }
 
     const download = (raw_path) => {
         console.log('Checking logged in');
@@ -203,13 +176,6 @@ const Details = ({
 
 const mapStateToProps = state => {
     return {
-        buyer: state.purchaseReducer.buyer,
-        seller: state.purchaseReducer.seller,
-        status: state.purchaseReducer.status,
-        transactionId: state.purchaseReducer.transactionId,
-        soldAmount: state.purchaseReducer.soldAmount,
-        m_id: state.purchaseReducer.m_id,
-        username: state.loginReducer.username,
         isLoggedIn: state.loginReducer.isLoggedIn
     };
 };
