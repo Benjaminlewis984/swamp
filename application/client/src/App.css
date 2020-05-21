@@ -1,10 +1,15 @@
 :root {
-  --mainYellow:#ffa400;
+  --mainYellow:#ffc355;
   --mainBlue:#9932CC;
   --mainDark:#252328;
-  --mainPurple: #6600ff;
+  --mainPurple: #9932CC;
   --lightBlue:#FFD700;
   --mainWhite:#f3f3f3;
+  --mainBlack: #474753;
+  --buttonBG: #ececec;
+  
+  --cardFooter: #acacac;
+  --cardHighlight: #ffc966;
 }
 
 body {

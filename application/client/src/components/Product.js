@@ -20,10 +20,9 @@ export default class Product extends Component {
                     }>
                         <Link to="/details">
                             <img src={`/${preview_path}`} 
-                            className="card-img-top" 
+                            className="card-img-top img-fluid" 
                             alt="product" 
-                            style={{width:'10rem', height: '10rem', margin:'auto'}}
-                            />
+                            style={{margin:'auto'}}/>
                         </Link>
                         <button className="cart-btn" disabled={inCart ? true : false} 
                         onClick={() => {
@@ -68,6 +67,7 @@ Product.propTypes = {
 };
 
 const ProductWrapper = styled.div`
+
 .card {
     border-color: var(--mainBlue);
     border-width: medium;
@@ -75,7 +75,7 @@ const ProductWrapper = styled.div`
 }
 
 .card-footer {
-    background: transparent;
+    background: var(--cardFooter);
     border-top: transparent;
     transition: all 1s linear;
 }
@@ -87,18 +87,24 @@ const ProductWrapper = styled.div`
     }
 
     .card-footer {
-        background: rgba(247, 247, 247);
+        background: var(--cardHighlight);
     }
 }
 
 .img-container {
     position: relative;
     overflow: hidden;
+    height: 12rem;
 }
 
+<<<<<<< Updated upstream
 .card-img-top {
+    
     transition: all 0.3s linear;
 }
+=======
+
+>>>>>>> Stashed changes
 
 .img-container:hover .card-img-top {
     transform: scale(1.2);
@@ -109,7 +115,7 @@ const ProductWrapper = styled.div`
     bottom: 0;
     right: 0;
     padding: 0.2rem 0.4rem;
-    background: var(--lightBlue);
+    background: var(--mainBlack);
     border: none;
     color: var(--mainWhite);
     font-size: 1.4rem;
@@ -123,7 +129,7 @@ const ProductWrapper = styled.div`
 }
 
 .cart-btn:hover {
-    color: var(--mainBlue);
+    color: var(--lightBlue);
     cursor: pointer;
 }
 `

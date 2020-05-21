@@ -11,7 +11,7 @@ import {
 // import { Redirect } from 'react-router-dom';
 import { ButtonContainer } from "./Button";
 import { Redirect } from "react-router-dom";
-// import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 // import { Form } from "reactstrap";
 
 const Signup = ({
@@ -115,7 +115,7 @@ const Signup = ({
                             </div>
 
                             <div class="row">
-                                <div>
+                                <div className="col-md-8">
                                     <ButtonContainer onClick={() => clearFields()}>Cancel</ButtonContainer>
                                     <ButtonContainer id="signup"
                                         onClick={() => dispatch(signUp())

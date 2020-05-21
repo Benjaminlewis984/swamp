@@ -6,7 +6,7 @@ font-size: 1.4rem;
 background: transparent;
 border: 0.05rem solid var(--lightBlue);
 border-color: ${props =>
-        props.cart ? "var(--lightBlue)" : "var(--lightBlue)"};
+        props.cart ? "var(--mainBlue)" : "var(--mainBlue)"};
 color: ${prop =>
         prop.cart ? "var(--mainYellow)" : "var(--lightBlue)"};
 color: var(--mainPurple);
@@ -18,8 +18,8 @@ transition: all 0.5s ease-in-out;
 
 &: hover {
     background: ${prop =>
-        prop.cart ? "var(--mainYellow)" : "var(--lightBlue)"};
-    color: var(--mainBlue);
+        prop.cart ? "var(--lightBlue)" : "var(--buttonBG)"};
+    color: var(--mainPurple);
 }
 
 &: focus {
