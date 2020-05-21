@@ -87,6 +87,11 @@ router.post('/browse', async (req, res, next) => {
   }
 });
 
+/**
+ * Given a user's username, returns the acc_id of the user
+ * @param req.query.username: Username of selected user
+ * @return: "true" and acc_id if successfully retrieved, otherwise "false" 
+ */
 router.get('/get_acc_id', async (req, res) => {
   const username = req.query.username;
   const acc_id = await userManager.getAccIDFromUsername(username);

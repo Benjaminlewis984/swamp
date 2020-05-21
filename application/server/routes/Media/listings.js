@@ -32,6 +32,12 @@ router.post('/listings', async (req, res) => {
   }
 });
 
+/**
+ * Deletes the media from the `media content` table.
+ * 
+ * @param req.body.m_id: The m_id of the media content that it to be deleted
+ * @return: "true" or "false" if media was successfully deleted or not.
+ */
 router.delete('/listings', async (req, res) => {
   const media = req.body.m_id;
   const deleted = await mediaManager.deleteMedia(media);
