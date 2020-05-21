@@ -1,9 +1,7 @@
 import React, { Component, useState } from 'react';
 import { ProductConsumer } from '../context';
-import { Link } from 'react-router-dom';
-import { ButtonContainer } from './Button';
-import Axios from 'axios';
-import download from 'downloadjs';
+import { useHistory, Link } from 'react-router-dom';
+import { ButtonContainerAlt } from './ButtonAlt';
 import ReactGA from 'react-ga';
 import {
     setBuyer,
@@ -32,6 +30,7 @@ const Details = ({
     ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
     ReactGA.pageview(window.location.pathname + window.location.search);
     const [message, setMessage] = useState("");
+    let history = useHistory();
 
     const contactSeller = (username) => {
         const axios = require("axios");
@@ -135,11 +134,17 @@ const Details = ({
                                 <p className="text-muted lead">{description}</p>
                                 {/* buttons */}
                                 <div>
-                                    <Link to="/result">
-                                        <ButtonContainer>Back</ButtonContainer>
-                                    </Link>
-
-                                    <ButtonContainer
+                                    <ButtonContainerAlt
+                                        disabled={false}
+                                        onClick={() => {
+                                            console.log(isLoggedIn)
+                                            if (isLoggedIn === false) { history.push("/signup") }
+                                            else { download(raw_path) }
+                                            }
+                                        }>
+                                        {price === 0 ? "Download" : "Contact seller"}
+                                    </ButtonContainerAlt>
+                                    <ButtonContainerAlt
                                         cart
                                         disabled={inCart ? true : false}
                                         onClick={() => {
@@ -147,14 +152,14 @@ const Details = ({
                                             value.openModel(m_id);
                                         }}>
                                         {inCart ? "inCart" : "add to cart"}
-                                    </ButtonContainer>
+                                    </ButtonContainerAlt>
                                     {price === 0 ?
-                                        <ButtonContainer
+                                        <ButtonContainerAlt
                                             disabled={false}
                                             onClick={() => download(raw_path)}>Download
-                                            </ButtonContainer> :
-                                        <ButtonContainer type="button" data-toggle="modal" data-target="#myModal"> Contact Seller
-                                                </ButtonContainer>}
+                                            </ButtonContainerAlt> :
+                                        <ButtonContainerAlt type="button" data-toggle="modal" data-target="#myModal"> Contact Seller
+                                                </ButtonContainerAlt>}
                                     <div class="container">
 
                                         {/* <!-- The Modal --> */}

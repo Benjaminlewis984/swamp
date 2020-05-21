@@ -10,7 +10,7 @@ import {
   login,
 } from "../redux/actions/loginAction";
 import { Redirect } from "react-router-dom";
-import { ButtonContainer } from "./Button";
+import { ButtonContainerAlt } from "./ButtonAlt";
 import ReactGA from 'react-ga';
 
 const Login = ({
@@ -65,9 +65,9 @@ const Login = ({
                   onChange={(e) => dispatch(setPassword(e.target.value))}
                 ></input>
               </div>
-              <ButtonContainer id="login" onClick={() => dispatch(login())}>
+              <ButtonContainerAlt id="login" onClick={() => dispatch(login())}>
                 Log In
-              </ButtonContainer>
+              </ButtonContainerAlt>
               <p className="text-center">
                 <a href="signup">Don’t have account?</a>
               </p>
