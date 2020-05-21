@@ -8,11 +8,10 @@ import {
     setLastName,
     signUp,
 } from '../redux/actions/signupAction';
-// import { Redirect } from 'react-router-dom';
-import { ButtonContainer } from "./Button";
-import { Redirect } from "react-router-dom";
+import { ButtonContainerAlt } from "./ButtonAlt";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import { Form } from "reactstrap";
+import { useHistory } from 'react-router-dom';
+import Disclaimer from './Disclaimer';
 
 const Signup = ({
     username,
@@ -20,10 +19,10 @@ const Signup = ({
     email,
     firstname,
     lastname,
-    //isSignedUp,
     isSignedUpLoadingState,
     dispatch,
 }) => {
+    let history = useHistory();
 
     const verify = (confirmPassword) => {
         if (password === confirmPassword) {
@@ -44,9 +43,7 @@ const Signup = ({
     }
 
     if (isSignedUpLoadingState === 'good') {
-        return <div>
-            Welcome {username}. You have been registered
-                </div>
+        history.push("/result")
     }
     return (
         <div class="container-fluid bg-light py-3">
@@ -110,23 +107,27 @@ const Signup = ({
 
                             <div>
                                 <a href="#">
-                                    <input type="checkbox" required /> Terms and Condition
+                                    <input type="checkbox" required />Terms and Conditions
                                 </a>
                             </div>
 
                             <div class="row">
                                 <div className="col-md-8">
-                                    <ButtonContainer onClick={() => clearFields()}>Cancel</ButtonContainer>
-                                    <ButtonContainer id="signup"
+                                    <ButtonContainerAlt id="signup"
                                         onClick={() => dispatch(signUp())
+                                        }>Submit</ButtonContainerAlt>
+                                    <ButtonContainerAlt onClick={() => {
+                                        clearFields()
+                                        history.push("/")
                                         }
-                                    >Submit</ButtonContainer>
+                                    }>Cancel</ButtonContainerAlt>
                                 </div>
                             </div>
                         </fieldset>
                     </div>
                 </div>
             </div>
+            <Disclaimer />
         </div>
 
     );

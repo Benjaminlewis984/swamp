@@ -32,8 +32,6 @@ const Home = () => {
             <div className="row col-10 mx-auto my-2 justify-content-center">
               <h3>A media marketplace for gators, by gators.</h3>
             </div>
-
-
           </HomeWrapper>
         )}
       </ProductConsumer>
@@ -42,50 +40,6 @@ const Home = () => {
 
   );
 };
-
-const homeSearch = () => {
-  // return (
-  //    <div className="container justify-content-center ml-auto">
-  //           <form>
-  //             <div className="input-group">
-  //               <div className="input-group-prepend">
-  //                 <select
-  //                   id="category-field"
-  //                   class="form-control dropdown toggle"
-  //                   data-toggle="dropdown"
-  //                   aria-hashpopup="true"
-  //                   aria-expanded="false"
-  //                   onChange={(e) => setCategory(e.target.value)}>
-  //                     <option value="all">All</option>
-  //                     <option value="document">Documents</option>
-  //                     <option value="image">Images</option>
-  //                     <option value="audio">Audio</option>
-  //                     <option value="video">Video</option>
-  //                 </select>
-  //               </div>
-
-  //               <input
-  //                 id="userInput"
-  //                 class="form-control"
-  //                 type="text"
-  //                 aria-label="Text input with dropdown button"
-  //                 placeholder="Search by title.."
-  //                 value={query}
-  //                 onChange={(e) => setQuery(e.target.value)}
-  //               ></input>
-
-  //               <button
-  //                 className="btn btn-dark"
-  //                 onClick={() => {
-  //                   value.setProducts(category, query);
-  //                   history.push("/result"); }}>
-  //                 <i class="fas fa-search"></i>
-  //               </button>
-  //             </div>
-  //           </form>
-  //         </div>
-  // )
-}
 
 const mapStateToProps = (state) => {
   return {

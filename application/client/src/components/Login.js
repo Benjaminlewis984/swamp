@@ -9,9 +9,10 @@ import {
   setIsLoggedIn,
   login,
 } from "../redux/actions/loginAction";
-import { Redirect } from "react-router-dom";
-import { ButtonContainer } from "./Button";
+import { useHistory, Redirect } from "react-router-dom";
+import { ButtonContainerAlt } from "./ButtonAlt";
 import ReactGA from 'react-ga';
+import Disclaimer from './Disclaimer';
 
 const Login = ({
   username,
@@ -24,6 +25,7 @@ const Login = ({
   dispatch,
   //authenticated,
 }) => {
+  let history = useHistory();
 
   if (isLoggedIn) {
     console.log("Test ::: I'm here ");
@@ -65,9 +67,13 @@ const Login = ({
                   onChange={(e) => dispatch(setPassword(e.target.value))}
                 ></input>
               </div>
-              <ButtonContainer id="login" onClick={() => dispatch(login())}>
+              <ButtonContainerAlt id="login" onClick={() => dispatch(login())}>
                 Log In
-              </ButtonContainer>
+              </ButtonContainerAlt>
+              <ButtonContainerAlt onClick={() => {
+                history.push("/")
+                }
+              }>Cancel</ButtonContainerAlt>
               <p className="text-center">
                 <a href="signup">Don’t have account?</a>
               </p>
@@ -81,6 +87,7 @@ const Login = ({
           </div>
         </div>
       </div>
+      <Disclaimer />
     </div>
   );
 };

@@ -51,6 +51,8 @@ const Navbar = ({
     dispatch(setIsLoggedIn(false));
     axios.defaults.withCredentials = true;
     axios.get(`/logout`);
+    dispatch(setUserName(""));
+    dispatch(setPassword(""));
     
     return <Link to="/"></Link>;
   };
@@ -140,7 +142,10 @@ const Navbar = ({
 
       {isAuth != "unchecked" && !isAuth && (
         <Link to="/login">
-          <ButtonContainer>
+          <ButtonContainer onClick={() => {
+            dispatch(setUserName(""));
+            dispatch(setPassword(""));
+          }}>
             <span className="mr-2">
               <i className="fas fa-sign-in-alt"></i>
             </span>
@@ -170,7 +175,12 @@ const Navbar = ({
       )}
       {isAuth != "unchecked" && isAuth && (
         <Link to="/">
-          <ButtonContainer onClick={logout}>
+          <ButtonContainer onClick={() => {
+            dispatch(setUserName(""))
+            dispatch(setPassword(""))
+            logout()
+            }
+          }>
             <span className="mr-2">
               <i className="fas fa-sign-out-alt"></i>
             </span>
