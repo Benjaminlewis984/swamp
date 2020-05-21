@@ -8,5 +8,4 @@ export default combineReducers({
     searchReducer,
     loginReducer,
     signupReducer,
-    purchaseReducer
 });
