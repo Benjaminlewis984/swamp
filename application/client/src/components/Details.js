@@ -4,7 +4,6 @@ import { Link, useHistory } from 'react-router-dom';
 import { ButtonContainerAlt } from './ButtonAlt';
 import ReactGA from 'react-ga';
 
-
 import { connect } from 'react-redux';
 
 const Details = ({
@@ -16,9 +15,10 @@ const Details = ({
     const [message, setMessage] = useState("");
     let history = useHistory();
 
-    const contactSeller = (username) => {
+    const contactSeller = (username, mid) => {
         const axios = require("axios");
         console.log("contact seller:", message);
+        console.log("username", username)
         axios.defaults.withCredentials = true;
 
   //TODO change back to aws ip address. 
@@ -30,13 +30,15 @@ const Details = ({
                 // buy_request = 0 is for messaging
                 //buy_request = 1 is for for buying product
                 "buy_request": 1,
+                "m_id": mid,
             }
+            console.log(res.data)
             return axios.post("/message", body)
             .then(res => {
-                // console.log("message sent");
                 setMessage("");
+                console.log("message sent")
             }).catch(err => {
-                // console.log("message not sent");
+                console.log("message not sent");
             })
         })
 
@@ -44,40 +46,34 @@ const Details = ({
 
 
     const download = (raw_path) => {
-        console.log('Checking logged in');
-        console.log(isLoggedIn);
-        if(isLoggedIn){
-            const formData = new FormData();
-            formData.append('path', raw_path);
-            fetch("/download", {
-                method: 'POST',
-                body: formData,
-                credentials: 'include'
-            })
-            .then(response => response.blob())
-            .then(blob => {
-                var url = window.URL.createObjectURL(blob);
-                var a = document.createElement('a');
-                console.log(url)
-                a.href = url;
-                a.download = raw_path.substr(4);
-                document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
-                a.click();    
-                a.remove();  //afterwards we remove the element again         
-            }).catch(err => console.log(err))
-        } else {
-            alert('You must be logged in to download');
-        }
+        const formData = new FormData();
+        formData.append('path', raw_path);
+        fetch("/download", {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.blob())
+        .then(blob => {
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = raw_path.substr(4);
+            document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+            a.click();    
+            a.remove();  //afterwards we remove the element again         
+        }).catch(err => console.log(err))
     }
 
+
+
     return (
+        
         <ProductConsumer>
-            {(value) => {
-                // Item information. From seller
-                const { m_id, author_username, preview_path, description, price, title, inCart, raw_path, approved }
+            { (value) => {
+                let {m_id, author_username, preview_path, description, price, title, inCart, raw_path, approved, bought}
                     = value.detailProduct;
-                console.log(value.detailProduct);
-                console.log(value.detailProduct.raw_path)
+                
+                // Item information. From seller
                 return (
                     <div className="container py-5">
 
@@ -93,7 +89,7 @@ const Details = ({
                             <div className="col-10 mx-auto col-md-6 my-3 text-capitalize">
                                 <h3>title : {title}</h3>
                                 <h5 className="text-title text-uppercase text-muted mt-3 mb-2">
-                                    uploader : <span className="text-uppercase">{author_username}</span>
+                                    made by : <span className="text-uppercase">{author_username}</span>
                                 </h5>
                                 <h5 className="text-blue">
                                     <strong>
@@ -118,7 +114,7 @@ const Details = ({
                                         {inCart ? "inCart" : "add to cart"}
                                     </ButtonContainerAlt>
 
-                                    {price === 0 ?
+                                    {price === 0 || bought === "true"?
                                         <ButtonContainerAlt
                                             disabled={false}
                                             onClick={() => {
@@ -154,7 +150,7 @@ const Details = ({
                                                     </form>
 
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-primary" onClick={() => contactSeller(value.detailProduct.author_username)} data-dismiss="modal">Send</button>
+                                                        <button type="button" class="btn btn-primary" onClick={() => contactSeller(value.detailProduct.author_username, value.detailProduct.m_id)} data-dismiss="modal">Send message</button>
                                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                                     </div>
 
@@ -172,7 +168,9 @@ const Details = ({
             }}
         </ProductConsumer>
     )
+
 }
+
 
 const mapStateToProps = state => {
     return {

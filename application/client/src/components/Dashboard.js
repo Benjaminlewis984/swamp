@@ -5,6 +5,8 @@ import { ButtonContainer } from './Button';
 import { connect } from 'react-redux';
 import axios from "axios";
 import ReactGA from 'react-ga';
+import styled from "styled-components";
+
 
 
 
@@ -16,9 +18,6 @@ const getInfo = (action) => {
 		}
 	});
 };
-function refreshPage() {
-    window.location.reload(false);
-  };
 
 const deletePost = (m_id) => {
 	axios.defaults.withCredentials = true;
@@ -31,11 +30,11 @@ const deletePost = (m_id) => {
 	.then(res => {
 		console.log(res);
 		if(res.data.success ==="true") {
-			console.log("Post successfully deleted");
-			refreshPage();
+			// console.log("Post successfully deleted");
+			window.location.reload(false);
 		}
 	}).catch(err => {
-		console.log("Post not deleted");
+		// console.log("Post not deleted");
 	})
 
 }
@@ -59,7 +58,7 @@ const Dashboard = () => {
 		}).then((res) => {
 			if (res.data.success == "true") {
 				listingsAction(res.data.results);
-				console.log(res.data.results);
+				// console.log(res.data.results);
 			}
 		});
 
@@ -77,8 +76,30 @@ const Dashboard = () => {
 		history.push("upload");
 	}
 
-	const editProfile = () => {
-		history.push("editProfile")
+	const acceptRequest = (messageID) => {
+		const axios = require('axios');
+		console.log(messageID);
+		axios.defaults.withCredentials = true;
+
+		axios.post("/approve_request", {"message_id": messageID})
+		.then(res => {
+			// console.log("approved");
+		}).catch(err => {
+			console.log("did not send");
+		}) 
+	}
+
+	const rejectRequest = (messageID) => {
+		const axios = require('axios');
+		axios.defaults.withCredentials = true;
+
+		axios.post("/reject_request", {"message_id": messageID})
+		.then(res => {
+			console.log("rejected === success");
+		}).catch(err => {
+			console.log(err);
+		})
+
 	}
 
 	if (userInfo == false) {
@@ -141,17 +162,33 @@ const Dashboard = () => {
 		<div class="container">
 				<div class="row d-flex align-items-stretch" margin="10rem">
 					{
-						userRequests && userRequests.map((requests) => {
-							return (
-
-							<div class="card-body">
-								<h5>User: {requests.sender}</h5>
-								<h5>Message: {requests.message}</h5>
-								<button>Accept</button><button>Reject</button>
-							</div>
-
-							)
-						})
+						<table class="table table-striped table-hover">
+						<thead class="thead-dark">
+						  <tr>
+							<th scope="col">From</th>
+							<th scope="col">Message</th>
+							<th scope="col">Option</th>
+						  </tr>
+						</thead>
+						<tbody>
+							{ userRequests && userRequests.map((requests) => {
+								return (
+						  <tr>
+							<td>{requests.sender}</td>
+							<td>{requests.message}</td>
+							<td>
+								<AcceptButton onClick={() => acceptRequest(requests.message_id)}>Accept</AcceptButton>
+								<RejectButton onClick={() => rejectRequest(requests.message_id)}>Reject</RejectButton>
+							</td>
+						  </tr>
+								)
+							})
+						}
+	
+						  </tbody>
+						  </table>
+								
+								
 					}
 				</div>
 			</div>
@@ -232,3 +269,50 @@ const mapStateToProps = state => {
 };
 
 export default connect(mapStateToProps)(Dashboard);
+
+const AcceptButton = styled.nav`
+text-transform: capitalize;
+font-size: 1.4rem;
+background: transparent;
+border: 0.05rem solid var(--lightBlue);
+border-color: var(--mainBlue);
+color: var(--mainPurple);
+border-radius: 0.5rem;
+padding: 0.2rem 0.5rem;
+cursor: pointer;
+margin: 0.2rem 0.5rem 0.2rem 0;
+transition: all 0.5s ease-in-out;
+
+&: hover {
+    background: var(--acceptButton);
+    color: var(--mainWhite);
+    border-color: var(--mainWhite);
+}
+
+&: focus {
+    outline: none;
+}`
+
+
+const RejectButton = styled.nav`
+text-transform: capitalize;
+font-size: 1.4rem;
+background: transparent;
+border: 0.05rem solid var(--lightBlue);
+border-color: var(--mainBlue);
+color: var(--mainPurple);
+border-radius: 0.5rem;
+padding: 0.2rem 0.5rem;
+cursor: pointer;
+margin: 0.2rem 0.5rem 0.2rem 0;
+transition: all 0.5s ease-in-out;
+
+&: hover {
+    background: var(--rejectButton);
+    color: var(--mainWhite);
+    border-color: var(--mainWhite);
+}
+
+&: focus {
+    outline: none;
+}`

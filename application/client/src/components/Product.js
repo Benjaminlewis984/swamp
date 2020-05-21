@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { ProductConsumer } from '../context'
 import PropTypes from 'prop-types'
+import Axios from 'axios';
 
 export default class Product extends Component {
     render() {
-        const { m_id, title, preview_path, price, inCart, raw_path } = this.props.product;
+        const { m_id, title, preview_path, price, inCart, bought, raw_path } = this.props.product;
         return (
             <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
                 <div className="card">
@@ -18,7 +19,7 @@ export default class Product extends Component {
                         else { console.log("No product ID") }
                         }
                     }>
-                        <Link to="/details">
+                        <Link to="/details" >
                             <img src={`/${preview_path}`} 
                             className="card-img-top" 
                             alt="product" />
