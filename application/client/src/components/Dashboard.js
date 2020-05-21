@@ -141,17 +141,30 @@ const Dashboard = () => {
 		<div class="container">
 				<div class="row d-flex align-items-stretch" margin="10rem">
 					{
-						userRequests && userRequests.map((requests) => {
-							return (
-
-							<div class="card-body">
-								<h5>User: {requests.sender}</h5>
-								<h5>Message: {requests.message}</h5>
-								<button>Accept</button><button>Reject</button>
-							</div>
-
-							)
-						})
+						<table class="table table-striped table-hover">
+						<thead class="thead-dark">
+						  <tr>
+							<th scope="col">From</th>
+							<th scope="col">Message</th>
+							<th scope="col">Option</th>
+						  </tr>
+						</thead>
+						<tbody>
+							{ userRequests && userRequests.map((requests) => {
+								return (
+						  <tr>
+							<td>{requests.sender}</td>
+							<td>{requests.message}</td>
+							<td><button>Accept</button><button>Reject</button></td>
+						  </tr>
+								)
+							})
+						}
+	
+						  </tbody>
+						  </table>
+								
+								
 					}
 				</div>
 			</div>
