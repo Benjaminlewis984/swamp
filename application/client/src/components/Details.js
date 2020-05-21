@@ -33,27 +33,42 @@ const Details = ({
     ReactGA.pageview(window.location.pathname + window.location.search);
     const [message, setMessage] = useState("");
 
-    const contactSeller = () => {
+    const contactSeller = (username) => {
         const axios = require("axios");
         console.log("contact seller:", message);
         axios.defaults.withCredentials = true;
 
 
-        var body = {
-            "acc_id": 10,
-            "message": message,
-            // buy_request = 0 is for messaging
-            //buy_request = 1 is for ?
-            "buy_request": 0,
-        }
-
-        axios.post("/message", body)
+  //TODO change back to aws ip address. 
+        axios.get("http://localhost:3001/get_acc_id", {params: {"username": username}})
+        .then(res => {
+            var body = {
+                "acc_id": res.data.acc_id,
+                "message": message,
+                // buy_request = 0 is for messaging
+                //buy_request = 1 is for for buying product
+                "buy_request": 1,
+            }
+            return axios.post("/message", body)
             .then(res => {
                 // console.log("message sent");
                 setMessage("");
             }).catch(err => {
                 // console.log("message not sent");
             })
+        })
+
+
+
+
+    }
+
+    const getAccID = () => {
+        const axios = require("axios");
+        axios.defaults.withCredentials = true;
+
+        axios.get("/get_acc_id", )
+
 
     }
 
@@ -161,7 +176,7 @@ const Details = ({
                                                     </form>
 
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-primary" onClick={contactSeller} data-dismiss="modal">Send message</button>
+                                                        <button type="button" class="btn btn-primary" onClick={() => contactSeller(value.detailProduct.author_username)} data-dismiss="modal">Send message</button>
                                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                                     </div>
 
