@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { ProductConsumer } from '../context';
 import { Link } from 'react-router-dom';
 import { ButtonContainer } from './Button';
@@ -31,15 +31,30 @@ const Details = ({
 
     ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
     ReactGA.pageview(window.location.pathname + window.location.search);
+    const [message, setMessage] = useState("");
 
-    const sendForApproval = () => {
-        dispatch(setBuyer(username)); 
-        dispatch(setStatus(false));
-        dispatch(setM_id(m_id));
+    const contactSeller = () => {
+        const axios = require("axios");
+        console.log("contact seller:", message);
+        axios.defaults.withCredentials = true;
 
-        console.log(buyer);
 
-        dispatch(sendingApproval());
+        var body = {
+            "acc_id": 10,
+            "message": message,
+            // buy_request = 0 is for messaging
+            //buy_request = 1 is for ?
+            "buy_request": 0,
+        }
+
+        axios.post("/message", body)
+            .then(res => {
+                // console.log("message sent");
+                setMessage("");
+            }).catch(err => {
+                // console.log("message not sent");
+            })
+
     }
 
     const download = (raw_path) => {
@@ -118,13 +133,44 @@ const Details = ({
                                         }}>
                                         {inCart ? "inCart" : "add to cart"}
                                     </ButtonContainer>
-                                    <ButtonContainer
-                                        disabled={false}
-                                        onClick={() => download(raw_path) }>
-                                        {price === 0 ? "Download" : "Contact seller"}
-                                    
-                                        
-                                    </ButtonContainer>
+                                    {price === 0 ?
+                                        <ButtonContainer
+                                            disabled={false}
+                                            onClick={() => download(raw_path)}>Download
+                                            </ButtonContainer> :
+                                        <ButtonContainer type="button" data-toggle="modal" data-target="#myModal"> Contact Seller
+                                                </ButtonContainer>}
+                                    <div class="container">
+
+                                        {/* <!-- The Modal --> */}
+                                        <div class="modal" id="myModal">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Contact Seller</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <form>
+
+                                                        <div class="form-group">
+                                                            <label for="message-text" class="col-form-label">Message:</label>
+                                                            <textarea class="form-control" id="message-text" value={message} onChange={e => setMessage(e.target.value)}></textarea>
+                                                        </div>
+
+                                                    </form>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary" onClick={contactSeller} data-dismiss="modal">Send message</button>
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -148,4 +194,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps) (Details);
+export default connect(mapStateToProps)(Details);
