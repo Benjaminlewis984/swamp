@@ -107,8 +107,8 @@ const Details = ({
                                 </h5>
                                 <h5 className="text-blue">
                                     <strong>
-                                        price : <span>$</span>
-                                        {price}
+                                        Price : 
+                                        {price == 0 ? " Free" : ' $' + price}
                                     </strong>
                                 </h5>
                                 <p className="text-capitalize font-weight-bold mt-3 mb-0">
