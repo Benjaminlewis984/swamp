@@ -6,6 +6,19 @@ import ReactGA from 'react-ga';
 
 import { connect } from 'react-redux';
 
+const checkAuth = (action) => {
+    const axios = require('axios')
+    axios.defaults.withCredentials = true;
+    axios.get(`/auth`).then((res) => {
+        if (res.data.success == "true") {
+            action(true);
+        }
+        else {
+            action(false);
+        }
+    });
+};
+
 const Details = ({
     isLoggedIn
 }) => {
@@ -21,26 +34,26 @@ const Details = ({
         console.log("username", username)
         axios.defaults.withCredentials = true;
 
-  //TODO change back to aws ip address. 
-        axios.get("http://localhost:3001/get_acc_id", {params: {"username": username}})
-        .then(res => {
-            var body = {
-                "acc_id": res.data.acc_id,
-                "message": message,
-                // buy_request = 0 is for messaging
-                //buy_request = 1 is for for buying product
-                "buy_request": 1,
-                "m_id": mid,
-            }
-            console.log(res.data)
-            return axios.post("/message", body)
+        //TODO change back to aws ip address. 
+        axios.get("http://localhost:3001/get_acc_id", { params: { "username": username } })
             .then(res => {
-                setMessage("");
-                console.log("message sent")
-            }).catch(err => {
-                console.log("message not sent");
+                var body = {
+                    "acc_id": res.data.acc_id,
+                    "message": message,
+                    // buy_request = 0 is for messaging
+                    //buy_request = 1 is for for buying product
+                    "buy_request": 1,
+                    "m_id": mid,
+                }
+                console.log(res.data)
+                return axios.post("/message", body)
+                    .then(res => {
+                        setMessage("");
+                        console.log("message sent")
+                    }).catch(err => {
+                        console.log("message not sent");
+                    })
             })
-        })
 
     }
 
@@ -52,27 +65,27 @@ const Details = ({
             method: 'POST',
             body: formData,
         })
-        .then(response => response.blob())
-        .then(blob => {
-            var url = window.URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            a.href = url;
-            a.download = raw_path.substr(4);
-            document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
-            a.click();    
-            a.remove();  //afterwards we remove the element again         
-        }).catch(err => console.log(err))
+            .then(response => response.blob())
+            .then(blob => {
+                var url = window.URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = raw_path.substr(4);
+                document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+                a.click();
+                a.remove();  //afterwards we remove the element again         
+            }).catch(err => console.log(err))
     }
 
 
 
     return (
-        
+
         <ProductConsumer>
-            { (value) => {
-                let {m_id, author_username, preview_path, description, price, title, inCart, raw_path, approved, bought}
+            {(value) => {
+                let { m_id, author_username, preview_path, description, price, title, inCart, raw_path, approved, bought }
                     = value.detailProduct;
-                
+
                 // Item information. From seller
                 return (
                     <div className="container py-5">
@@ -114,16 +127,16 @@ const Details = ({
                                         {inCart ? "inCart" : "add to cart"}
                                     </ButtonContainerAlt>
 
-                                    {price === 0 || bought === "true"?
+                                    {price === 0 || bought === "true" ?
                                         <ButtonContainerAlt
                                             disabled={false}
                                             onClick={() => {
                                                 if (isLoggedIn === false) { history.push("/signup") }
                                                 else { download(raw_path) }
-                                                }
+                                            }
                                             }>Download
                                             </ButtonContainerAlt> :
-                                        <ButtonContainerAlt type="button" data-toggle="modal" data-target="#myModal"> Contact Seller
+                                        <ButtonContainerAlt type="button" data-toggle="modal" data-target="#myModal" > Contact Seller
                                         </ButtonContainerAlt>}
 
                                     <Link to="/result">
@@ -150,7 +163,12 @@ const Details = ({
                                                     </form>
 
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-primary" onClick={() => contactSeller(value.detailProduct.author_username, value.detailProduct.m_id)} data-dismiss="modal">Send message</button>
+                                                        <button type="button" class="btn btn-primary" onClick={() => {
+                                                            checkAuth((LoggedIn) => {
+                                                                if (LoggedIn == false) { history.push('/signup') }
+                                                            })
+                                                            contactSeller(value.detailProduct.author_username, value.detailProduct.m_id)
+                                                        }} data-dismiss="modal">Send message</button>
                                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                                     </div>
 
