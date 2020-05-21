@@ -212,7 +212,7 @@ const Dashboard = () => {
 											<td>{requests.sender}</td>
 											<td>{requests.message}</td>
 											<td>
-												<AcceptButton onChange={() => acceptRequest(requests.message_id)}>
+												<AcceptButton onClick={() => acceptRequest(requests.message_id)}>
 													<i class="fas fa-check"></i>
 												</AcceptButton>
 												<RejectButton onClick={() => rejectRequest(requests.message_id)}>
