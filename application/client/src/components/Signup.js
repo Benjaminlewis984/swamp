@@ -8,11 +8,8 @@ import {
     setLastName,
     signUp,
 } from '../redux/actions/signupAction';
-// import { Redirect } from 'react-router-dom';
-import { ButtonContainer } from "./Button";
-import { Redirect } from "react-router-dom";
-// import "bootstrap/dist/css/bootstrap.min.css";
-// import { Form } from "reactstrap";
+import { ButtonContainerAlt } from "./ButtonAlt";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const Signup = ({
     username,
@@ -110,17 +107,16 @@ const Signup = ({
 
                             <div>
                                 <a href="#">
-                                    <input type="checkbox" required /> Terms and Condition
+                                    <input type="checkbox" required />Terms and Conditions
                                 </a>
                             </div>
 
                             <div class="row">
                                 <div>
-                                    <ButtonContainer onClick={() => clearFields()}>Cancel</ButtonContainer>
-                                    <ButtonContainer id="signup"
+                                    <ButtonContainerAlt id="signup"
                                         onClick={() => dispatch(signUp())
-                                        }
-                                    >Submit</ButtonContainer>
+                                        }>Submit</ButtonContainerAlt>
+                                    <ButtonContainerAlt onClick={() => clearFields()}>Cancel</ButtonContainerAlt>
                                 </div>
                             </div>
                         </fieldset>

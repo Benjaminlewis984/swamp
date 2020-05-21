@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import { ProductConsumer } from '../context';
-import { ButtonContainer } from './Button';
+import { ButtonContainerAlt } from './ButtonAlt';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types'
 
@@ -27,15 +27,15 @@ export default class Model extends Component {
                                     />
                                     <h5>{title}</h5>
                                     <h5 className="text-muted">price : $ {price}</h5>
-                                    <Link to='/result'>
-                                        <ButtonContainer onClick={() => closeModel()}>
-                                            store
-                                        </ButtonContainer>
-                                    </Link>
                                     <Link to='/cart'>
-                                        <ButtonContainer cart onClick={() => closeModel()}>
-                                            go to cart
-                                        </ButtonContainer>
+                                        <ButtonContainerAlt cart onClick={() => closeModel()}>
+                                            view cart
+                                        </ButtonContainerAlt>
+                                    </Link>
+                                    <Link to='/result'>
+                                        <ButtonContainerAlt onClick={() => closeModel()}>
+                                            continue shopping
+                                        </ButtonContainerAlt>
                                     </Link>
                                 </div>
                             </div>

@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import { ProductConsumer } from '../context';
-import { Link } from 'react-router-dom';
-import { ButtonContainer } from './Button';
-import Axios from 'axios';
-import download from 'downloadjs';
+import { useHistory, Link } from 'react-router-dom';
+import { ButtonContainerAlt } from './ButtonAlt';
 import ReactGA from 'react-ga';
 import {
     setBuyer,
@@ -31,17 +29,12 @@ const Details = ({
 
     ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
     ReactGA.pageview(window.location.pathname + window.location.search);
+    let history = useHistory();
 
     const sendForApproval = () => {
         dispatch(setBuyer(username)); 
-        // dispatch(setSeller()); //Already done on button click
         dispatch(setStatus(false));
-        // dispatch(setTransactionId());
         dispatch(setM_id(m_id));
-        // dispatch(setSoldAmount);
-        console.log(buyer);
-        // console.log(status);
-        // console.log(m_id);
         dispatch(sendingApproval());
     }
 
@@ -102,11 +95,17 @@ const Details = ({
                                 <p className="text-muted lead">{description}</p>
                                 {/* buttons */}
                                 <div>
-                                    <Link to="/result">
-                                        <ButtonContainer>Back</ButtonContainer>
-                                    </Link>
-
-                                    <ButtonContainer
+                                    <ButtonContainerAlt
+                                        disabled={false}
+                                        onClick={() => {
+                                            console.log(isLoggedIn)
+                                            if (isLoggedIn === false) { history.push("/signup") }
+                                            else { download(raw_path) }
+                                            }
+                                        }>
+                                        {price === 0 ? "Download" : "Contact seller"}
+                                    </ButtonContainerAlt>
+                                    <ButtonContainerAlt
                                         cart
                                         disabled={inCart ? true : false}
                                         onClick={() => {
@@ -114,12 +113,10 @@ const Details = ({
                                             value.openModel(m_id);
                                         }}>
                                         {inCart ? "inCart" : "add to cart"}
-                                    </ButtonContainer>
-                                    <ButtonContainer
-                                        disabled={false}
-                                        onClick={() => download(raw_path) }>
-                                        {price === 0 ? "Download" : "Contact seller"}
-                                    </ButtonContainer>
+                                    </ButtonContainerAlt>
+                                    <Link to="/result">
+                                        <ButtonContainerAlt>Back</ButtonContainerAlt>
+                                    </Link>
                                 </div>
                             </div>
                         </div>

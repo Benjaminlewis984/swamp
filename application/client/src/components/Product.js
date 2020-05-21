@@ -20,9 +20,8 @@ export default class Product extends Component {
                     }>
                         <Link to="/details">
                             <img src={`/${preview_path}`} 
-                            className="card-img-top img-fluid" 
-                            alt="product" 
-                            style={{margin:'auto'}}/>
+                            className="card-img-top" 
+                            alt="product" />
                         </Link>
                         <button className="cart-btn" disabled={inCart ? true : false} 
                         onClick={() => {
@@ -77,7 +76,7 @@ const ProductWrapper = styled.div`
 .card-footer {
     background: var(--cardFooter);
     border-top: transparent;
-    transition: all 1s linear;
+    transition: all 0.3s linear;
 }
 
 &: hover {
@@ -97,14 +96,11 @@ const ProductWrapper = styled.div`
     height: 12rem;
 }
 
-<<<<<<< Updated upstream
 .card-img-top {
-    
+    height: 100%;
+    width: 100%;
     transition: all 0.3s linear;
 }
-=======
-
->>>>>>> Stashed changes
 
 .img-container:hover .card-img-top {
     transform: scale(1.2);
