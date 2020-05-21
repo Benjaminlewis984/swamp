@@ -43,18 +43,30 @@ const Dashboard = () => {
 
 	const [userInfo, setUserInfo] = useState(false);
 	const [userListings, setUserListings] = useState(false);
+	const [userRequests, setUserRequests] = useState(false);
+	const [listingsType, setListingsType] = useState("posts");
+
 	const history = useHistory();
 
-	const getListings = (username, action) => {
+	const getListings = (username, listingsAction, requestsAction) => {
 		axios.defaults.withCredentials = true;
 		axios.post(`/listings`, {
 			username: username
 		}).then((res) => {
 			if (res.data.success == "true") {
-				action(res.data.results);
+				listingsAction(res.data.results);
 				console.log(res.data.results);
 			}
 		});
+
+		axios.post('/messagebox')
+		.then((res) => {
+			if (res.data.success == "true") {
+				requestsAction(res.data.results);
+				console.log(res.data.results);
+			}
+		});
+
 	}
 
 	const upload = () => {
@@ -70,9 +82,77 @@ const Dashboard = () => {
 			setUserInfo(info);
 			getListings(info.username, (listings) => {
 				setUserListings(listings);
+			}, (requests) => {
+				setUserRequests(requests);
 			});
 		});
 	}
+
+	const showPosts = () => {
+		setListingsType("posts");
+	}
+
+	const showRequests = () => {
+		setListingsType("requests");
+	}
+
+	var postElements = (
+		<>
+			<div className="add-post rounded" id="rcorners" onClick={upload}>
+				<i className="fas fa-plus fa-2x text-blue "></i>
+			</div>
+			<label>Current Posts</label>
+			<div class="container">
+				<div class="row d-flex align-items-stretch" margin="10rem">
+					{
+						userListings && userListings.map((listing) => {
+							return (
+
+								<div class="card col-4 " >
+									<img src={"http://18.191.184.143:3001/" + listing.preview_path} class="img-thumbnail card-img-top" />
+
+									<div class="card-body">
+										<h5>Title: {listing.title}
+										</h5>
+											<h5>Price: ${listing.price}</h5>
+											<h5>m_id: {listing.m_id}</h5>
+
+									</div>
+									<div class="card-footer text-center" id={listing.m_id}>
+										<div class="btn btn-danger" onClick={() => deletePost(listing.m_id)}>Delete</div>
+									</div>
+								</div>
+
+							)
+						})
+					}
+				</div>
+			</div>
+			</>
+	)
+
+	var requestElements = (
+		<>
+		<label>Current Requests</label>
+		<div class="container">
+				<div class="row d-flex align-items-stretch" margin="10rem">
+					{
+						userRequests && userRequests.map((requests) => {
+							return (
+
+							<div class="card-body">
+								<h5>User: {requests.sender}</h5>
+								<h5>Message: {requests.message}</h5>
+								<button>Accept</button><button>Reject</button>
+							</div>
+
+							)
+						})
+					}
+				</div>
+			</div>
+		</>
+	)
 
 	return (
 		<div class="container user-profile mx-auto">
@@ -96,13 +176,12 @@ const Dashboard = () => {
 							<h6>Marketplace for Gators. By Gators.</h6>
 							<ul class="nav nav-tabs" id="myTab" role="tablist">
 								<li class="nav-item">
-									<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Posts</a>
+									<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true" onClick={showPosts}>Posts</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" onClick={showRequests}>Requests</a>
 								</li>
 							</ul>
-							<div className="add-post rounded" id="rcorners" onClick={upload}>
-								<i className="fas fa-plus fa-2x text-blue "></i>
-							</div>
-
 						</div>
 					</div>
 				</div>
@@ -122,34 +201,8 @@ const Dashboard = () => {
 					</div>
 					<div class="col-md-8">
 						<div class="tab-content profile-tab" id="myTabContent">
-							<label>Current Posts</label>
-							<div class="container">
-								<div class="row d-flex align-items-stretch" margin="10rem">
-									{
-										userListings && userListings.map((listing) => {
-											return (
-
-												<div class="card col-4 " >
-													<img src={"http://18.191.184.143:3001/" + listing.preview_path} class="img-thumbnail card-img-top" />
-
-													<div class="card-body">
-														<h5>Title: {listing.title}
-														</h5>
-															<h5>Price: ${listing.price}</h5>
-															<h5>m_id: {listing.m_id}</h5>
-
-													</div>
-													<div class="card-footer text-center" id={listing.m_id}>
-														<div class="btn btn-danger" onClick={() => deletePost(listing.m_id)}>Delete</div>
-													</div>
-												</div>
-
-											)
-										})
-									}
-								</div>
-							</div>
-
+							{listingsType == "posts" && postElements}
+							{listingsType == "requests" && requestElements}
 						</div>
 					</div>
 				</div>
