@@ -19,7 +19,7 @@ import {
 
 const checkAuth = (action) => {
   axios.defaults.withCredentials = true;
-  axios.get(`http://18.191.184.143:3001/auth`).then((res) => {
+  axios.get(`/auth`).then((res) => {
     if (res.data.success == "true") {
       action(true);
     }
@@ -51,7 +51,7 @@ const Navbar = ({
 
   const logout = () => {
     axios.defaults.withCredentials = true;
-    axios.get(`http://18.191.184.143:3001/logout`);
+    axios.get(`/logout`);
     
     return <Link to="/"></Link>;
   };

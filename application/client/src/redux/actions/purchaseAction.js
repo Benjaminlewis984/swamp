@@ -41,7 +41,7 @@ export const sendingApproval = () => (dispatchEvent, getState) => {
         transaction_id: `${transaction_id}`,
     };
 
-    axios.post(`http://18.191.184.143:3001/purchases`, body, { validateStatus: false })
+    axios.post(`/purchases`, body, { validateStatus: false })
         .then((response) => {
             console.log("Response from backend", response);
             if (response.data.success === 'true') {

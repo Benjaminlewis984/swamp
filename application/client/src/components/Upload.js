@@ -51,7 +51,7 @@ const Upload = () => {
         
     
     
-            axios.post(`http://18.191.184.143:3001/listings`, {"username": "onu"}
+            axios.post(`/listings`, {"username": "onu"}
     
             )
                 .then((res) => {
@@ -79,7 +79,7 @@ const Upload = () => {
         // formData.append("academic", 0);
         // formData.append("acc_id", 3);
         
-        axios.post(`http://18.191.184.143:3001/upload`,
+        axios.post(`/upload`,
             formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'

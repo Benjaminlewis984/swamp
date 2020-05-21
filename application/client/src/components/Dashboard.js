@@ -10,7 +10,7 @@ import ReactGA from 'react-ga';
 
 const getInfo = (action) => {
 	axios.defaults.withCredentials = true;
-	axios.get(`http://18.191.184.143:3001/info`).then((res) => {
+	axios.get(`/info`).then((res) => {
 		if (res.data.success == "true") {
 			action(res.data.user);
 		}
@@ -24,7 +24,7 @@ const deletePost = (m_id) => {
 	var body = {
 		"m_id": m_id,
 	}
-	axios.delete("http://18.191.184.143:3001/listings", {"data": body})
+	axios.delete("/listings", {"data": body})
 	.then(res => {
 		console.log(res);
 		if(res.data.success ==="true") {
@@ -47,7 +47,7 @@ const Dashboard = () => {
 
 	const getListings = (username, action) => {
 		axios.defaults.withCredentials = true;
-		axios.post(`http://18.191.184.143:3001/listings`, {
+		axios.post(`/listings`, {
 			username: username
 		}).then((res) => {
 			if (res.data.success == "true") {
@@ -80,7 +80,7 @@ const Dashboard = () => {
 				<div class="row">
 					<div class="col-md-4">
 						<div class="profile-img">
-							<img src={"http://18.191.184.143:3001/" + userInfo.profile_path} alt="" />
+							<img src={"/" + userInfo.profile_path} alt="" />
 							<div class="file btn btn-lg btn-primary">
 								Change Photo
 								<input type="file" name="file" />

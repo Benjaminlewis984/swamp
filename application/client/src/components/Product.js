@@ -19,7 +19,7 @@ export default class Product extends Component {
                         }
                     }>
                         <Link to="/details">
-                            <img src={`http://18.191.184.143:3001/${preview_path}`} 
+                            <img src={`/${preview_path}`} 
                             className="card-img-top" 
                             alt="product" 
                             style={{width:'10rem', height: '10rem', margin:'auto'}}

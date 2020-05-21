@@ -48,7 +48,7 @@ const Details = ({
     const download = (raw_path) => {
         const formData = new FormData();
         formData.append('path', raw_path);
-        fetch("http://18.191.184.143:3001/download", {
+        fetch("/download", {
             method: 'POST',
             body: formData,
         })
@@ -78,7 +78,7 @@ const Details = ({
 
                         <div className="row">
                             <div className="col-10 mx-auto col-md-6 my-3">
-                                <img src={`http://18.191.184.143:3001/${preview_path}`}
+                                <img src={`/${preview_path}`}
                                     className="img-fluid"
                                     alt="product"
                                 />
@@ -119,7 +119,7 @@ const Details = ({
                                         onClick={() => {
                                             const formData = new FormData();
                                             formData.append('path', raw_path);
-                                            fetch("http://18.191.184.143:3001/download", {
+                                            fetch("/download", {
                                                 method: 'POST',
                                                 body: formData,
                                                 credentials: 'include'

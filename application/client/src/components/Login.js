@@ -25,9 +25,6 @@ const Login = ({
   //authenticated,
 }) => {
 
-  ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
-  ReactGA.pageview(window.location.pathname + window.location.search);
-
   if (isLoggedIn) {
     console.log("Test ::: I'm here ");
     return (
@@ -37,6 +34,9 @@ const Login = ({
       </div>
     );
   }
+
+  ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
+  ReactGA.pageview(window.location.pathname + window.location.search);
 
   return (
     <div class="container-fluid bg-light py-3">
