@@ -90,7 +90,7 @@ exports.getMediaFilter = async (count, offset, filter) => {
 
 exports.getPurchases = async (count, offset, acc_id) => {
   const result = await databaseManager.queryDatabase(`
-    SELECT mc.* FROM \`approved requests\` ar
+    SELECT mc.*, mr.request_id FROM \`approved requests\` ar
     INNER JOIN \`message requests\` mr ON ar.request_id = mr.request_id
     INNER JOIN \`message box\` mb ON mr.message_id = mb.message_id
     INNER JOIN accounts acc ON mb.sender_id = acc.acc_id
