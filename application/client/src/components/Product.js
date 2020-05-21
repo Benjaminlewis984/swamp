@@ -22,7 +22,7 @@ export default class Product extends Component {
                             <img src={`/${preview_path}`} 
                             className="card-img-top img-fluid" 
                             alt="product" 
-                            style={{width:'10rem', height: '10rem', margin:'auto'}}/>
+                            style={{margin:'auto'}}/>
                         </Link>
                         <button className="cart-btn" disabled={inCart ? true : false} 
                         onClick={() => {
@@ -67,6 +67,7 @@ Product.propTypes = {
 };
 
 const ProductWrapper = styled.div`
+
 .card {
     border-color: var(--mainBlue);
     border-width: medium;
@@ -93,6 +94,7 @@ const ProductWrapper = styled.div`
 .img-container {
     position: relative;
     overflow: hidden;
+    height: 12rem;
 }
 
 .card-img-top {
