@@ -75,7 +75,7 @@ const Upload = ({isLoggedIn}) => {
         formData.append("description", description);
         formData.append("price", price);
         formData.append("category", category);
-        formData.append("type", type);
+        formData.append("type", "digital");
 
         
         axios.post(`http://18.191.184.143:3001/upload`,
@@ -130,7 +130,7 @@ const Upload = ({isLoggedIn}) => {
                                     onChange={e => setPrice(e.target.value)}>
                                 </input>
                             </div>
-                            <form>
+                            {/* <form>
                                 <label>Type of Data</label>
                                 <div >
                                     <input type="radio" id="type1"
@@ -141,7 +141,7 @@ const Upload = ({isLoggedIn}) => {
                                         name="type" value="physical" onClick={e => getType(e)}></input>
                                     <label for="type2">Physical</label>
                                 </div>
-                            </form>
+                            </form> */}
 
                             <label>Category</label>
                             <div class="input-group mb-2">
