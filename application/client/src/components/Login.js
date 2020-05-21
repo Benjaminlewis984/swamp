@@ -77,6 +77,9 @@ const Login = ({
               <p className="text-center">
                 <a href="signup">Don’t have account?</a>
               </p>
+              <p className="text-center">
+                <a href="#">Forgot your password?</a>
+              </p>
               {loginLoadingState === "error" && (
                 <p className="text-center alert alert-danger alert-dismissible">
                   {" "}

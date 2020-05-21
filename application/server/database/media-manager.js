@@ -90,18 +90,17 @@ exports.getMediaFilter = async (count, offset, filter) => {
 
 exports.getPurchases = async (count, offset, acc_id) => {
   const result = await databaseManager.queryDatabase(`
-    SELECT mc.* FROM \`media content\` mc 
-    INNER JOIN accounts acc ON acc.acc_id = mc.acc_id
-    INNER JOIN \`message box\` mb ON mc.acc_id = mb.sender_id
-    INNER JOIN \`message requests\` mr ON  mb.message_id = mr.message_id
-    INNER JOIN \`approved requests\` ar ON mr.request_id = ar.request_id
-    WHERE mb.acc_id = ?;`, [acc_id]);
+    SELECT mc.* FROM \`approved requests\` ar
+    INNER JOIN \`message requests\` mr ON ar.request_id = mr.request_id
+    INNER JOIN \`message box\` mb ON mr.message_id = mb.message_id
+    INNER JOIN accounts acc ON mb.sender_id = acc.acc_id
+    INNER JOIN \`media content\` mc ON mr.m_id = mc.m_id
+    WHERE mb.sender_id = ?;`, [acc_id]);
   // let approvedIDString = '';
   // await result.forEach((result, idx) => {
   //   approvedIDString += result.approved_id;
   //   approvedIDString += ", ";
   // });
-
   if (result.length == 0) {
     return [];
   }
