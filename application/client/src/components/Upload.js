@@ -131,7 +131,7 @@ const Upload = ({isLoggedIn}) => {
                                 </input>
                             </div>
                             <form>
-                                {/* <label>Type of Data</label>
+                                <label>Type of Data</label>
                                 <div >
                                     <input type="radio" id="type1"
                                         name="type" value="digital" onClick={e => getType(e)}></input>
@@ -140,7 +140,7 @@ const Upload = ({isLoggedIn}) => {
                                     <input type="radio" id="type2"
                                         name="type" value="physical" onClick={e => getType(e)}></input>
                                     <label for="type2">Physical</label>
-                                </div> */}
+                                </div>
                             </form>
 
                             <label>Category</label>
