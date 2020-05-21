@@ -87,4 +87,13 @@ router.post('/browse', async (req, res, next) => {
   }
 });
 
+router.get('/get_acc_id', async (req, res) => {
+  const username = req.query.username;
+  const acc_id = await userManager.getAccIDFromUsername(username);
+  if(acc_id != undefined) {
+    return res.status(200).send({success: "true", acc_id: acc_id[0]['acc_id']})
+  }
+  return res.status(404).send({success: "false"});
+})
+
 module.exports = router;

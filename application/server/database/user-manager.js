@@ -91,6 +91,12 @@ exports.getRegIDFromUser = async (acc_id) => {
   } else { return undefined; }
 }
 
+exports.getAccIDFromUsername = async (username) => {
+  const acc_id = await databaseManager.queryDatabase(`SELECT acc_id FROM \`accounts\` WHERE username = ?;`, [username]);
+  if(acc_id.length == 0) { return undefined; }
+  return acc_id;
+}
+
 exports.updateUserProfilePicture = async (profilePath, acc_id) => {
   await databaseManager.queryDatabase(`UPDATE \`accounts\` SET profile_path = ? WHERE acc_id = ?;`, [profilePath, acc_id]);
   return true;
