@@ -40,7 +40,6 @@ export const setFirstName = (firstname) => ({
 });
 
 export const login = () => (dispatchEvent, getState) => {
-  console.log("Log In Function !!!");
   const axios = require("axios");
   axios.defaults.withCredentials = true;
 
@@ -54,11 +53,8 @@ export const login = () => (dispatchEvent, getState) => {
         { validateStatus: false }
       )
       .then((response) => {
-        console.log("Login data :::", response);
         if (response.data.success === "true") {
-          console.log(
-            "After Dispatch, Login is updated to accurate to correct value"
-          );
+
           dispatchEvent(setIsLoggedIn(true));
           dispatchEvent(setUserName(response.data.user.username));
           dispatchEvent(setEmail(response.data.user.email));

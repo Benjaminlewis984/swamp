@@ -24,7 +24,7 @@ export default class Product extends Component {
                             className="card-img-top" 
                             alt="product" />
                         </Link>
-                        <button className="cart-btn" disabled={inCart ? true : false} 
+                        {/* <button className="cart-btn" disabled={inCart ? true : false} 
                         onClick={() => {
                             value.addToCart(m_id);
                             value.openModel(m_id);
@@ -34,7 +34,7 @@ export default class Product extends Component {
                             {" "}
                             In Cart</p>) :
                              (<i className="fas fa-cart-plus" />)}
-                        </button>
+                        </button> */}
                     </div>)}
                     
                     </ProductConsumer>

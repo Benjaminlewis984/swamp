@@ -46,7 +46,7 @@ const Details = ({
                     "m_id": mid,
                 }
                 console.log(res.data)
-                return axios.post("/message", body)
+                return axios.post("http://18.191.184.143:3001/message", body)
                     .then(res => {
                         setMessage("");
                         console.log("message sent")
@@ -58,12 +58,13 @@ const Details = ({
     }
 
 
-    const download = (raw_path) => {
+ const download = (raw_path) => {
         const formData = new FormData();
         formData.append('path', raw_path);
-        fetch("http://18.191.184.143:3001/", {
+        fetch("http://18.191.184.143:3001/download", {
             method: 'POST',
             body: formData,
+            credentials: "include"
         })
             .then(response => response.blob())
             .then(blob => {
@@ -117,15 +118,6 @@ const Details = ({
 
                                 {/* buttons */}
                                 <div>
-                                    <ButtonContainerAlt
-                                        cart
-                                        disabled={inCart ? true : false}
-                                        onClick={() => {
-                                            value.addToCart(m_id);
-                                            value.openModel(m_id);
-                                        }}>
-                                        {inCart ? "inCart" : "add to cart"}
-                                    </ButtonContainerAlt>
 
                                     {price === 0 || bought === "true" ?
                                         <ButtonContainerAlt
