@@ -141,7 +141,7 @@ const Dashboard = () => {
 		<div class="container">
 				<div class="row d-flex align-items-stretch" margin="10rem">
 					{
-						userRequests && userRequests.map((requests) => {
+						userRequests === true ? userRequests.map((requests) => {
 							return (
 
 							<div class="card-body">
@@ -151,7 +151,7 @@ const Dashboard = () => {
 							</div>
 
 							)
-						})
+						}) : false
 					}
 				</div>
 			</div>
