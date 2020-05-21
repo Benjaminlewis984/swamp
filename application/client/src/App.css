@@ -7,14 +7,11 @@
   --mainWhite:#f3f3f3;
   --mainBlack: #474753;
   --buttonBG: #ececec;
-  --acceptButton: #6dff6d;
-  --rejectButton: #ff4848;
+  --acceptButton: #63bd63;
+  --rejectButton: #d14848;
   
   --cardFooter: #acacac;
   --cardHighlight: #ffc966;
-
-  --acceptButton: #6dff6d;
-  --rejectButton: #ff4848;
 }
 
 body {

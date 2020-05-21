@@ -7,9 +7,6 @@ import axios from "axios";
 import ReactGA from 'react-ga';
 import styled from "styled-components";
 
-
-
-
 const getInfo = (action) => {
 	axios.defaults.withCredentials = true;
 	axios.get(`/info`).then((res) => {
@@ -167,7 +164,7 @@ const Dashboard = () => {
 								<tr>
 									<th scope="col">From</th>
 									<th scope="col">Message</th>
-									<th scope="col">Option</th>
+									<th scope="col">Response</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -177,8 +174,12 @@ const Dashboard = () => {
 											<td>{requests.sender}</td>
 											<td>{requests.message}</td>
 											<td>
-												<AcceptButton onClick={() => acceptRequest(requests.message_id)}>Accept</AcceptButton>
-												<RejectButton onClick={() => rejectRequest(requests.message_id)}>Reject</RejectButton>
+												<AcceptButton onClick={() => acceptRequest(requests.message_id)}>
+													<i class="fas fa-check"></i>
+												</AcceptButton>
+												<RejectButton onClick={() => rejectRequest(requests.message_id)}>
+													<i class="fas fa-times"></i>
+												</RejectButton>
 											</td>
 										</tr>
 									)
@@ -214,7 +215,6 @@ const Dashboard = () => {
 								{userInfo.first_name} {userInfo.last_name}
 							</h5>
 							<h6>Status: Student</h6>
-							<h6>Marketplace for Gators. By Gators.</h6>
 							<ul class="nav nav-tabs" id="myTab" role="tablist">
 								<li class="nav-item">
 									<a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true" onClick={showPosts}>Posts</a>
@@ -271,8 +271,8 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps)(Dashboard);
 
 const AcceptButton = styled.nav`
-text-transform: capitalize;
-font-size: 1.4rem;
+display: block;
+width: 2.1rem;
 background: transparent;
 border: 0.05rem solid var(--lightBlue);
 border-color: var(--mainBlue);
@@ -295,8 +295,9 @@ transition: all 0.5s ease-in-out;
 
 
 const RejectButton = styled.nav`
-text-transform: capitalize;
-font-size: 1.4rem;
+display: block;
+
+width: 2.1rem;
 background: transparent;
 border: 0.05rem solid var(--lightBlue);
 border-color: var(--mainBlue);
