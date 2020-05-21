@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ProductConsumer } from '../context';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { ButtonContainerAlt } from './ButtonAlt';
 import ReactGA from 'react-ga';
 
@@ -20,7 +20,6 @@ const Details = ({
         const axios = require("axios");
         console.log("contact seller:", message);
         axios.defaults.withCredentials = true;
-
 
   //TODO change back to aws ip address. 
         axios.get("http://localhost:3001/get_acc_id", {params: {"username": username}})
@@ -155,7 +154,7 @@ const Details = ({
                                                     </form>
 
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-primary" onClick={() => contactSeller(value.detailProduct.author_username)} data-dismiss="modal">Send message</button>
+                                                        <button type="button" class="btn btn-primary" onClick={() => contactSeller(value.detailProduct.author_username)} data-dismiss="modal">Send</button>
                                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                                     </div>
 

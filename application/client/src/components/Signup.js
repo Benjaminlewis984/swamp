@@ -107,7 +107,7 @@ const Signup = ({
 
                             <div>
                                 <a href="#">
-                                    <input type="checkbox" required />Terms and Conditions
+                                    <input type="checkbox" required /> Terms and Conditions
                                 </a>
                             </div>
 
