@@ -46,7 +46,7 @@ const Dashboard = () => {
 
 	const [userInfo, setUserInfo] = useState(false);
 	const [userListings, setUserListings] = useState(false);
-	const [userRequests, setUserRequests] = useState(false);
+	const [userRequests, setUserRequests] = useState([]);
 	const [listingsType, setListingsType] = useState("posts");
 
 	const history = useHistory();
@@ -66,7 +66,7 @@ const Dashboard = () => {
 			.then((res) => {
 				if (res.data.success == "true") {
 					requestsAction(res.data.results);
-					console.log(res.data.results);
+					console.log(res.data.results[0]);
 				}
 			});
 
@@ -130,7 +130,7 @@ const Dashboard = () => {
 			<div class="container">
 				<div class="row d-flex align-items-stretch" margin="10rem">
 					{
-						userListings && userListings.map((listing) => {
+						userListings.length > 0 ? userListings.map((listing) => {
 							return (
 
 								<div class="card col-4 " >
@@ -149,7 +149,7 @@ const Dashboard = () => {
 								</div>
 
 							)
-						})
+						}) : false
 					}
 				</div>
 			</div>
@@ -171,7 +171,7 @@ const Dashboard = () => {
 								</tr>
 							</thead>
 							<tbody>
-								{userRequests === true ? userRequests.map((requests) => {
+								{userRequests.length > 0 && userRequests != "Your message box is empty" ? userRequests.map((requests) => {
 									return (
 										<tr>
 											<td>{requests.sender}</td>
