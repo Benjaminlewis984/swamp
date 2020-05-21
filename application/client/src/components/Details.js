@@ -15,7 +15,7 @@ const Details = ({
     const [message, setMessage] = useState("");
     let history = useHistory();
 
-    const contactSeller = (username) => {
+    const contactSeller = (username, mid) => {
         const axios = require("axios");
         console.log("contact seller:", message);
         axios.defaults.withCredentials = true;
@@ -30,11 +30,14 @@ const Details = ({
                 // buy_request = 0 is for messaging
                 //buy_request = 1 is for for buying product
                 "buy_request": 1,
+                "m_id": mid,
             }
             return axios.post("/message", body)
             .then(res => {
                 setMessage("");
+                console.log("message sent")
             }).catch(err => {
+                console.log("message not sent");
             })
         })
 
@@ -153,7 +156,7 @@ const Details = ({
                                                     </form>
 
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-primary" onClick={() => contactSeller(value.detailProduct.author_username)} data-dismiss="modal">Send message</button>
+                                                        <button type="button" class="btn btn-primary" onClick={() => contactSeller(author_username, m_id)} data-dismiss="modal">Send message</button>
                                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                                     </div>
 
