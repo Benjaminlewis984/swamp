@@ -4,6 +4,18 @@ import logo from '../imgs/gator.png';
 import ReactGA from 'react-ga';
 import { useHistory } from "react-router-dom";
 
+const checkAuth = (action) => {
+    const axios = require('axios')
+    axios.defaults.withCredentials = true;
+    axios.get(`/auth`).then((res) => {
+      if (res.data.success == "true") {
+        action(true);
+      }
+      else {
+        action(false);
+      }
+    });
+};
 
 const Upload = ({isLoggedIn}) => {
     const [title, setTitle] = useState("");
@@ -16,9 +28,13 @@ const Upload = ({isLoggedIn}) => {
     let selectedFile;
     let previewFile;
 
-    if(!isLoggedIn) {
-        history.push('/signup')
-    }
+    checkAuth((LoggedIn) => {
+        if(LoggedIn == false) { ;history.push("/signup") }
+    })
+
+    // if(!isLoggedIn) {
+    //     history.push('/signup')
+    // }
 
     ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
     ReactGA.pageview(window.location.pathname + window.location.search);

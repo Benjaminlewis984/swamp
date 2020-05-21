@@ -132,8 +132,12 @@ const Navbar = ({
       {/* Search bar end */}
 
       <ButtonContainer onClick={() => {
-            if (isLoggedIn === false) { history.push("/signup") }
-            else { history.push("/upload") }
+        checkAuth((LoggedIn) => {
+          if(LoggedIn == false) { ;history.push("/signup") }
+          else { history.push("/upload")}
+        })
+          //   if (isLoggedIn === false) { console.log(2);history.push("/signup") }
+          //   else { console.log(1);history.push("/upload") }
           }
         }>
         <span className="mr-2">
