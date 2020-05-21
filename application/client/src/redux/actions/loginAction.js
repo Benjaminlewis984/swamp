@@ -50,7 +50,7 @@ export const login = () => (dispatchEvent, getState) => {
   if (username.length > 0 && password.length > 0) {
     axios
       .post(
-        `/login?username=${username}&password=${password}`,
+        `http://18.191.184.143:3001/login?username=${username}&password=${password}`,
         { validateStatus: false }
       )
       .then((response) => {
