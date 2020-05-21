@@ -127,3 +127,10 @@ exports.getPurchaseCount = async (m_id) => {
   const result = await databaseManager.queryDatabase(`SELECT DISTINCT * FROM \`digital media\` WHERE m_id = ?;`, [m_id]);
   return result[0].sold;
 }
+
+exports.getMediaFromID = async (m_id) => {
+  const result = await databaseManager.queryDatabase(`SELECT mc.*, acc.username FROM \`media content\` mc
+    INNER JOIN accounts acc ON acc.acc_id = mc.acc_id 
+    WHERE m_id = ?;`, [m_id]);
+  return result;
+}

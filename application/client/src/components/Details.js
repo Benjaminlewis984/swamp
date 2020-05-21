@@ -12,7 +12,7 @@ import {
     setStatus,
     setTransactionId,
     setM_id,
-    sendingApproval
+    sendingApproval,
 } from '../redux/actions/purchaseAction';
 
 import { connect } from 'react-redux';
@@ -22,7 +22,6 @@ const Details = ({
     seller,
     status,
     soldAmount,
-    m_id,
     transactionId,
     dispatch,
     username,
@@ -31,52 +30,56 @@ const Details = ({
 
     ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
     ReactGA.pageview(window.location.pathname + window.location.search);
-
+    
     const sendForApproval = () => {
         dispatch(setBuyer(username)); 
+        // dispatch(setSeller()); //Already done on button click
         dispatch(setStatus(false));
+        // dispatch(setTransactionId());
         dispatch(setM_id(m_id));
-
+        // dispatch(setSoldAmount);
         console.log(buyer);
-
+        // console.log(status);
+        // console.log(m_id);
         dispatch(sendingApproval());
     }
 
     const download = (raw_path) => {
-        console.log('Checking logged in');
-        console.log(isLoggedIn);
-        if(isLoggedIn){
-            const formData = new FormData();
-            formData.append('path', raw_path);
-            fetch("/download", {
-                method: 'POST',
-                body: formData,
-                credentials: 'include'
-            })
-            .then(response => response.blob())
-            .then(blob => {
-                var url = window.URL.createObjectURL(blob);
-                var a = document.createElement('a');
-                console.log(url)
-                a.href = url;
-                a.download = raw_path.substr(4);
-                document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
-                a.click();    
-                a.remove();  //afterwards we remove the element again         
-            }).catch(err => console.log(err))
-        } else {
-            alert('You must be logged in to download');
-        }
+        const formData = new FormData();
+        formData.append('path', raw_path);
+        fetch("/download", {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.blob())
+        .then(blob => {
+            var url = window.URL.createObjectURL(blob);
+            var a = document.createElement('a');
+            a.href = url;
+            a.download = raw_path.substr(4);
+            document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+            a.click();    
+            a.remove();  //afterwards we remove the element again         
+        }).catch(err => console.log(err))
     }
+
+    let m_id, author_username, preview_path, description, price, title, inCart, raw_path, approved;
+    const Cookies = require('js-cookie');
+    const media = JSON.parse(Cookies.get('m_id'));
+    m_id = media.m_id;
+    author_username = media.username
+    preview_path = media.preview_path;
+    description = media.description;
+    price = media.price;
+    title = media.title;
+    inCart = false;
+    raw_path = media.raw_path;
+
 
     return (
         <ProductConsumer>
-            {(value) => {
+            { (value) => {
                 // Item information. From seller
-                const { m_id, author_username, preview_path, description, price, title, inCart, raw_path, approved }
-                    = value.detailProduct;
-                console.log(value.detailProduct);
-                console.log(value.detailProduct.raw_path)
                 return (
                     <div className="container py-5">
 
@@ -91,7 +94,7 @@ const Details = ({
                             <div className="col-10 mx-auto col-md-6 my-3 text-capitalize">
                                 <h3>title : {title}</h3>
                                 <h5 className="text-title text-uppercase text-muted mt-3 mb-2">
-                                    uploader : <span className="text-uppercase">{author_username}</span>
+                                    made by : <span className="text-uppercase">{author_username}</span>
                                 </h5>
                                 <h5 className="text-blue">
                                     <strong>
@@ -120,10 +123,29 @@ const Details = ({
                                     </ButtonContainer>
                                     <ButtonContainer
                                         disabled={false}
-                                        onClick={() => download(raw_path) }>
+                                        onClick={() => {
+                                            const formData = new FormData();
+                                            formData.append('path', raw_path);
+                                            fetch("/download", {
+                                                method: 'POST',
+                                                body: formData,
+                                                credentials: 'include'
+                                            })
+                                            .then(response => response.blob())
+                                            .then(blob => {
+                                                var url = window.URL.createObjectURL(blob);
+                                                var a = document.createElement('a');
+                                                console.log(url)
+                                                a.href = url;
+                                                a.download = raw_path.substr(4);
+                                                document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+                                                a.click();    
+                                                a.remove();  //afterwards we remove the element again         
+                                            }).catch(err => console.log(err))
+                                        }
+                                        }
+                                    >
                                         {price === 0 ? "Download" : "Contact seller"}
-                                    
-                                        
                                     </ButtonContainer>
                                 </div>
                             </div>
@@ -133,7 +155,9 @@ const Details = ({
             }}
         </ProductConsumer>
     )
+
 }
+
 
 const mapStateToProps = state => {
     return {
@@ -144,7 +168,6 @@ const mapStateToProps = state => {
         soldAmount: state.purchaseReducer.soldAmount,
         m_id: state.purchaseReducer.m_id,
         username: state.loginReducer.username,
-        isLoggedIn: state.loginReducer.isLoggedIn
     };
 };
 

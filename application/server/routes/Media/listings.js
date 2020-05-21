@@ -40,4 +40,10 @@ router.delete('/listings', async (req, res) => {
   } else { return res.status(404).send({success: "false"}); }
 });
 
+router.get('/media', async (req, res) => {
+  const m_id = req.query.m_id;
+  const media = await mediaManager.getMediaFromID(m_id);
+  return res.status(200).send({success: "true", media: media});
+})
+
 module.exports = router;
