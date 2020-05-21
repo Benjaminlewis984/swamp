@@ -7,7 +7,7 @@ const getListings = () => {
     
 
 
-        axios.post(`/listings`, {"username": "onu"}
+        axios.post(`http://18.191.184.143:3001/listings`, {"username": "onu"}
 
         )
             .then((res) => {

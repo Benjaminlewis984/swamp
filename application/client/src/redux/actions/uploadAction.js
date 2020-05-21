@@ -9,7 +9,7 @@ export const upload = () => (dispatchEvent, getState) => {
   const description = getState().uploadReducer.description; // string
   const category = getState().uploadReducer.category;       // string
 
-  axios.post(`/upload`, {
+  axios.post(`http://18.191.184.143:3001/upload`, {
     file: file,
     preview: preview,
     title: title,

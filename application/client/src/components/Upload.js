@@ -7,7 +7,7 @@ import { useHistory } from "react-router-dom";
 const checkAuth = (action) => {
     const axios = require('axios')
     axios.defaults.withCredentials = true;
-    axios.get(`/auth`).then((res) => {
+    axios.get(`http://18.191.184.143:3001/auth`).then((res) => {
       if (res.data.success == "true") {
         action(true);
       }
@@ -78,7 +78,7 @@ const Upload = ({isLoggedIn}) => {
         formData.append("type", type);
 
         
-        axios.post(`/upload`,
+        axios.post(`http://18.191.184.143:3001/upload`,
             formData, {
             headers: {
                 'Content-Type': 'multipart/form-data'

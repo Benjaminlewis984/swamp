@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 const checkAuth = (action) => {
     const axios = require('axios')
     axios.defaults.withCredentials = true;
-    axios.get(`/auth`).then((res) => {
+    axios.get(`http://18.191.184.143:3001/auth`).then((res) => {
         if (res.data.success == "true") {
             action(true);
         }
@@ -35,7 +35,7 @@ const Details = ({
         axios.defaults.withCredentials = true;
 
         //TODO change back to aws ip address. 
-        axios.get("http://localhost:3001/get_acc_id", { params: { "username": username } })
+        axios.get("http://18.191.184.143:3001/get_acc_id", { params: { "username": username } })
             .then(res => {
                 var body = {
                     "acc_id": res.data.acc_id,
@@ -61,7 +61,7 @@ const Details = ({
     const download = (raw_path) => {
         const formData = new FormData();
         formData.append('path', raw_path);
-        fetch("/download", {
+        fetch("http://18.191.184.143:3001/", {
             method: 'POST',
             body: formData,
         })

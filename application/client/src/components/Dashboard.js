@@ -9,7 +9,7 @@ import styled from "styled-components";
 
 const getInfo = (action) => {
 	axios.defaults.withCredentials = true;
-	axios.get(`/info`).then((res) => {
+	axios.get(`http://18.191.184.143:3001/info`).then((res) => {
 		if (res.data.success == "true") {
 			action(res.data.user);
 		}
@@ -23,7 +23,7 @@ const deletePost = (m_id) => {
 	var body = {
 		"m_id": m_id,
 	}
-	axios.delete("/listings", { "data": body })
+	axios.delete("http://18.191.184.143:3001/listings", { "data": body })
 		.then(res => {
 			console.log(res);
 			if (res.data.success === "true") {
@@ -50,7 +50,7 @@ const Dashboard = () => {
 
 	const getListings = (username, listingsAction, requestsAction) => {
 		axios.defaults.withCredentials = true;
-		axios.post(`/listings`, {
+		axios.post(`http://18.191.184.143:3001/listings`, {
 			username: username
 		}).then((res) => {
 			if (res.data.success == "true") {
@@ -59,7 +59,7 @@ const Dashboard = () => {
 			}
 		});
 
-		axios.post('/messagebox')
+		axios.post('http://18.191.184.143:3001/messagebox')
 			.then((res) => {
 				if (res.data.success == "true") {
 					requestsAction(res.data.results);
@@ -78,7 +78,7 @@ const Dashboard = () => {
 		console.log(messageID);
 		axios.defaults.withCredentials = true;
 
-		axios.post("/approve_request", { "message_id": messageID })
+		axios.post("http://18.191.184.143:3001/approve_request", { "message_id": messageID })
 			.then(res => {
 				// console.log("approved");
 			}).catch(err => {
@@ -90,7 +90,7 @@ const Dashboard = () => {
 		const axios = require('axios');
 		axios.defaults.withCredentials = true;
 
-		axios.post("/reject_request", { "message_id": messageID })
+		axios.post("http://18.191.184.143:3001/reject_request", { "message_id": messageID })
 			.then(res => {
 				console.log("rejected === success");
 			}).catch(err => {
