@@ -176,7 +176,7 @@ const Dashboard = () => {
 										<h5>Title: {listing.title}
 										</h5>
 										<h5>Price: ${listing.price}</h5>
-										<h5>m_id: {listing.m_id}</h5>
+										<h5>Status: {listing.status}</h5>
 
 									</div>
 									<div class="card-footer text-center" id={listing.m_id}>
