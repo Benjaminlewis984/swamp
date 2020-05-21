@@ -87,7 +87,7 @@ const Details = ({
                             <div className="col-10 mx-auto col-md-6 my-3 text-capitalize">
                                 <h3>title : {title}</h3>
                                 <h5 className="text-title text-uppercase text-muted mt-3 mb-2">
-                                    made by : <span className="text-uppercase">{author_username}</span>
+                                    uploader : <span className="text-uppercase">{author_username}</span>
                                 </h5>
                                 <h5 className="text-blue">
                                     <strong>
@@ -136,8 +136,7 @@ const Details = ({
                                                 a.remove();  //afterwards we remove the element again         
                                             }).catch(err => console.log(err))
                                         }
-                                        }
-                                    >
+                                    }>
                                         {price === 0 ? "Download" : "Contact seller"}
                                     </ButtonContainer>
                                 </div>
@@ -148,9 +147,7 @@ const Details = ({
             }}
         </ProductConsumer>
     )
-
 }
-
 
 const mapStateToProps = state => {
     return {

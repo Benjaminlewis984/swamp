@@ -16,7 +16,6 @@ import {
   setIsLoggedIn
 } from '../redux/actions/loginAction';
 
-
 const checkAuth = (action) => {
   axios.defaults.withCredentials = true;
   axios.get(`/auth`).then((res) => {
@@ -28,7 +27,6 @@ const checkAuth = (action) => {
     }
   });
 };
-
 
 const Navbar = ({ 
   username,
@@ -56,15 +54,15 @@ const Navbar = ({
     return <Link to="/"></Link>;
   };
 
+  checkAuth((value) => {
+    setIsAuth(value);
+  })
+
   // Function for conditional display of the search bar
   const showBar = () => {
     console.log("PATHNAME: " + location.pathname)
     if(location.pathname === "/") { setNavSearch(true); }
   }
-
-  checkAuth((value) => {
-    setIsAuth(value);
-  })
 
   var staticElements = (
     <NavWrapper
