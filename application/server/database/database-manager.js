@@ -1,19 +1,19 @@
 const mysql = require('mysql');
 
-// const connectionInformation = {
-// 	host: 'swamp.c7yirp5jbhfm.us-east-2.rds.amazonaws.com',
-// 	user: 'admin',
-// 	password: '74DQSgJAXD4bPgAqJ1mv',
-// 	database: 'mydb'
-// };
+const connectionInformation = {
+	host: 'swamp.c7yirp5jbhfm.us-east-2.rds.amazonaws.com',
+	user: 'admin',
+	password: '74DQSgJAXD4bPgAqJ1mv',
+	database: 'mydb'
+};
 
 // Local DB for testing
-const connectionInformation = {
-	host: 'localhost',
-	user: 'root',
-	password: 'password',
-	database: 'mydb'
-}
+// const connectionInformation = {
+// 	host: 'localhost',
+// 	user: 'root',
+// 	password: 'password',
+// 	database: 'mydb'
+// }
 
 const connection = mysql.createConnection(connectionInformation);
 

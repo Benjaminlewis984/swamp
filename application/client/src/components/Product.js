@@ -7,19 +7,7 @@ import Axios from 'axios';
 
 export default class Product extends Component {
     render() {
-        const { m_id, title, preview_path, price, inCart, raw_path } = this.props.product;
-        function sendMediaID() {
-            const Cookies = require('js-cookie');
-            Axios.get('/media', {params: {
-                m_id: m_id
-            }})
-            .then((results) => {
-                if(results.data.success == "true") {
-                    console.log(results.data.media[0])
-                    Cookies.set('m_id', results.data.media[0]);
-                }
-            })
-        }
+        const { m_id, title, preview_path, price, inCart, bought, raw_path } = this.props.product;
         return (
             <ProductWrapper className="col-9 mx-auto col-md-6 col-lg-3 my-3">
                 <div className="card">
@@ -31,7 +19,7 @@ export default class Product extends Component {
                         else { console.log("No product ID") }
                         }
                     }>
-                        <Link to="/details" target="_blank" onClick={sendMediaID}>
+                        <Link to="/details" >
                             <img src={`/${preview_path}`} 
                             className="card-img-top" 
                             alt="product" />

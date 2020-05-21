@@ -5,7 +5,7 @@ import { ButtonContainerAlt } from './ButtonAlt';
 import ReactGA from 'react-ga';
 
 import { connect } from 'react-redux';
-let m_id, author_username, preview_path, description, price, title, inCart, raw_path, approved;
+
 const Details = ({
     isLoggedIn
 }) => {
@@ -65,24 +65,15 @@ const Details = ({
         }).catch(err => console.log(err))
     }
 
-    const Cookies = require('js-cookie');
-    const media = JSON.parse(Cookies.get('m_id'));
-    console.log(media)
-    m_id = media.m_id;
-    author_username = media.username
-    preview_path = media.preview_path;
-    description = media.description;
-    price = media.price;
-    title = media.title;
-    inCart = false;
-    raw_path = media.raw_path;
-    console.log(author_username)
-
 
 
     return (
+        
         <ProductConsumer>
             { (value) => {
+                let {m_id, author_username, preview_path, description, price, title, inCart, raw_path, approved, bought}
+                    = value.detailProduct;
+                
                 // Item information. From seller
                 return (
                     <div className="container py-5">
@@ -124,7 +115,7 @@ const Details = ({
                                         {inCart ? "inCart" : "add to cart"}
                                     </ButtonContainerAlt>
 
-                                    {price === 0 ?
+                                    {price === 0 || bought === "true"?
                                         <ButtonContainerAlt
                                             disabled={false}
                                             onClick={() => {
@@ -160,7 +151,7 @@ const Details = ({
                                                     </form>
 
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-primary" onClick={() => contactSeller(author_username, m_id)} data-dismiss="modal">Send message</button>
+                                                        <button type="button" class="btn btn-primary" onClick={() => contactSeller(value.detailProduct.author_username, value.detailProduct.m_id)} data-dismiss="modal">Send message</button>
                                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                                     </div>
 
