@@ -9,8 +9,9 @@ import {
     signUp,
 } from '../redux/actions/signupAction';
 import { ButtonContainerAlt } from "./ButtonAlt";
-import { Redirect } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useHistory } from 'react-router-dom';
+import Disclaimer from './Disclaimer';
 
 const Signup = ({
     username,
@@ -21,6 +22,7 @@ const Signup = ({
     isSignedUpLoadingState,
     dispatch,
 }) => {
+    let history = useHistory();
 
     const verify = (confirmPassword) => {
         if (password === confirmPassword) {
@@ -41,9 +43,7 @@ const Signup = ({
     }
 
     if (isSignedUpLoadingState === 'good') {
-        return <div>
-            Welcome {username}. You have been registered
-                </div>
+        history.push("/result")
     }
     return (
         <div class="container-fluid bg-light py-3">
@@ -113,17 +113,21 @@ const Signup = ({
 
                             <div class="row">
                                 <div className="col-md-8">
-                                    <ButtonContainerAlt onClick={() => clearFields()}>Cancel</ButtonContainerAlt>
                                     <ButtonContainerAlt id="signup"
                                         onClick={() => dispatch(signUp())
                                         }>Submit</ButtonContainerAlt>
-                                    <ButtonContainerAlt onClick={() => clearFields()}>Cancel</ButtonContainerAlt>
+                                    <ButtonContainerAlt onClick={() => {
+                                        clearFields()
+                                        history.push("/")
+                                        }
+                                    }>Cancel</ButtonContainerAlt>
                                 </div>
                             </div>
                         </fieldset>
                     </div>
                 </div>
             </div>
+            <Disclaimer />
         </div>
 
     );

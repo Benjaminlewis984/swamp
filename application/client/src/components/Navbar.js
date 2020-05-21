@@ -175,7 +175,12 @@ const Navbar = ({
       )}
       {isAuth != "unchecked" && isAuth && (
         <Link to="/">
-          <ButtonContainer onClick={logout}>
+          <ButtonContainer onClick={() => {
+            dispatch(setUserName(""))
+            dispatch(setPassword(""))
+            logout()
+            }
+          }>
             <span className="mr-2">
               <i className="fas fa-sign-out-alt"></i>
             </span>

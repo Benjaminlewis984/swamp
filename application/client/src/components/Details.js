@@ -101,6 +101,7 @@ const Details = ({
                                     alt="product"
                                 />
                             </div>
+
                             {/* product text */}
                             <div className="col-10 mx-auto col-md-6 my-3 text-capitalize">
                                 <h3>title : {title}</h3>
@@ -117,18 +118,9 @@ const Details = ({
                                     description :
                                     </p>
                                 <p className="text-muted lead">{description}</p>
+
                                 {/* buttons */}
                                 <div>
-                                    <ButtonContainerAlt
-                                        disabled={false}
-                                        onClick={() => {
-                                            console.log(isLoggedIn)
-                                            if (isLoggedIn === false) { history.push("/signup") }
-                                            else { download(raw_path) }
-                                            }
-                                        }>
-                                        {price === 0 ? "Download" : "Contact seller"}
-                                    </ButtonContainerAlt>
                                     <ButtonContainerAlt
                                         cart
                                         disabled={inCart ? true : false}
@@ -138,13 +130,22 @@ const Details = ({
                                         }}>
                                         {inCart ? "inCart" : "add to cart"}
                                     </ButtonContainerAlt>
+
                                     {price === 0 ?
                                         <ButtonContainerAlt
                                             disabled={false}
-                                            onClick={() => download(raw_path)}>Download
+                                            onClick={() => {
+                                                if (isLoggedIn === false) { history.push("/signup") }
+                                                else { download(raw_path) }
+                                                }
+                                            }>Download
                                             </ButtonContainerAlt> :
                                         <ButtonContainerAlt type="button" data-toggle="modal" data-target="#myModal"> Contact Seller
-                                                </ButtonContainerAlt>}
+                                        </ButtonContainerAlt>}
+
+                                    <Link to="/result">
+                                        <ButtonContainerAlt>Back</ButtonContainerAlt>
+                                    </Link>
                                     <div class="container">
 
                                         {/* <!-- The Modal --> */}
