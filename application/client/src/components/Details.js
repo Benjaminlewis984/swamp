@@ -1,29 +1,13 @@
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import { ProductConsumer } from '../context';
-import { useHistory, Link } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { ButtonContainerAlt } from './ButtonAlt';
 import ReactGA from 'react-ga';
-import {
-    setBuyer,
-    setSeller,
-    setSoldAmount,
-    setStatus,
-    setTransactionId,
-    setM_id,
-    sendingApproval
-} from '../redux/actions/purchaseAction';
+
 
 import { connect } from 'react-redux';
 
 const Details = ({
-    buyer,
-    seller,
-    status,
-    soldAmount,
-    m_id,
-    transactionId,
-    dispatch,
-    username,
     isLoggedIn
 }) => {
 
@@ -32,29 +16,33 @@ const Details = ({
     const [message, setMessage] = useState("");
     let history = useHistory();
 
-    const contactSeller = () => {
+    const contactSeller = (username) => {
         const axios = require("axios");
         console.log("contact seller:", message);
         axios.defaults.withCredentials = true;
 
 
-        var body = {
-            "acc_id": 10,
-            "message": message,
-            // buy_request = 0 is for messaging
-            //buy_request = 1 is for ?
-            "buy_request": 0,
-        }
-
-        axios.post("/message", body)
+  //TODO change back to aws ip address. 
+        axios.get("http://localhost:3001/get_acc_id", {params: {"username": username}})
+        .then(res => {
+            var body = {
+                "acc_id": res.data.acc_id,
+                "message": message,
+                // buy_request = 0 is for messaging
+                //buy_request = 1 is for for buying product
+                "buy_request": 1,
+            }
+            return axios.post("/message", body)
             .then(res => {
                 // console.log("message sent");
                 setMessage("");
             }).catch(err => {
                 // console.log("message not sent");
             })
+        })
 
     }
+
 
     const download = (raw_path) => {
         console.log('Checking logged in');
@@ -167,7 +155,7 @@ const Details = ({
                                                     </form>
 
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-primary" onClick={contactSeller} data-dismiss="modal">Send message</button>
+                                                        <button type="button" class="btn btn-primary" onClick={() => contactSeller(value.detailProduct.author_username)} data-dismiss="modal">Send message</button>
                                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                                     </div>
 
@@ -189,13 +177,6 @@ const Details = ({
 
 const mapStateToProps = state => {
     return {
-        buyer: state.purchaseReducer.buyer,
-        seller: state.purchaseReducer.seller,
-        status: state.purchaseReducer.status,
-        transactionId: state.purchaseReducer.transactionId,
-        soldAmount: state.purchaseReducer.soldAmount,
-        m_id: state.purchaseReducer.m_id,
-        username: state.loginReducer.username,
         isLoggedIn: state.loginReducer.isLoggedIn
     };
 };
