@@ -131,7 +131,7 @@ const Upload = ({isLoggedIn}) => {
                                 </input>
                             </div>
                             <form>
-                                <label>Type of Data</label>
+                                {/* <label>Type of Data</label>
                                 <div >
                                     <input type="radio" id="type1"
                                         name="type" value="digital" onClick={e => getType(e)}></input>
@@ -140,7 +140,7 @@ const Upload = ({isLoggedIn}) => {
                                     <input type="radio" id="type2"
                                         name="type" value="physical" onClick={e => getType(e)}></input>
                                     <label for="type2">Physical</label>
-                                </div>
+                                </div> */}
                             </form>
 
                             <label>Category</label>
@@ -157,7 +157,7 @@ const Upload = ({isLoggedIn}) => {
 
 
                             <div class="form-group has-success">
-                                <label for="upload">Upload file here</label>
+                                <label for="upload" >Upload file here</label>
                                 <div class="col-lg-5 mx-auto">
                                     <label for="fileUpload"
                                         class="file-upload btn btn-block rounded-pill shadow">
