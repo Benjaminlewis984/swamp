@@ -43,24 +43,28 @@ const Dashboard = () => {
 
 	const [userInfo, setUserInfo] = useState(false);
 	const [userListings, setUserListings] = useState(false);
+	const [userRequests, setUserRequests] = useState(false);
 	const [listingsType, setListingsType] = useState("posts");
 
 	const history = useHistory();
 
-	const getListings = (username, action) => {
+	const getListings = (username, listingsAction, requestsAction) => {
 		axios.defaults.withCredentials = true;
 		axios.post(`/listings`, {
 			username: username
 		}).then((res) => {
 			if (res.data.success == "true") {
-				action(res.data.results);
+				listingsAction(res.data.results);
 				console.log(res.data.results);
 			}
 		});
 
 		axios.post('/messagebox')
 		.then((res) => {
-			console.log(res.data.results);
+			if (res.data.success == "true") {
+				requestsAction(res.data.results);
+				console.log(res.data.results);
+			}
 		});
 
 	}
@@ -78,6 +82,8 @@ const Dashboard = () => {
 			setUserInfo(info);
 			getListings(info.username, (listings) => {
 				setUserListings(listings);
+			}, (requests) => {
+				setUserRequests(requests);
 			});
 		});
 	}
@@ -126,7 +132,26 @@ const Dashboard = () => {
 	)
 
 	var requestElements = (
-		<h1>Hello</h1>
+		<>
+		<label>Current Requests</label>
+		<div class="container">
+				<div class="row d-flex align-items-stretch" margin="10rem">
+					{
+						userRequests && userRequests.map((requests) => {
+							return (
+
+							<div class="card-body">
+								<h5>User: {requests.sender}</h5>
+								<h5>Message: {requests.message}</h5>
+								<button>Accept</button><button>Reject</button>
+							</div>
+
+							)
+						})
+					}
+				</div>
+			</div>
+		</>
 	)
 
 	return (
