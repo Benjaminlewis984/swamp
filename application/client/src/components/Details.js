@@ -12,7 +12,7 @@ import {
     setStatus,
     setTransactionId,
     setM_id,
-    sendingApproval,
+    sendingApproval
 } from '../redux/actions/purchaseAction';
 
 import { connect } from 'react-redux';
@@ -34,36 +34,39 @@ const Details = ({
 
     const sendForApproval = () => {
         dispatch(setBuyer(username)); 
-        // dispatch(setSeller()); //Already done on button click
         dispatch(setStatus(false));
-        // dispatch(setTransactionId());
         dispatch(setM_id(m_id));
-        // dispatch(setSoldAmount);
+
         console.log(buyer);
-        // console.log(status);
-        // console.log(m_id);
+
         dispatch(sendingApproval());
     }
 
     const download = (raw_path) => {
-        const formData = new FormData();
-        formData.append('path', raw_path);
-        fetch("/download", {
-            method: 'POST',
-            body: formData,
-            credentials: 'include'
-        })
-        .then(response => response.blob())
-        .then(blob => {
-            var url = window.URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            console.log(url)
-            a.href = url;
-            a.download = raw_path.substr(4);
-            document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
-            a.click();    
-            a.remove();  //afterwards we remove the element again         
-        }).catch(err => console.log(err))
+        console.log('Checking logged in');
+        console.log(isLoggedIn);
+        if(isLoggedIn){
+            const formData = new FormData();
+            formData.append('path', raw_path);
+            fetch("/download", {
+                method: 'POST',
+                body: formData,
+                credentials: 'include'
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                var url = window.URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                console.log(url)
+                a.href = url;
+                a.download = raw_path.substr(4);
+                document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+                a.click();    
+                a.remove();  //afterwards we remove the element again         
+            }).catch(err => console.log(err))
+        } else {
+            alert('You must be logged in to download');
+        }
     }
 
     return (
@@ -119,6 +122,8 @@ const Details = ({
                                         disabled={false}
                                         onClick={() => download(raw_path) }>
                                         {price === 0 ? "Download" : "Contact seller"}
+                                    
+                                        
                                     </ButtonContainer>
                                 </div>
                             </div>
@@ -139,6 +144,7 @@ const mapStateToProps = state => {
         soldAmount: state.purchaseReducer.soldAmount,
         m_id: state.purchaseReducer.m_id,
         username: state.loginReducer.username,
+        isLoggedIn: state.loginReducer.isLoggedIn
     };
 };
 
