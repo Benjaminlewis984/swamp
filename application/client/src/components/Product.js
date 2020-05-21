@@ -97,10 +97,14 @@ const ProductWrapper = styled.div`
     height: 12rem;
 }
 
+<<<<<<< Updated upstream
 .card-img-top {
     
     transition: all 0.3s linear;
 }
+=======
+
+>>>>>>> Stashed changes
 
 .img-container:hover .card-img-top {
     transform: scale(1.2);

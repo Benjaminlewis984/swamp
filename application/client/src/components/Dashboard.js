@@ -16,6 +16,9 @@ const getInfo = (action) => {
 		}
 	});
 };
+function refreshPage() {
+    window.location.reload(false);
+  };
 
 const deletePost = (m_id) => {
 	axios.defaults.withCredentials = true;
@@ -29,6 +32,7 @@ const deletePost = (m_id) => {
 		console.log(res);
 		if(res.data.success ==="true") {
 			console.log("Post successfully deleted");
+			refreshPage();
 		}
 	}).catch(err => {
 		console.log("Post not deleted");
