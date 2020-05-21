@@ -9,6 +9,7 @@ import {
     signUp,
 } from '../redux/actions/signupAction';
 import { ButtonContainerAlt } from "./ButtonAlt";
+import { Redirect } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 const Signup = ({
@@ -17,7 +18,6 @@ const Signup = ({
     email,
     firstname,
     lastname,
-    //isSignedUp,
     isSignedUpLoadingState,
     dispatch,
 }) => {
@@ -112,7 +112,8 @@ const Signup = ({
                             </div>
 
                             <div class="row">
-                                <div>
+                                <div className="col-md-8">
+                                    <ButtonContainerAlt onClick={() => clearFields()}>Cancel</ButtonContainerAlt>
                                     <ButtonContainerAlt id="signup"
                                         onClick={() => dispatch(signUp())
                                         }>Submit</ButtonContainerAlt>

@@ -59,7 +59,7 @@ export const login = () => (dispatchEvent, getState) => {
           console.log(
             "After Dispatch, Login is updated to accurate to correct value"
           );
-          dispatchEvent(setIsLoggedIn("init"));
+          dispatchEvent(setIsLoggedIn(true));
           dispatchEvent(setUserName(response.data.user.username));
           dispatchEvent(setEmail(response.data.user.email));
           dispatchEvent(setFirstName(response.data.user.first_name));

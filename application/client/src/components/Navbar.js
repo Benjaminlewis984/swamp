@@ -48,6 +48,7 @@ const Navbar = ({
   let location = useLocation();
 
   const logout = () => {
+    dispatch(setIsLoggedIn(false));
     axios.defaults.withCredentials = true;
     axios.get(`/logout`);
     dispatch(setUserName(""));

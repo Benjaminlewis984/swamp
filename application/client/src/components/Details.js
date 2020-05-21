@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { ProductConsumer } from '../context';
 import { useHistory, Link } from 'react-router-dom';
 import { ButtonContainerAlt } from './ButtonAlt';
@@ -10,7 +10,7 @@ import {
     setStatus,
     setTransactionId,
     setM_id,
-    sendingApproval,
+    sendingApproval
 } from '../redux/actions/purchaseAction';
 
 import { connect } from 'react-redux';
@@ -29,34 +29,58 @@ const Details = ({
 
     ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
     ReactGA.pageview(window.location.pathname + window.location.search);
+    const [message, setMessage] = useState("");
     let history = useHistory();
 
-    const sendForApproval = () => {
-        dispatch(setBuyer(username)); 
-        dispatch(setStatus(false));
-        dispatch(setM_id(m_id));
-        dispatch(sendingApproval());
+    const contactSeller = () => {
+        const axios = require("axios");
+        console.log("contact seller:", message);
+        axios.defaults.withCredentials = true;
+
+
+        var body = {
+            "acc_id": 10,
+            "message": message,
+            // buy_request = 0 is for messaging
+            //buy_request = 1 is for ?
+            "buy_request": 0,
+        }
+
+        axios.post("/message", body)
+            .then(res => {
+                // console.log("message sent");
+                setMessage("");
+            }).catch(err => {
+                // console.log("message not sent");
+            })
+
     }
 
     const download = (raw_path) => {
-        const formData = new FormData();
-        formData.append('path', raw_path);
-        fetch("/download", {
-            method: 'POST',
-            body: formData,
-            credentials: 'include'
-        })
-        .then(response => response.blob())
-        .then(blob => {
-            var url = window.URL.createObjectURL(blob);
-            var a = document.createElement('a');
-            console.log(url)
-            a.href = url;
-            a.download = raw_path.substr(4);
-            document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
-            a.click();    
-            a.remove();  //afterwards we remove the element again         
-        }).catch(err => console.log(err))
+        console.log('Checking logged in');
+        console.log(isLoggedIn);
+        if(isLoggedIn){
+            const formData = new FormData();
+            formData.append('path', raw_path);
+            fetch("/download", {
+                method: 'POST',
+                body: formData,
+                credentials: 'include'
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                var url = window.URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                console.log(url)
+                a.href = url;
+                a.download = raw_path.substr(4);
+                document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+                a.click();    
+                a.remove();  //afterwards we remove the element again         
+            }).catch(err => console.log(err))
+        } else {
+            alert('You must be logged in to download');
+        }
     }
 
     return (
@@ -114,9 +138,44 @@ const Details = ({
                                         }}>
                                         {inCart ? "inCart" : "add to cart"}
                                     </ButtonContainerAlt>
-                                    <Link to="/result">
-                                        <ButtonContainerAlt>Back</ButtonContainerAlt>
-                                    </Link>
+                                    {price === 0 ?
+                                        <ButtonContainerAlt
+                                            disabled={false}
+                                            onClick={() => download(raw_path)}>Download
+                                            </ButtonContainerAlt> :
+                                        <ButtonContainerAlt type="button" data-toggle="modal" data-target="#myModal"> Contact Seller
+                                                </ButtonContainerAlt>}
+                                    <div class="container">
+
+                                        {/* <!-- The Modal --> */}
+                                        <div class="modal" id="myModal">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Contact Seller</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                    </div>
+                                                    <form>
+
+                                                        <div class="form-group">
+                                                            <label for="message-text" class="col-form-label">Message:</label>
+                                                            <textarea class="form-control" id="message-text" value={message} onChange={e => setMessage(e.target.value)}></textarea>
+                                                        </div>
+
+                                                    </form>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary" onClick={contactSeller} data-dismiss="modal">Send message</button>
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -136,7 +195,8 @@ const mapStateToProps = state => {
         soldAmount: state.purchaseReducer.soldAmount,
         m_id: state.purchaseReducer.m_id,
         username: state.loginReducer.username,
+        isLoggedIn: state.loginReducer.isLoggedIn
     };
 };
 
-export default connect(mapStateToProps) (Details);
+export default connect(mapStateToProps)(Details);
