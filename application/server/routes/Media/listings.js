@@ -23,13 +23,14 @@ router.post('/listings', async (req, res) => {
   if (results.length == 0) {
     return res.status(200).send({success: "true", results: results});
   }
-  else {
-    results.forEach(async (result, idx) => {
-      result.purchase_count = await mediaManager.getPurchaseCount(result.m_id);
+  // else {
+  //   results.forEach(async (result, idx) => {
+      // result.purchase_count = await mediaManager.getPurchaseCount(result.m_id);
 
-      if(idx == results.length - 1) { return res.status(200).send({success: "true", results: results}); }
-    });
-  }
+  //     if(idx == results.length - 1) { return res.status(200).send({success: "true", results: results}); }
+  //   });
+  // }
+  return res.status(200).send({success: "true", results: results});
 });
 
 /**
