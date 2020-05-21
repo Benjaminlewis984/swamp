@@ -51,6 +51,7 @@ const Details = ({
         fetch("/download", {
             method: 'POST',
             body: formData,
+            credentials: 'include'
         })
         .then(response => response.blob())
         .then(blob => {
@@ -116,27 +117,7 @@ const Details = ({
                                     </ButtonContainer>
                                     <ButtonContainer
                                         disabled={false}
-                                        onClick={() => {
-                                            const formData = new FormData();
-                                            formData.append('path', raw_path);
-                                            fetch("/download", {
-                                                method: 'POST',
-                                                body: formData,
-                                                credentials: 'include'
-                                            })
-                                            .then(response => response.blob())
-                                            .then(blob => {
-                                                var url = window.URL.createObjectURL(blob);
-                                                var a = document.createElement('a');
-                                                console.log(url)
-                                                a.href = url;
-                                                a.download = raw_path.substr(4);
-                                                document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
-                                                a.click();    
-                                                a.remove();  //afterwards we remove the element again         
-                                            }).catch(err => console.log(err))
-                                        }
-                                        }
+                                        onClick={() => download(raw_path) }
                                     >
                                         {price === 0 ? "Download" : "Contact seller"}
                                     </ButtonContainer>

@@ -2,6 +2,8 @@ import React, { Component, useState, setState } from 'react'
 import '../styles/Upload.css'
 import logo from '../imgs/gator.png';
 import ReactGA from 'react-ga';
+import { useHistory } from "react-router-dom";
+
 
 const Upload = () => {
 
@@ -13,6 +15,7 @@ const Upload = () => {
     const [description, setDescription] = useState("");
     const [type, setType] = useState("");
     const [category, setCategory] = useState("invalid");
+	const history = useHistory();
 
     let selectedFile;
     let previewFile;
@@ -20,21 +23,17 @@ const Upload = () => {
 
     const fileSelectedHandler = (event) => {
         selectedFile = event.target.files[0];
+        console.log(selectedFile);
     }
 
     const previewSelectedHandler = (event) => {
         previewFile = event.target.files[0];
+        console.log(previewFile);
     }
 
     const getType = (e) => {
         var element = document.getElementsByName("type");
 
-        // if(element[0].checked) {
-        //     setType(element[0].value)
-        // }
-        // else {
-        //     setType(element[1].value)
-        // }
         for (var i = 0; i < element.length; i++) {
 
             if (element[i].checked) {
@@ -42,24 +41,6 @@ const Upload = () => {
             }
         }
         console.log(type);
-    }
-
-    const getListings = () => {
-        console.log('Retrieving listings');
-        const axios = require('axios');
-        axios.defaults.withCredentials = true;
-        
-    
-    
-            axios.post(`/listings`, {"username": "onu"}
-    
-            )
-                .then((res) => {
-                    console.log(res);
-
-    
-                }).catch(err => console.log("Did not upload"));
-        
     }
 
 
@@ -76,8 +57,7 @@ const Upload = () => {
         formData.append("price", price);
         formData.append("category", category);
         formData.append("type", type);
-        // formData.append("academic", 0);
-        // formData.append("acc_id", 3);
+
         
         axios.post(`/upload`,
             formData, {
@@ -88,16 +68,13 @@ const Upload = () => {
             .then((res) => {
                 console.log(res);
                 // console.log(res.success);
+                history.push("dashboard");
 
             }).catch(err => console.log("Did not upload"));
     }
 
 
     return (
-        // <div>
-        //     <input type="file" onChange={fileSelectedHandler} />
-        //     <button onClick={submit}>Upload</button>
-        // </div>
 
         <div class="container-fluid bg-light py-3" >
             <div class="row">
