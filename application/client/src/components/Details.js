@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ProductConsumer } from '../context';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { ButtonContainerAlt } from './ButtonAlt';
 import ReactGA from 'react-ga';
 
