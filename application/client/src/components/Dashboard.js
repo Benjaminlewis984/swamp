@@ -163,7 +163,6 @@ const Dashboard = () => {
 			<div className="add-post rounded" id="rcorners" onClick={upload}>
 				<i className="fas fa-plus fa-2x text-blue "></i>
 			</div>
-			<label>Current Posts</label>
 			<div class="container">
 				<div class="row d-flex align-items-stretch" margin="10rem">
 					{
@@ -195,7 +194,6 @@ const Dashboard = () => {
 
 	var requestElements = (
 		<>
-			<label>Current Requests</label>
 			<div class="container">
 				<div class="row d-flex align-items-stretch" margin="10rem">
 					{
@@ -317,7 +315,7 @@ const Dashboard = () => {
 				<div class="row">
 					<div class="col-md-4">
 						<div class="profile-info">
-							<h5>username: {userInfo.username} </h5>
+							<h5>Username: {userInfo.username} </h5>
 							<h5>Full Name: {userInfo.first_name} {userInfo.last_name}</h5>
 							<h5>Email: {userInfo.email} </h5>
 						</div>
