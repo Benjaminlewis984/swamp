@@ -5,11 +5,7 @@ import ReactGA from 'react-ga';
 import { useHistory } from "react-router-dom";
 
 
-const Upload = () => {
-
-    ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
-    ReactGA.pageview(window.location.pathname + window.location.search);
-
+const Upload = ({isLoggedIn}) => {
     const [title, setTitle] = useState("");
     const [price, setPrice] = useState("");
     const [description, setDescription] = useState("");
@@ -19,6 +15,13 @@ const Upload = () => {
 
     let selectedFile;
     let previewFile;
+
+    if(!isLoggedIn) {
+        history.push('/signup')
+    }
+
+    ReactGA.initialize(process.env.REACT_APP_GA_TRACKING_ID);
+    ReactGA.pageview(window.location.pathname + window.location.search);
 
 
     const fileSelectedHandler = (event) => {

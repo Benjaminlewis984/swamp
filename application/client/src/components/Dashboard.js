@@ -26,16 +26,16 @@ const deletePost = (m_id) => {
 	var body = {
 		"m_id": m_id,
 	}
-	axios.delete("/listings", {"data": body})
-	.then(res => {
-		console.log(res);
-		if(res.data.success ==="true") {
-			// console.log("Post successfully deleted");
-			window.location.reload(false);
-		}
-	}).catch(err => {
-		// console.log("Post not deleted");
-	})
+	axios.delete("/listings", { "data": body })
+		.then(res => {
+			console.log(res);
+			if (res.data.success === "true") {
+				// console.log("Post successfully deleted");
+				window.location.reload(false);
+			}
+		}).catch(err => {
+			// console.log("Post not deleted");
+		})
 
 }
 
@@ -63,12 +63,12 @@ const Dashboard = () => {
 		});
 
 		axios.post('/messagebox')
-		.then((res) => {
-			if (res.data.success == "true") {
-				requestsAction(res.data.results);
-				console.log(res.data.results);
-			}
-		});
+			.then((res) => {
+				if (res.data.success == "true") {
+					requestsAction(res.data.results);
+					console.log(res.data.results);
+				}
+			});
 
 	}
 
@@ -81,24 +81,24 @@ const Dashboard = () => {
 		console.log(messageID);
 		axios.defaults.withCredentials = true;
 
-		axios.post("/approve_request", {"message_id": messageID})
-		.then(res => {
-			// console.log("approved");
-		}).catch(err => {
-			console.log("did not send");
-		}) 
+		axios.post("/approve_request", { "message_id": messageID })
+			.then(res => {
+				// console.log("approved");
+			}).catch(err => {
+				console.log("did not send");
+			})
 	}
 
 	const rejectRequest = (messageID) => {
 		const axios = require('axios');
 		axios.defaults.withCredentials = true;
 
-		axios.post("/reject_request", {"message_id": messageID})
-		.then(res => {
-			console.log("rejected === success");
-		}).catch(err => {
-			console.log(err);
-		})
+		axios.post("/reject_request", { "message_id": messageID })
+			.then(res => {
+				console.log("rejected === success");
+			}).catch(err => {
+				console.log(err);
+			})
 
 	}
 
@@ -139,8 +139,8 @@ const Dashboard = () => {
 									<div class="card-body">
 										<h5>Title: {listing.title}
 										</h5>
-											<h5>Price: ${listing.price}</h5>
-											<h5>m_id: {listing.m_id}</h5>
+										<h5>Price: ${listing.price}</h5>
+										<h5>m_id: {listing.m_id}</h5>
 
 									</div>
 									<div class="card-footer text-center" id={listing.m_id}>
@@ -153,42 +153,42 @@ const Dashboard = () => {
 					}
 				</div>
 			</div>
-			</>
+		</>
 	)
 
 	var requestElements = (
 		<>
-		<label>Current Requests</label>
-		<div class="container">
+			<label>Current Requests</label>
+			<div class="container">
 				<div class="row d-flex align-items-stretch" margin="10rem">
 					{
 						<table class="table table-striped table-hover">
-						<thead class="thead-dark">
-						  <tr>
-							<th scope="col">From</th>
-							<th scope="col">Message</th>
-							<th scope="col">Option</th>
-						  </tr>
-						</thead>
-						<tbody>
-							{ userRequests && userRequests.map((requests) => {
-								return (
-						  <tr>
-							<td>{requests.sender}</td>
-							<td>{requests.message}</td>
-							<td>
-								<AcceptButton onClick={() => acceptRequest(requests.message_id)}>Accept</AcceptButton>
-								<RejectButton onClick={() => rejectRequest(requests.message_id)}>Reject</RejectButton>
-							</td>
-						  </tr>
-								)
-							})
-						}
-	
-						  </tbody>
-						  </table>
-								
-								
+							<thead class="thead-dark">
+								<tr>
+									<th scope="col">From</th>
+									<th scope="col">Message</th>
+									<th scope="col">Option</th>
+								</tr>
+							</thead>
+							<tbody>
+								{userRequests === true ? userRequests.map((requests) => {
+									return (
+										<tr>
+											<td>{requests.sender}</td>
+											<td>{requests.message}</td>
+											<td>
+												<AcceptButton onClick={() => acceptRequest(requests.message_id)}>Accept</AcceptButton>
+												<RejectButton onClick={() => rejectRequest(requests.message_id)}>Reject</RejectButton>
+											</td>
+										</tr>
+									)
+								}) : false
+								}
+
+							</tbody>
+						</table>
+
+
 					}
 				</div>
 			</div>
