@@ -24,6 +24,7 @@ import Kevin from './components/About/Kevin';
 import Ben from './components/About/Ben';
 import Onu from './components/About/Onu';
 
+
 class App extends Component {
 
   render() {

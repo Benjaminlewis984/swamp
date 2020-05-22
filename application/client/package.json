@@ -19,10 +19,14 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.0",
     "reactstrap": "^8.4.1",
+<<<<<<< HEAD
+    "redux": "^4.0.5"
+=======
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "request": "^2.88.2",
     "styled-components": "^5.1.0"
+>>>>>>> 0c90c426bc5e22ed0bd72350ddbf526b9468e037
   },
   "scripts": {
     "start": "react-scripts start",
