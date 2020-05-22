@@ -19,7 +19,7 @@ Server URL: http://18.191.184.143:3000/
 Database Endpoint: swamp-database-instance.c7yirp5jbhfm.us-east-2.rds.amazonaws.com <br>
 Database Port: 3306
 5. Database username: admin
-6. Database password: 1vFhxpUjr0vof3KErgPi
+6. Database password: 74DQSgJAXD4bPgAqJ1mv
 7. Database name: swamp
   - Instructions (<strong>requires mysql-client</strong>): 
     - Use the following command: 
