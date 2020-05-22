@@ -45,7 +45,7 @@ exports.approveRequest = async (message_id, request_id) => {
   WHERE mr.m_id = ?;`, [m_id]);
   const approved_id = approved[0]['approved_id'];
 
-  await databaseManager.queryDatabase(`INSERT INTO checkout(approved_id, reg_id) VALUES (?, ?);`, [approved_id, reg_id]);
+  // await databaseManager.queryDatabase(`INSERT INTO checkout(approved_id, reg_id) VALUES (?, ?);`, [approved_id, reg_id]);
   return '';
 }
 

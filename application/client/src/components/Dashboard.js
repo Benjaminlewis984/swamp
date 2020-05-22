@@ -95,7 +95,7 @@ const Dashboard = () => {
 		axios.post("http://18.191.184.143:3001/reject_request", { "message_id": messageID })
 			.then(res => {
 				// console.log("rejected === success");
-				history.push("/dashboard");
+				window.location.reload();
 			}).catch(err => {
 				console.log(err);
 			})
